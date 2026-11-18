@@ -10,7 +10,7 @@
 /* Layout: guia de viagem em capítulos; em cada cidade, mapa fixo à esquerda e texto longo à direita. */
 :root{
   --bg:#F2F4F7; --surface:#FFFFFF; --ink:#172038; --muted:#56607C; --line:#D3D9E5;
-  --accent:#2B47B0; --gold:#8F6710; --sea:#DCE5F1; --land:#FAFAF6; --on-accent:#FFFFFF;
+  --accent:#2B47B0; --gold:#8F6710; --sea:#DCE5F1; --land:#FAFAF6; --on-accent:#FFFFFF; --red:#B3261E; --orange:#A15C00; --green:#1E7B45;
   --display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
   --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -18,10 +18,10 @@
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#10162A; --surface:#182039; --ink:#E7EAF4; --muted:#9CA7C5; --line:#2D3859;
-  --accent:#93A8FF; --gold:#E2B95B; --sea:#0B1021; --land:#232D4E; --on-accent:#10162A; color-scheme:dark } }
+  --accent:#93A8FF; --gold:#E2B95B; --sea:#0B1021; --land:#232D4E; --on-accent:#10162A; --red:#FF8A80; --orange:#FFB74D; --green:#7DD9A0; color-scheme:dark } }
 :root[data-theme="dark"]{
   --bg:#10162A; --surface:#182039; --ink:#E7EAF4; --muted:#9CA7C5; --line:#2D3859;
-  --accent:#93A8FF; --gold:#E2B95B; --sea:#0B1021; --land:#232D4E; --on-accent:#10162A; color-scheme:dark }
+  --accent:#93A8FF; --gold:#E2B95B; --sea:#0B1021; --land:#232D4E; --on-accent:#10162A; --red:#FF8A80; --orange:#FFB74D; --green:#7DD9A0; color-scheme:dark }
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -210,12 +210,40 @@ body[data-view="hoje"] .hero{padding-block:24px 8px}
 .maplibregl-popup-anchor-top .maplibregl-popup-tip{border-bottom-color:var(--surface)}
 .maplibregl-ctrl-attrib{font-size:10px}
 .maplibregl-cooperative-gesture-screen{font-family:var(--body)}
+
+.trans{padding-block:28px 48px;display:grid;gap:18px}
+.tr-head h2{font-size:clamp(1.8rem,4.6vw,2.6rem);margin-top:4px}
+.tr-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tr-list{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));align-items:start}
+.tr-leg{padding:16px 18px;display:grid;gap:12px;min-width:0}
+.tr-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.tr-top h3{grid-column:1/-1;font-size:1.3rem}
+.tr-st{font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.tr-st.urg{color:var(--red)} .tr-st.mid{color:var(--orange)} .tr-st.ok{color:var(--green)}
+.tr-seg{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:2px solid var(--line);margin-left:4px}
+.tr-seg li{display:grid;grid-template-columns:3.4em 6.2em minmax(0,1fr);gap:8px;padding:6px 0 6px 12px;position:relative;line-height:1.4}
+.tr-seg li::before{content:"";position:absolute;left:-6px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.tr-seg .tm{font-family:var(--mono);font-size:.82rem;color:var(--gold);font-variant-numeric:tabular-nums;padding-top:1px}
+.tr-seg .md{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:3px}
+.tr-seg b{font-weight:600;display:block}
+.tr-seg div span{display:block;font-size:.9rem;color:var(--muted)}
+@media (max-width:520px){.tr-seg li{grid-template-columns:3.4em minmax(0,1fr)}.tr-seg .md{display:none}}
+.tr-meta{margin:0;display:grid;gap:6px;font-size:.92rem}
+.tr-meta div{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:8px}
+@media (max-width:520px){.tr-meta div{grid-template-columns:minmax(0,1fr);gap:0}}
+.tr-meta dt{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:3px}
+.tr-meta dd{margin:0}
+.tr-tip{margin:0;font-size:.92rem;border-left:3px solid var(--gold);padding-left:10px}
+.tr-day{justify-self:start}
+.tr-foot{margin:0;font-size:.85rem;color:var(--muted)}
+body[data-view="trans"] .hero .lede,body[data-view="trans"] #cd-go{display:none}
+body[data-view="trans"] .hero{padding-block:24px 8px}
 </style>
 </head>
 <body>
 
 
-<nav class="nav" aria-label="Navegação"><div class="wrap"><div class="tabs" role="tablist"><button type="button" role="tab" id="tab-guia" aria-selected="true" aria-controls="v-guia">Guia</button><button type="button" role="tab" id="tab-hoje" aria-selected="false" aria-controls="v-hoje">Hoje</button></div><span class="sep" aria-hidden="true"></span>
+<nav class="nav" aria-label="Navegação"><div class="wrap"><div class="tabs" role="tablist"><button type="button" role="tab" id="tab-guia" aria-selected="true" aria-controls="v-guia">Guia</button><button type="button" role="tab" id="tab-hoje" aria-selected="false" aria-controls="v-hoje">Hoje</button><button type="button" role="tab" id="tab-trans" aria-selected="false" aria-controls="v-trans">Transporte</button></div><span class="sep" aria-hidden="true"></span>
   <a href="#rota">Rota</a><a href="#eras">Épocas</a><a href="#toquio">Tóquio</a><a href="#fuji">Fuji</a><a href="#kanazawa">Kanazawa</a><a href="#seto">Takamatsu e ilhas</a><a href="#hiroshima">Hiroshima</a><a href="#kyoto">Kyoto</a><a href="#osaka">Osaka</a>
 </div></nav>
 
@@ -276,6 +304,108 @@ body[data-view="hoje"] .hero{padding-block:24px 8px}
       <a class="btn hj-read" id="hj-read" href="#toquio">Ler a história</a>
     </div>
   </div>
+</section>
+<section class="wrap trans" id="v-trans" role="tabpanel" aria-labelledby="tab-trans" hidden>
+  <div class="tr-head">
+    <span class="mono">Deslocamentos entre cidades e bate-voltas</span>
+    <h2>Transporte</h2>
+    <p class="hj-sub">Cada trecho com horários, duração, preço por pessoa e onde reservar. Horários com "~" são sugestão; os sem "~" já estão no roteiro.</p>
+    <div class="tr-legend"><span class="tr-st urg">Reservar até 20/11</span><span class="tr-st mid">Reservar até 25/11</span><span class="tr-st ok">Sem reserva</span></div>
+  </div>
+  <div class="tr-list">
+<article class="panel tr-leg" id="tr-0">
+  <header class="tr-top"><span class="mono">02/12 · qua · Trem</span><span class="tr-st ok">Sem reserva</span><h3>Chegada: Narita → Haneda → Asakusa</h3></header>
+  <ol class="tr-seg"><li><span class="tm">11:45</span><span class="md">Voo</span><div><b>Rodrigo pousa em Narita</b></div></li><li><span class="tm">14:00</span><span class="md">Trem</span><div><b>Keisei de Narita a Haneda</b><span>~1h30 · ¥1.810</span></div></li><li><span class="tm">15:05</span><span class="md">Voo</span><div><b>A vovó pousa em Haneda</b><span>Encontro no saguão de chegada</span></div></li><li><span class="tm">17:00</span><span class="md">Trem</span><div><b>Keikyu Airport Line até Asakusa</b><span>~40 min, direto, sem baldeação</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Pagamento</dt><dd>Suica ou PASMO, comprada ou carregada no aeroporto</dd></div></dl>
+  <p class="tr-tip">Esse trecho não precisa de reserva. Se o voo da vovó atrasar, o trem sai a cada poucos minutos.</p>
+  <button type="button" class="btn ghost tr-day" data-day="0">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-4">
+  <header class="tr-top"><span class="mono">06/12 · dom · Ônibus</span><span class="tr-st urg">Reservar até 20/11</span><h3>Tóquio → Fujikawaguchiko</h3></header>
+  <ol class="tr-seg"><li><span class="tm">11:00</span><span class="md">Hotel</span><div><b>Check-out do Amanek</b><span>Malas grandes saem por takkyubin para Kanazawa</span></div></li><li><span class="tm">11:20</span><span class="md">Metrô + JR</span><div><b>Linha Ginza até Kanda e JR Chūō rápida até Shinjuku</b><span>~40 min</span></div></li><li><span class="tm">12:15</span><span class="md">Ônibus</span><div><b>Busta Shinjuku (4º andar) → estação de Kawaguchiko</b><span>~1h45 · ¥2.200 por pessoa</span></div></li><li><span class="tm">~14:00</span><span class="md">Hotel</span><div><b>Chegada; ligar para o hotel pedir o shuttle</b><span>Telefone no voucher da reserva</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Onde reservar</dt><dd><a href="https://www.highwaybus.com/gp/inbound/index?lang=EN" target="_blank" rel="noopener">highwaybus.com</a></dd></div><div><dt>Malas</dt><dd>Só bagagem de mão; as grandes vão direto para o Tokyu Stay Kanazawa (chegam 8/12)</dd></div></dl>
+  <p class="tr-tip">É domingo e o ônibus costuma lotar. Chegar à Busta com 20 min de folga: o embarque é no 4º andar, acima da estação.</p>
+  <button type="button" class="btn ghost tr-day" data-day="4">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-6">
+  <header class="tr-top"><span class="mono">08/12 · ter · Ônibus + Shinkansen</span><span class="tr-st urg">Reservar até 20/11</span><h3>Fujikawaguchiko → Kanazawa</h3></header>
+  <ol class="tr-seg"><li><span class="tm">10:00</span><span class="md">Hotel</span><div><b>Check-out do Fuji Lake View Hotel</b></div></li><li><span class="tm">~10:30</span><span class="md">Ônibus</span><div><b>Kawaguchiko → estação de Tóquio (Yaesu)</b><span>~2h05 · ~¥2.300</span></div></li><li><span class="tm">~13:00</span><span class="md">Shinkansen</span><div><b>Hokuriku Shinkansen Kagayaki, Tóquio → Kanazawa</b><span>~2h30 · ~¥14.700 com assento reservado</span></div></li><li><span class="tm">~15:30</span><span class="md">Hotel</span><div><b>Check-in no Tokyu Stay Kanazawa</b><span>As malas grandes já devem estar lá</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Onde reservar</dt><dd><a href="https://www.eki-net.com" target="_blank" rel="noopener">Eki-net (JR East)</a> para o trem · <a href="https://www.highwaybus.com/gp/inbound/index?lang=EN" target="_blank" rel="noopener">highwaybus.com</a> para o ônibus</dd></div><div><dt>Frequência</dt><dd>Shinkansen a cada ~30 min; o Kagayaki só tem assento reservado</dd></div></dl>
+  <p class="tr-tip">Horários com &quot;~&quot; são sugestão: o ônibus pode atrasar no trânsito de Tóquio, então vale deixar uns 30 min de folga antes do trem.</p>
+  <button type="button" class="btn ghost tr-day" data-day="6">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-7">
+  <header class="tr-top"><span class="mono">09/12 · qua · Ônibus</span><span class="tr-st urg">Reservar até 20/11</span><h3>Bate-volta: Kanazawa ⇄ Shirakawa-gō</h3></header>
+  <ol class="tr-seg"><li><span class="tm">08:10</span><span class="md">Ônibus</span><div><b>Primeiro ônibus da estação de Kanazawa</b><span>~1h15 · ¥2.800 por trecho</span></div></li><li><span class="tm"></span><span class="md">Vila</span><div><b>Ogimachi e as casas gasshō-zukuri</b></div></li><li><span class="tm">tarde</span><span class="md">Ônibus</span><div><b>Volta a Kanazawa</b><span>Os últimos ônibus saem de Shirakawa-gō no fim da tarde</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Onde reservar</dt><dd><a href="https://www.nouhibus.co.jp/english/" target="_blank" rel="noopener">Nōhi Bus</a></dd></div><div><dt>Saídas</dt><dd>9 por dia de Kanazawa; a última sai às 16:00</dd></div></dl>
+  <p class="tr-tip">Reserva de assento obrigatória na ida e na volta. Comprar os dois trechos juntos.</p>
+  <button type="button" class="btn ghost tr-day" data-day="7">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-9">
+  <header class="tr-top"><span class="mono">11/12 · sex · 4 trens</span><span class="tr-st urg">Reservar até 20/11</span><h3>Kanazawa → Takamatsu</h3></header>
+  <ol class="tr-seg"><li><span class="tm">11:00</span><span class="md">Hotel</span><div><b>Check-out do Tokyu Stay</b></div></li><li><span class="tm">~11:30</span><span class="md">Shinkansen</span><div><b>Hokuriku Shinkansen, Kanazawa → Tsuruga</b><span>~40 min</span></div></li><li><span class="tm">~12:20</span><span class="md">Trem</span><div><b>Limited Express Thunderbird, Tsuruga → Shin-Osaka</b><span>~1h20 · baldeação de ~10 min em Tsuruga</span></div></li><li><span class="tm">~14:00</span><span class="md">Shinkansen</span><div><b>San’yō Shinkansen, Shin-Osaka → Okayama</b><span>~45 min · ~¥7.300</span></div></li><li><span class="tm">~15:00</span><span class="md">Trem</span><div><b>Marine Liner, Okayama → Takamatsu, pela ponte de Seto</b><span>~55 min</span></div></li><li><span class="tm">~16:00</span><span class="md">Hotel</span><div><b>Check-in no Hotel RAH</b><span>Recepção até as 22:00</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Onde reservar</dt><dd><a href="https://www.westjr.co.jp/global/en/" target="_blank" rel="noopener">JR West</a> (todos os trechos)</dd></div><div><dt>Duração total</dt><dd>4 a 5 horas</dd></div><div><dt>Desconto</dt><dd>A JR West vende o Hokuriku One-way Ticket, ¥8.000, entre Osaka e Kanazawa para turistas estrangeiros. Conferir se vale no sentido Kanazawa → Osaka</dd></div></dl>
+  <p class="tr-tip">Sentar do lado direito no Marine Liner para ver o mar na ponte. O Thunderbird só tem assento reservado.</p>
+  <button type="button" class="btn ghost tr-day" data-day="9">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-10">
+  <header class="tr-top"><span class="mono">12/12 · sáb · Barco</span><span class="tr-st ok">Comprar no porto</span><h3>Bate-volta: Takamatsu ⇄ Teshima</h3></header>
+  <ol class="tr-seg"><li><span class="tm">09:07</span><span class="md">Barco</span><div><b>Takamatsu → Ieura</b><span>chega 09:57 · ¥1.450</span></div></li><li><span class="tm">17:20</span><span class="md">Barco</span><div><b>Ieura → Takamatsu</b><span>chega 17:55</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Plano B</dt><dd>Barco das 15:10, que chega às 16:00</dd></div><div><dt>Na ilha</dt><dd>Ônibus ou o único táxi da ilha, que precisa ser reservado até 25/11</dd></div></dl>
+  <p class="tr-tip">O barco não tem reserva. Chegar ao porto 20 min antes.</p>
+  <button type="button" class="btn ghost tr-day" data-day="10">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-11">
+  <header class="tr-top"><span class="mono">13/12 · dom · Ferry</span><span class="tr-st ok">Comprar no porto</span><h3>Bate-volta: Takamatsu ⇄ Naoshima</h3></header>
+  <ol class="tr-seg"><li><span class="tm">08:12</span><span class="md">Ferry</span><div><b>Takamatsu → Miyanoura</b><span>chega 09:02 · ¥680</span></div></li><li><span class="tm">17:00</span><span class="md">Ferry</span><div><b>Miyanoura → Takamatsu</b><span>chega 18:00</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Plano B</dt><dd>Barco rápido das 19:45, que chega às 20:15</dd></div><div><dt>Na ilha</dt><dd>Ônibus a ¥100, só moedas, pagas na saída</dd></div></dl>
+  <p class="tr-tip">O ferry não tem reserva. No domingo enche: chegar ao porto 20 min antes.</p>
+  <button type="button" class="btn ghost tr-day" data-day="11">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-12">
+  <header class="tr-top"><span class="mono">14/12 · seg · Trem + Shinkansen</span><span class="tr-st mid">Reservar até 25/11</span><h3>Takamatsu → Hiroshima</h3></header>
+  <ol class="tr-seg"><li><span class="tm">10:00</span><span class="md">Hotel</span><div><b>Check-out do RAH</b><span>Malas grandes saem por takkyubin para Kyoto</span></div></li><li><span class="tm">~10:30</span><span class="md">Trem</span><div><b>Marine Liner, Takamatsu → Okayama</b><span>~55 min · não precisa de reserva</span></div></li><li><span class="tm">~11:40</span><span class="md">Shinkansen</span><div><b>San’yō Shinkansen, Okayama → Hiroshima</b><span>~35–40 min · ¥5.940 a ¥6.260 reservado</span></div></li><li><span class="tm">15:00</span><span class="md">Hotel</span><div><b>Check-in no Royal Park Hotel Riverside</b></div></li></ol>
+  <dl class="tr-meta"><div><dt>Onde reservar</dt><dd><a href="https://smart-ex.jp/en/" target="_blank" rel="noopener">smartEX</a></dd></div><div><dt>Duração total</dt><dd>~2 horas</dd></div></dl>
+  <p class="tr-tip">O shinkansen passa a cada poucos minutos nesse trecho: se perder um, pega o próximo.</p>
+  <button type="button" class="btn ghost tr-day" data-day="12">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-13">
+  <header class="tr-top"><span class="mono">15/12 · ter · Trem + ferry</span><span class="tr-st ok">Sem reserva</span><h3>Bate-volta: Hiroshima ⇄ Miyajima</h3></header>
+  <ol class="tr-seg"><li><span class="tm">08:30</span><span class="md">Trem</span><div><b>JR San’yō, Hiroshima → Miyajimaguchi</b><span>~30 min · ¥420</span></div></li><li><span class="tm">09:30</span><span class="md">Ferry</span><div><b>Miyajimaguchi → Miyajima</b><span>10 min · ¥200 + ¥100 de taxa de visitante</span></div></li><li><span class="tm">17:15</span><span class="md">Ferry + trem</span><div><b>Volta para Hiroshima</b></div></li></ol>
+  <dl class="tr-meta"><div><dt>Pagamento</dt><dd>Suica no trem e no ferry da JR</dd></div></dl>
+  <p class="tr-tip">O ferry da JR e o da Matsudai saem do mesmo píer; o da JR passa mais perto do torii.</p>
+  <button type="button" class="btn ghost tr-day" data-day="13">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-14">
+  <header class="tr-top"><span class="mono">16/12 · qua · Shinkansen</span><span class="tr-st mid">Reservar até 25/11</span><h3>Hiroshima → Kyoto</h3></header>
+  <ol class="tr-seg"><li><span class="tm">11:00</span><span class="md">Hotel</span><div><b>Check-out; malas na recepção</b></div></li><li><span class="tm">13:00</span><span class="md">Shinkansen</span><div><b>Nozomi, Hiroshima → Kyoto</b><span>~1h40 · ¥11.100 a ¥11.740 reservado</span></div></li><li><span class="tm">15:00</span><span class="md">Hotel</span><div><b>Check-in no Grand Bach Select</b><span>As malas grandes já devem estar lá</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Onde reservar</dt><dd><a href="https://smart-ex.jp/en/" target="_blank" rel="noopener">smartEX</a></dd></div></dl>
+  <p class="tr-tip">Nozomi não vale com o JR Pass comum, mas com passagem avulsa não faz diferença.</p>
+  <button type="button" class="btn ghost tr-day" data-day="14">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-17">
+  <header class="tr-top"><span class="mono">19/12 · sáb · Trem</span><span class="tr-st ok">Sem reserva</span><h3>Kyoto → Osaka</h3></header>
+  <ol class="tr-seg"><li><span class="tm">07:30</span><span class="md">Passeio</span><div><b>Fushimi Inari, cedo</b></div></li><li><span class="tm">11:00</span><span class="md">Hotel</span><div><b>Check-out do Grand Bach</b></div></li><li><span class="tm"></span><span class="md">Trem</span><div><b>JR Special Rapid, Kyoto → Osaka (Umeda)</b><span>~30 min · ~¥580</span></div></li><li><span class="tm">15:00</span><span class="md">Hotel</span><div><b>Check-in no Hotel ELCIENT</b></div></li></ol>
+  <dl class="tr-meta"><div><dt>Malas</dt><dd>Levar junto ou despachar no dia 18, a decidir</dd></div></dl>
+  <p class="tr-tip">Trem sem reserva, a cada ~15 min. Evitar o horário de pico com as malas.</p>
+  <button type="button" class="btn ghost tr-day" data-day="17">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-20">
+  <header class="tr-top"><span class="mono">22/12 · ter · Trem</span><span class="tr-st ok">Sem reserva</span><h3>Bate-volta: Nara ou Kobe</h3></header>
+  <ol class="tr-seg"><li><span class="tm"></span><span class="md">Trem</span><div><b>Nara: Kintetsu a partir de Namba</b><span>~40 min</span></div></li><li><span class="tm"></span><span class="md">Trem</span><div><b>ou Kobe: a partir de Umeda</b><span>~25–30 min</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Pagamento</dt><dd>Suica</dd></div></dl>
+  <p class="tr-tip">Decidir até 18/12. Os dois saem perto do hotel.</p>
+  <button type="button" class="btn ghost tr-day" data-day="20">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-22">
+  <header class="tr-top"><span class="mono">24/12 · qui · Avião</span><span class="tr-st mid">Conferir voucher</span><h3>Osaka → China</h3></header>
+  <ol class="tr-seg"><li><span class="tm">11:00</span><span class="md">Hotel</span><div><b>Check-out do Hotel ELCIENT</b></div></li><li><span class="tm"></span><span class="md">Trem</span><div><b>Até o aeroporto</b><span>Kansai (KIX): ~1h de trem; Itami: ~30 min</span></div></li><li><span class="tm"></span><span class="md">Voo</span><div><b>Voo para a China</b></div></li></ol>
+  <dl class="tr-meta"><div><dt>Na China</dt><dd>Trem Suzhou ⇄ Xangai: as passagens abrem ~15 dias antes, pelo 12306 ou pelo Trip.com, com o passaporte</dd></div></dl>
+  <p class="tr-tip">Conferir no voucher de qual aeroporto sai o voo e chegar com 3 horas de antecedência.</p>
+  <button type="button" class="btn ghost tr-day" data-day="22">Ver o dia na aba Hoje</button>
+</article>
+  </div>
+  <p class="tr-foot">Preços de referência de 2025–2026, por pessoa, em ienes; podem mudar. Conferir no site de reserva antes de comprar.</p>
 </section>
 <div id="v-guia" role="tabpanel" aria-labelledby="tab-guia">
 <section class="wrap route" id="rota">
@@ -1193,12 +1323,12 @@ function render(i,anim){
 }
 
 /* troca de abas */
-var vG=$('v-guia'),vH=$('v-hoje'),tG=$('tab-guia'),tH=$('tab-hoje'),shown=null;
+var vG=$('v-guia'),vH=$('v-hoje'),vT=$('v-trans'),tG=$('tab-guia'),tH=$('tab-hoje'),tT=$('tab-trans'),shown=null;
 function show(v){
   if(shown===v)return;shown=v;
   document.body.setAttribute('data-view',v);
-  vG.hidden=v!=='guia';vH.hidden=v!=='hoje';
-  tG.setAttribute('aria-selected',v==='guia');tH.setAttribute('aria-selected',v==='hoje');
+  vG.hidden=v!=='guia';vH.hidden=v!=='hoje';vT.hidden=v!=='trans';
+  tG.setAttribute('aria-selected',v==='guia');tH.setAttribute('aria-selected',v==='hoje');tT.setAttribute('aria-selected',v==='trans');
   if(v==='hoje'){render(cur<0?defaultIdx():cur,true)}
   else if(window.__jp&&window.__jp.live)window.__jp.live.forEach(function(x){x.resize()});
   if(v==='hoje'&&map)setTimeout(function(){map.resize()},0);
@@ -1206,10 +1336,13 @@ function show(v){
 function route(){
   var h=location.hash.slice(1);
   if(h==='hoje'){show('hoje');window.scrollTo(0,0);return}
+  if(h==='transporte'){show('trans');window.scrollTo(0,0);return}
   show('guia');
   if(h){var el=document.getElementById(h);if(el)setTimeout(function(){el.scrollIntoView()},0)}
 }
-tG.addEventListener('click',function(){if(location.hash==='#hoje')history.replaceState(null,'',location.pathname+location.search);show('guia');window.scrollTo(0,0)});
+tG.addEventListener('click',function(){if(location.hash==='#hoje'||location.hash==='#transporte')history.replaceState(null,'',location.pathname+location.search);show('guia');window.scrollTo(0,0)});
+tT.addEventListener('click',function(){if(location.hash!=='#transporte')location.hash='transporte';else show('trans')});
+Array.prototype.forEach.call(document.querySelectorAll('.tr-day'),function(b){b.addEventListener('click',function(){cur=+b.getAttribute('data-day');if(location.hash!=='#hoje')location.hash='hoje';else{shown=null;show('hoje')}})});
 tH.addEventListener('click',function(){if(location.hash!=='#hoje')location.hash='hoje';else show('hoje')});
 window.addEventListener('hashchange',route);
 var k0=key(jst()),during=k0>=D[0].d&&k0<=D[D.length-1].d;
