@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<title>China Comentada</title>
+<link rel="icon" type="image/svg+xml" href="logo-china.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@500;700;900&display=swap">
+<style>
+/* Layout: guia de viagem em capítulos; em cada cidade, mapa fixo à esquerda e texto longo à direita. */
+:root{
+  --bg:#F4EEE3; --surface:#FFFCF6; --ink:#211C18; --muted:#6E645A; --line:#DDD2BF;
+  --accent:#A8321F; --gold:#2F6B5C; --sea:#D9E4E0; --land:#FBF7EF; --on-accent:#FFF8EE; --red:#A8321F; --orange:#9A5B00; --green:#2F6B5C;
+  --display:"Noto Serif SC","Songti SC","STSong",Georgia,serif;
+  --body:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+  --mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
+  --navh:52px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#16120F; --surface:#201B17; --ink:#EFE6D8; --muted:#A99D8E; --line:#3A322B;
+  --accent:#F08A6E; --gold:#86CDB6; --sea:#0F1715; --land:#2A241F; --on-accent:#1A120D; --red:#FF8A74; --orange:#F2B25C; --green:#86CDB6; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#16120F; --surface:#201B17; --ink:#EFE6D8; --muted:#A99D8E; --line:#3A322B;
+  --accent:#F08A6E; --gold:#86CDB6; --sea:#0F1715; --land:#2A241F; --on-accent:#1A120D; --red:#FF8A74; --orange:#F2B25C; --green:#86CDB6; color-scheme:dark }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+
+/* navegação */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.nav a{flex:none;font-family:var(--mono);font-size:.78rem;letter-spacing:.03em;text-decoration:none;color:var(--ink);padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.nav a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* abertura */
+.hero{padding-block:44px 28px;display:grid;gap:18px}
+.hero h1{font-size:clamp(2.2rem,6vw,3.9rem);font-weight:700;letter-spacing:-.01em}
+.hero h1 span{color:var(--gold);font-weight:500}
+.lede{max-width:64ch;font-size:1.08rem;color:var(--ink);margin:0}
+
+.route{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:20px;align-items:start;padding-bottom:40px}
+@media (max-width:900px){ .route{grid-template-columns:minmax(0,1fr)} }
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.jpwrap{overflow-x:auto}
+#jp{display:block;width:100%}
+.land{fill:var(--land);stroke:var(--line);stroke-width:1.2;stroke-linejoin:round}
+.lake{fill:var(--sea);stroke:var(--line);stroke-width:1}
+.seabg{fill:var(--sea)}
+.leg{fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:2 5;stroke-linecap:round;opacity:.7}
+.leg-on{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.trav{fill:var(--gold);stroke:var(--surface);stroke-width:2}
+.pin{fill:var(--surface);stroke:var(--ink);stroke-width:1.6}
+.pin-n{fill:var(--ink);font-family:var(--mono);font-size:13px;font-weight:500;text-anchor:middle;dominant-baseline:central}
+.lbl{fill:var(--ink);font-family:var(--body);font-size:15px;font-weight:600;paint-order:stroke;stroke:var(--land);stroke-width:4px;stroke-linejoin:round}
+.sealbl{fill:var(--muted);font-family:var(--display);font-size:15px;font-style:italic}
+.fuji{fill:var(--gold)}
+.mapnote{padding:8px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;margin:0}
+
+.legs{padding:14px}
+.legs h2{font-size:1.25rem;margin-bottom:4px}
+.legs ol{list-style:none;margin:10px 0 12px;padding:0;display:grid;gap:6px}
+.legs button.leg-b{all:unset;box-sizing:border-box;display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:2px 10px;width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:4px;cursor:pointer}
+.legs button.leg-b:hover{border-color:var(--accent)}
+.legs button.leg-b[aria-current="true"]{border-color:var(--accent);background:var(--bg)}
+.legs button.leg-b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.leg-b .d{font-family:var(--mono);font-size:.78rem;color:var(--gold);padding-top:3px}
+.leg-b .t{font-weight:600;line-height:1.3}
+.leg-b .m{grid-column:2;font-size:.86rem;color:var(--muted);line-height:1.35}
+.btn{font:inherit;font-family:var(--mono);font-size:.8rem;letter-spacing:.03em;color:var(--on-accent);background:var(--accent);border:0;border-radius:4px;padding:8px 12px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+
+/* texto corrido */
+.prose{max-width:66ch}
+.prose p{margin:0 0 1em}
+.intro{padding-block:8px 36px;display:grid;gap:22px}
+.intro h2{font-size:clamp(1.6rem,3.6vw,2.2rem)}
+.eras{overflow-x:auto}
+.eras table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+.eras th,.eras td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--line)}
+.eras th{font-family:var(--mono);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.eras td:first-child{font-family:var(--display);font-weight:700;white-space:nowrap}
+.eras td:nth-child(2){font-family:var(--mono);font-size:.82rem;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--gold)}
+
+/* capítulos */
+.chap{border-top:1px solid var(--line);padding-block:44px}
+.chap-head{display:grid;gap:6px;margin-bottom:26px}
+.chap-head .kanji{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,9vw,5rem);line-height:1;color:var(--gold)}
+.chap-head h2{font-size:clamp(1.8rem,4.4vw,2.6rem)}
+.chap-head .sub{max-width:62ch;color:var(--muted);margin:4px 0 0}
+.chap-grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:36px;align-items:start}
+.chap-map{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--navh) + 14px)}
+@media (max-width:940px){ .chap-grid{grid-template-columns:minmax(0,1fr);gap:24px} .chap-map{position:static} }
+.chap-text{display:grid;gap:34px;min-width:0}
+.site h3{font-size:1.5rem;margin-bottom:2px}
+.site h3 small{font-family:var(--display);font-weight:500;font-size:.95rem;color:var(--muted);margin-left:.4em}
+.site .when{display:block;margin-bottom:10px}
+.site p{margin:0 0 .9em;max-width:66ch}
+.site p:last-child{margin-bottom:0}
+.site .look{border-left:2px solid var(--gold);padding-left:14px;color:var(--ink)}
+.site .look b{font-family:var(--mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);font-weight:500;display:block}
+.way{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.way p{margin:0;max-width:66ch;font-size:.96rem}
+.way .mono{display:block;margin-bottom:4px}
+
+/* mini-mapas */
+.mm{padding:12px}
+.mm-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.mm-tabs button{font:inherit;font-family:var(--mono);font-size:.76rem;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.mm-tabs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+body{margin:0}
+.mm .rt{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.mm .shape{fill:var(--land);stroke:var(--line);stroke-width:1}
+.mm .sc{stroke:var(--ink);stroke-width:1.5}
+.mm .sct{fill:var(--muted);font-family:var(--mono);font-size:11px}
+.mm ol{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:3px;font-size:.9rem;counter-reset:s}
+.mm li{counter-increment:s;display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:6px;line-height:1.35}
+.mm li::before{content:counter(s);font-family:var(--mono);font-size:.74rem;width:1.6em;height:1.6em;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center}
+.mm .cap{margin:10px 0 0;font-size:.8rem;color:var(--muted);line-height:1.4}
+.mm .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px}
+
+.foot{border-top:1px solid var(--line);padding-block:28px 48px;color:var(--muted);font-size:.9rem}
+.foot p{max-width:70ch;margin:0 0 .7em}
+
+.lmap{height:340px;border-radius:4px;background:var(--sea);z-index:0}
+.lmap.big{height:min(62vh,500px);border-radius:6px 6px 0 0}
+.lmap .msg{padding:24px;color:var(--muted);font-size:.9rem}
+.pinicon{width:24px;height:24px;border-radius:50%;background:var(--surface);border:2px solid var(--ink);display:grid;place-items:center;font:500 12px/1 var(--mono);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:0 0 16px}
+.ph{margin:0;min-width:0}
+.ph a{display:block;aspect-ratio:4/3;background:var(--line);border-radius:4px;overflow:hidden}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+.ph figcaption{font-size:.78rem;line-height:1.35;color:var(--muted);margin-top:5px}
+.tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-right:6px}
+.t-e{color:var(--gold)} .t-h{color:var(--accent)}
+.facts{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin-top:14px;max-width:66ch}
+.facts h4{font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:500;margin:0 0 8px}
+.facts ul{margin:0;padding-left:1.1em;display:grid;gap:7px}
+.facts li{font-size:.95rem;line-height:1.5}
+.intro .facts{max-width:none}
+
+.tabs{display:flex;flex:none;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:2px}
+.tabs button{font:inherit;font-family:var(--mono);font-size:.78rem;letter-spacing:.03em;border:0;border-radius:999px;padding:4px 12px;background:transparent;color:var(--ink);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent)}
+.nav .sep{flex:none;width:1px;background:var(--line);margin:4px 2px}
+.cd{padding:16px 18px;display:grid;gap:10px;max-width:640px}
+.cd>div{display:none}
+.cd[data-state="antes"] .cd-antes,.cd[data-state="durante"] .cd-durante,.cd[data-state="depois"] .cd-depois{display:grid;gap:8px}
+.cd .cd-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;font-size:.86rem;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.cd-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.cd-row div{display:grid;justify-items:start;border-left:2px solid var(--gold);padding-left:10px}
+.cd-row b{font-family:var(--display);font-size:clamp(2rem,7vw,3rem);line-height:1;font-variant-numeric:tabular-nums;font-weight:700}
+.cd-row span{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.cd-note{margin:0;font-size:.92rem}
+.cd-big{margin:0;font-family:var(--display);font-size:1.4rem;line-height:1.3}
+.hoje{padding-block:28px 48px;display:grid;gap:16px}
+.hj-head h2{font-size:clamp(1.8rem,4.6vw,2.6rem);margin-top:4px}
+.hj-sub{margin:4px 0 0;color:var(--muted)}
+.hj-nav{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:center}
+.hj-nav .btn{padding:8px 12px}
+.hj-nav .btn:disabled{opacity:.35;cursor:default}
+.strip{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding:2px}
+.chip{flex:none;font:inherit;display:grid;justify-items:center;gap:0;min-width:44px;padding:5px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);cursor:pointer;position:relative}
+.chip .w{font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.chip .n{font-family:var(--display);font-weight:700;font-size:1.05rem;line-height:1.2}
+.chip[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.chip[aria-current="true"] .w{color:var(--on-accent)}
+.chip.today::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hj-todaybtn{justify-self:start}
+.hj-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:20px;align-items:start}
+@media (max-width:900px){.hj-grid{grid-template-columns:minmax(0,1fr)}}
+.hj-main,.hj-side{display:grid;gap:16px;min-width:0}
+.hj-card{padding:14px 16px}
+.hj-card h3{font-size:1.2rem;margin-bottom:10px}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.tl li{display:grid;grid-template-columns:3.6em minmax(0,1fr);gap:10px;padding:7px 8px;border-radius:4px;line-height:1.4}
+.tl .tm{font-family:var(--mono);font-size:.82rem;color:var(--gold);font-variant-numeric:tabular-nums;padding-top:1px}
+.tl li.past{opacity:.5}
+.tl li.next{background:var(--bg);box-shadow:inset 3px 0 0 var(--accent)}
+.tl .nx{font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;color:var(--on-accent);background:var(--accent);border-radius:3px;padding:1px 5px;margin-left:8px;font-weight:500;vertical-align:1px}
+.hj-r{margin:0;padding-left:1.1em;display:grid;gap:6px;font-size:.95rem}
+.hoje .facts{margin-top:0;max-width:none}
+.hoje .facts p{margin:0}
+.hj-hotel{display:grid;gap:2px}
+.hj-hotel p{margin:0}
+.hj-hotel .hn{font-family:var(--display);font-weight:700;font-size:1.2rem;margin-top:4px}
+.hj-hotel .ha{color:var(--muted);font-size:.9rem}
+.hj-hotel .hc{font-size:.9rem;margin-top:6px}
+.hj-read{display:block;text-align:center;text-decoration:none}
+body[data-view="hoje"] .hero .lede,body[data-view="hoje"] #cd-go{display:none}
+body[data-view="hoje"] .hero{padding-block:24px 8px}
+#hj-ml{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:3px;font-size:.9rem;counter-reset:s}
+.hjm{padding:12px}
+.hjm li{counter-increment:s;display:grid;grid-template-columns:1.7em minmax(0,1fr);gap:6px;line-height:1.35}
+.hjm li::before{content:counter(s);font-family:var(--mono);font-size:.74rem;width:1.6em;height:1.6em;border:1.5px solid var(--ink);border-radius:50%;display:grid;place-items:center}
+
+.pinwrap{display:flex;align-items:center;gap:5px;cursor:pointer}
+.pinlab{background:var(--surface);color:var(--ink);border:1px solid var(--line);font:600 12px/1.3 var(--body);padding:2px 7px;border-radius:3px;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.maplibregl-popup-content{background:var(--surface);color:var(--ink);font:600 13px/1.35 var(--body);padding:6px 10px;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip{border-top-color:var(--surface)}
+.maplibregl-popup-anchor-top .maplibregl-popup-tip{border-bottom-color:var(--surface)}
+.maplibregl-ctrl-attrib{font-size:10px}
+.maplibregl-cooperative-gesture-screen{font-family:var(--body)}
+
+.trans{padding-block:28px 48px;display:grid;gap:18px}
+.tr-head h2{font-size:clamp(1.8rem,4.6vw,2.6rem);margin-top:4px}
+.tr-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tr-list{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));align-items:start}
+.tr-leg{padding:16px 18px;display:grid;gap:12px;min-width:0}
+.tr-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.tr-top h3{grid-column:1/-1;font-size:1.3rem}
+.tr-st{font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.tr-st.urg{color:var(--red)} .tr-st.mid{color:var(--orange)} .tr-st.ok{color:var(--green)}
+.tr-seg{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:2px solid var(--line);margin-left:4px}
+.tr-seg li{display:grid;grid-template-columns:3.4em 6.2em minmax(0,1fr);gap:8px;padding:6px 0 6px 12px;position:relative;line-height:1.4}
+.tr-seg li::before{content:"";position:absolute;left:-6px;top:12px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.tr-seg .tm{font-family:var(--mono);font-size:.82rem;color:var(--gold);font-variant-numeric:tabular-nums;padding-top:1px}
+.tr-seg .md{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:3px}
+.tr-seg b{font-weight:600;display:block}
+.tr-seg div span{display:block;font-size:.9rem;color:var(--muted)}
+@media (max-width:520px){.tr-seg li{grid-template-columns:3.4em minmax(0,1fr)}.tr-seg .md{display:none}}
+.tr-meta{margin:0;display:grid;gap:6px;font-size:.92rem}
+.tr-meta div{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:8px}
+@media (max-width:520px){.tr-meta div{grid-template-columns:minmax(0,1fr);gap:0}}
+.tr-meta dt{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:3px}
+.tr-meta dd{margin:0}
+.tr-tip{margin:0;font-size:.92rem;border-left:3px solid var(--gold);padding-left:10px}
+.tr-day{justify-self:start}
+.tr-foot{margin:0;font-size:.85rem;color:var(--muted)}
+body[data-view="trans"] .hero .lede,body[data-view="trans"] #cd-go{display:none}
+body[data-view="trans"] .hero{padding-block:24px 8px}
+
+.ig-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.ig-jump{font-family:var(--mono);font-size:.74rem;text-decoration:none;color:var(--ink);padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.ig-jump:hover{border-color:var(--accent);color:var(--accent)}
+.ig-city{padding:16px 18px;display:grid;gap:12px;scroll-margin-top:calc(var(--navh) + 16px)}
+.ig-city h3{font-size:1.4rem;margin-top:2px}
+.ig-city h4{font-family:var(--mono);font-size:.74rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+.ig-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:22px}
+@media (max-width:900px){.ig-grid{grid-template-columns:minmax(0,1fr)}}
+.vd{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.vd li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:10px;line-height:1.4}
+.vd b{display:block;font-weight:600}
+.vd div span{display:block;font-size:.9rem;color:var(--muted)}
+.vd-k{font-family:var(--mono);font-size:.68rem;letter-spacing:.03em;text-transform:uppercase;text-align:center;padding:3px 0;border-radius:4px;border:1px solid currentColor;align-self:start}
+.vd-sim .vd-k{color:var(--green)} .vd-nao .vd-k{color:var(--red)} .vd-talvez .vd-k{color:var(--orange)}
+.ig-list{list-style:none;margin:0;padding:0;display:grid}
+.ig-it{display:grid;grid-template-columns:3.2em minmax(0,1fr) auto;grid-template-areas:"d n p" "d n s" "d l l";gap:2px 10px;padding:8px 0;border-top:1px solid var(--line);line-height:1.35}
+.ig-it:first-child{border-top:0;padding-top:0}
+.ig-d{grid-area:d;font-family:var(--mono);font-size:.8rem;color:var(--gold);padding-top:2px}
+.ig-n{grid-area:n;min-width:0}
+.ig-n b{display:block;font-weight:600}
+.ig-o{display:block;font-size:.86rem;color:var(--muted)}
+.ig-p{grid-area:p;justify-self:end;font-family:var(--mono);font-size:.84rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ig-it .tr-st{grid-area:s;justify-self:end;align-self:start}
+.ig-l{grid-area:l;font-size:.86rem}
+.ig-l:empty{display:none}
+.ig-ok{color:var(--green)} .ig-urg{color:var(--red)} .ig-mid{color:var(--orange)} .ig-here{color:var(--accent)} .ig-free,.ig-off{color:var(--muted)}
+
+.buy{font:inherit;font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;display:inline-flex;align-items:center;gap:7px;margin-top:6px;padding:3px 10px 3px 4px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);cursor:pointer}
+.buy .sw{position:relative;width:26px;height:14px;border-radius:999px;background:var(--line);flex:none;transition:background .15s}
+.buy .sw::after{content:"";position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--surface);transition:transform .15s}
+.buy[aria-pressed="true"]{color:var(--green);border-color:var(--green)}
+.buy[aria-pressed="true"] .sw{background:var(--green)}
+.buy[aria-pressed="true"] .sw::after{transform:translateX(12px)}
+@media (prefers-reduced-motion: reduce){.buy .sw,.buy .sw::after{transition:none}}
+.tr-seg .buy{display:inline-flex}
+.ig-it .buy{grid-area:b;justify-self:start;margin-top:4px}
+.ig-it{grid-template-areas:"d n p" "d n s" "d l l" "d b b"}
+.ig-it.is-bought .ig-st{display:none}
+.ig-it.is-bought .ig-n b{color:var(--muted)}
+body[data-view="ing"] .hero .lede,body[data-view="ing"] #cd-go{display:none}
+body[data-view="ing"] .hero{padding-block:24px 8px}
+
+.brand{display:flex;align-items:center;gap:clamp(12px,2.4vw,22px)}
+.logo{flex:none;width:clamp(64px,11vw,104px);aspect-ratio:1;max-width:100%}
+.logo-svg{display:block;width:100%;height:auto}
+
+.ctry{display:flex;flex:none;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:2px}
+.nav .ctry a{border:0;background:transparent;padding:4px 10px;border-radius:999px}
+.nav .ctry a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+
+.ctry{display:flex;flex:none;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:2px}
+.nav .ctry a{border:0;background:transparent;padding:4px 10px;border-radius:999px}
+.nav .ctry a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+
+/* ===== China: tinta, papel de arroz e selo vermelho ===== */
+body{background-image:radial-gradient(color-mix(in srgb,var(--line) 55%,transparent) 1px,transparent 1.2px);background-size:22px 22px}
+.panel,.facts,.way{border-radius:2px;box-shadow:0 0 0 3px var(--bg),0 0 0 4px var(--line)}
+.ph a{border-radius:2px}
+.hero h1{font-weight:900;letter-spacing:0}
+.hero h1 span{color:var(--accent);font-weight:700}
+.chap-head .kanji{writing-mode:vertical-rl;text-orientation:upright;justify-self:start;font-weight:700;font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.05;color:var(--on-accent);background:var(--accent);padding:.22em .14em;border-radius:5px;box-shadow:inset 0 0 0 3px var(--accent),inset 0 0 0 5px var(--on-accent)}
+.chap-head{grid-template-columns:auto minmax(0,1fr);column-gap:22px;align-items:start}
+.chap-head .kanji{grid-row:1/span 3}
+@media (max-width:560px){.chap-head{grid-template-columns:minmax(0,1fr)}.chap-head .kanji{grid-row:auto;writing-mode:horizontal-tb;padding:.1em .25em}}
+.site h3{font-weight:700}
+.site h3 small{color:var(--accent)}
+.chap{border-top:0;background-image:linear-gradient(var(--accent),var(--accent));background-size:56px 3px;background-repeat:no-repeat;background-position:max(16px,calc((100% - 1120px)/2 + 16px)) 0}
+.tabs button[aria-selected="true"],.mm-tabs button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.btn{border-radius:2px}
+.ig-inc{color:var(--gold)} .ig-here{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Navegação"><div class="wrap"><div class="ctry"><a href="index.html">日本 Japão</a><a href="china.html" aria-current="page">中国 China</a></div><span class="sep" aria-hidden="true"></span><div class="tabs" role="tablist"><button type="button" role="tab" id="tab-guia" aria-selected="true" aria-controls="v-guia">Guia</button><button type="button" role="tab" id="tab-hoje" aria-selected="false" aria-controls="v-hoje">Hoje</button><button type="button" role="tab" id="tab-trans" aria-selected="false" aria-controls="v-trans">Transporte</button><button type="button" role="tab" id="tab-ing" aria-selected="false" aria-controls="v-ing">Ingressos</button></div><span class="sep" aria-hidden="true"></span>
+  <a href="#rota">Rota</a><a href="#eras">Épocas</a><a href="#xangai">Xangai</a><a href="#suzhou">Suzhou</a>
+</div></nav>
+
+<header class="wrap hero">
+  <span class="mono">24 a 31 de dezembro de 2026 · Rodrigo e Virginia</span>
+  <div class="brand"><span class="logo"><svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="lgc-t">
+  <title id="lgc-t">Vovó e neto de mãos dadas diante de um portão da lua num jardim chinês</title>
+  <defs><clipPath id="lgc-c"><circle cx="60" cy="60" r="56"/></clipPath>
+  <linearGradient id="lgc-s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3C98B"/><stop offset="1" stop-color="#E58A5A"/></linearGradient></defs>
+  <circle cx="60" cy="60" r="58" fill="#DCE6E2"/>
+  <g clip-path="url(#lgc-c)">
+    <circle cx="60" cy="66" r="27" fill="url(#lgc-s)"/>
+    <g fill="#5B3A2E">
+      <rect x="57.2" y="44" width="5.6" height="40"/>
+      <path d="M50 52 L70 52 L66 49 L54 49 Z"/><path d="M49 60 L71 60 L67 57 L53 57 Z"/><path d="M48 68 L72 68 L68 65 L52 65 Z"/><path d="M47 76 L73 76 L69 73 L51 73 Z"/>
+      <rect x="59.3" y="38" width="1.4" height="7"/>
+    </g>
+    <path d="M30 93 Q40 86 48 92 Q56 86 66 92 Q76 86 90 93 L90 100 L30 100 Z" fill="#3E7C68"/>
+    <path fill="#F7F1E6" fill-rule="evenodd" d="M-2 32 H122 V100 H-2 Z M60 39 a27 27 0 1 0 0.01 0 Z"/>
+    <path d="M-4 33 Q30 27 60 27 Q90 27 124 33 L124 36 L-4 36 Z" fill="#33302E"/>
+    <path d="M-4 27 Q30 21 60 21 Q90 21 124 27 L124 30 Q90 24 60 24 Q30 24 -4 30 Z" fill="#4A4542"/>
+    <circle cx="60" cy="66" r="27.5" fill="none" stroke="#B9AE9C" stroke-width="1.4"/>
+    <g><line x1="18" y1="36" x2="18" y2="41" stroke="#33302E" stroke-width="1"/><ellipse cx="18" cy="47" rx="5.5" ry="6.5" fill="#C23B2A"/><rect x="15.5" y="40.5" width="5" height="1.6" fill="#C9A24A"/><rect x="15.5" y="52" width="5" height="1.6" fill="#C9A24A"/></g>
+    <g><line x1="102" y1="36" x2="102" y2="41" stroke="#33302E" stroke-width="1"/><ellipse cx="102" cy="47" rx="5.5" ry="6.5" fill="#C23B2A"/><rect x="99.5" y="40.5" width="5" height="1.6" fill="#C9A24A"/><rect x="99.5" y="52" width="5" height="1.6" fill="#C9A24A"/></g>
+    <rect x="0" y="98" width="120" height="22" fill="#CFC4B0"/>
+    <g stroke="#B5A992" stroke-width=".8"><line x1="0" y1="106" x2="120" y2="106"/><line x1="20" y1="98" x2="20" y2="106"/><line x1="46" y1="98" x2="46" y2="106"/><line x1="78" y1="98" x2="78" y2="106"/><line x1="104" y1="98" x2="104" y2="106"/></g>
+    <!-- neto (alto) -->
+    <rect x="65.5" y="88" width="4.6" height="16" rx="2" fill="#20273D"/>
+    <rect x="72" y="88" width="4.6" height="16" rx="2" fill="#20273D"/>
+    <path d="M63 70 Q71 65 79 70 L80 90 L62 90 Z" fill="#1F3B66"/>
+    <path d="M64 72 Q58 78 55.5 85" stroke="#1F3B66" stroke-width="4.4" stroke-linecap="round" fill="none"/>
+    <path d="M78.5 72 Q82 80 81 88" stroke="#1F3B66" stroke-width="4.4" stroke-linecap="round" fill="none"/>
+    <rect x="68.6" y="63.5" width="5" height="5" rx="1.5" fill="#E8B68F"/>
+    <circle cx="71" cy="58" r="6.4" fill="#2A2A35"/>
+    <!-- vovó -->
+    <rect x="42.6" y="98" width="3" height="6" rx="1.4" fill="#5A4B52"/>
+    <rect x="48.4" y="98" width="3" height="6" rx="1.4" fill="#5A4B52"/>
+    <path d="M41 80 Q47 76.5 53 80 L56 99 L38 99 Z" fill="#2F6E5F"/>
+    <path d="M52 82 Q54.5 84 55.5 85.5" stroke="#2F6E5F" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+    <path d="M42 82 Q38.5 88 39 94" stroke="#2F6E5F" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+    <circle cx="55.8" cy="85.6" r="2.3" fill="#E8B68F"/>
+    <circle cx="47" cy="74" r="5.6" fill="#C9CDD6"/>
+    <circle cx="47" cy="67.6" r="2.8" fill="#B7BCC7"/>
+    <path d="M39 85 Q47 88 55 85" stroke="#C9A24A" stroke-width="1.6" fill="none"/>
+  </g>
+  <circle cx="60" cy="60" r="56.5" fill="none" stroke="#A8321F" stroke-width="3"/>
+</svg></span><h1>China Comentada <span>中国</span></h1></div>
+  <p class="lede">A segunda parte da viagem: Xangai e Suzhou, com a história por trás de cada lugar. De um lado, jardins de letrados da dinastia Ming e canais traçados há oito séculos; do outro, o porto que as potências estrangeiras abriram em 1842 e a cidade de vidro que nasceu depois de 1990.</p>
+
+  <div class="cd panel" id="cd" data-state="antes" aria-live="off">
+    <div class="cd-antes">
+      <span class="mono">Chegada a Xangai · 24 de dezembro · horário do voo a confirmar</span>
+      <div class="cd-row">
+        <div><b id="cd-d">–</b><span>dias</span></div>
+        <div><b id="cd-h">–</b><span>horas</span></div>
+        <div><b id="cd-m">–</b><span>min</span></div>
+        <div><b id="cd-s">–</b><span>seg</span></div>
+      </div>
+      <p class="cd-note">Depois de 22 dias no Japão, um voo de cerca de 2 horas a partir de Osaka. A contagem usa meio-dia em Xangai até o horário do voo ser confirmado.</p>
+    </div>
+    <div class="cd-durante"><span class="mono">Estamos lá</span><p class="cd-big" id="cd-live">Estamos na China</p></div>
+    <div class="cd-depois"><span class="mono">再见 · zàijiàn</span><p class="cd-big">Bem-vindos de volta. A viagem terminou em 31 de dezembro.</p></div>
+    <div class="cd-foot"><span id="cd-now"></span><button type="button" class="btn" id="cd-go">Abrir a aba Hoje</button></div>
+  </div>
+</header>
+
+<section class="wrap hoje" id="v-hoje" role="tabpanel" aria-labelledby="tab-hoje" hidden>
+  <div class="hj-head">
+    <span class="mono" id="hj-lab"></span>
+    <h2 id="hj-t"></h2>
+    <p class="hj-sub" id="hj-sub"></p>
+  </div>
+  <div class="hj-nav">
+    <button type="button" class="btn ghost" id="hj-prev" aria-label="Dia anterior">←</button>
+    <div class="strip" id="hj-strip" aria-label="Dias da viagem"></div>
+    <button type="button" class="btn ghost" id="hj-next" aria-label="Próximo dia">→</button>
+  </div>
+  <button type="button" class="btn ghost hj-todaybtn" id="hj-today" hidden>Voltar para hoje</button>
+  <div class="hj-grid">
+    <div class="hj-main">
+      <div class="panel hj-card">
+        <h3>Programa do dia</h3>
+        <ol class="tl" id="hj-tl"></ol>
+      </div>
+      <div class="panel hj-card">
+        <h3>Lembretes</h3>
+        <ul class="hj-r" id="hj-r"></ul>
+      </div>
+      <aside class="facts"><h4>Curiosidade do dia</h4><p id="hj-f"></p></aside>
+    </div>
+    <div class="hj-side">
+      <div class="panel hjm"><div class="lmap" id="hj-map"></div><ol id="hj-ml"></ol></div>
+      <div class="panel hj-card hj-hotel">
+        <span class="mono">Hotel desta noite</span>
+        <p class="hn" id="hj-hn"></p>
+        <p class="ha" id="hj-ha"></p>
+        <p class="hc" id="hj-hc"></p>
+      </div>
+      <a class="btn hj-read" id="hj-read" href="#xangai">Ler a história</a>
+    </div>
+  </div>
+</section>
+<section class="wrap trans" id="v-trans" role="tabpanel" aria-labelledby="tab-trans" hidden>
+  <div class="tr-head">
+    <span class="mono">Voos, trens e traslados</span>
+    <h2>Transporte</h2>
+    <p class="hj-sub">Os traslados e os dois trens-bala estão incluídos no pacote da agência. Só os voos são por conta de vocês: use o botão para marcar quando estiverem comprados.</p>
+    <div class="tr-legend"><span class="tr-st mid">Por conta de vocês</span><span class="tr-st ok">Incluído ou pago na hora</span></div>
+  </div>
+  <div class="tr-list">
+<article class="panel tr-leg" id="tr-0">
+  <header class="tr-top"><span class="mono">24/12 · qui · Avião</span><span class="tr-st mid" data-orig="Voo por conta de vocês" data-cls="mid">Voo por conta de vocês</span><h3>Osaka → Xangai</h3></header>
+  <ol class="tr-seg"><li><span class="tm">11:00</span><span class="md">Hotel</span><div><b>Check-out do Hotel ELCIENT, em Osaka</b></div></li><li><span class="tm"></span><span class="md">Trem</span><div><b>Até o aeroporto de Kansai (KIX)</b><span>~1h · Haruka ou Nankai</span></div></li><li><span class="tm"></span><span class="md">Voo</span><div><b>Voo Osaka → Xangai</b><span>Cerca de 2h15 · horário e aeroporto de chegada no bilhete</span><button type="button" class="buy" data-k="c0-2" data-def="0" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="bl">Não comprado</span></button></div></li><li><span class="tm"></span><span class="md">Carro</span><div><b>O guia espera no saguão de desembarque e leva ao hotel de carro particular</b><span>Incluído no pacote</span></div></li><li><span class="tm">14:00</span><span class="md">Hotel</span><div><b>Check-in no Kingtown Hotel Plaza</b><span>A partir das 14:00</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Imigração</dt><dd>Isenção de visto para brasileiros até 31/12/2026, até 30 dias. Ter à mão a reserva do hotel e a passagem de volta</dd></div><div><dt>Fuso</dt><dd>Xangai fica 1 hora atrás do Japão</dd></div></dl>
+  <p class="tr-tip">Avisar a agência do número do voo e do aeroporto (Pudong ou Hongqiao), para o guia esperar no lugar certo.</p>
+  <button type="button" class="btn ghost tr-day" data-day="0">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-4">
+  <header class="tr-top"><span class="mono">28/12 · seg · Trem-bala</span><span class="tr-st ok" data-orig="Incluído no pacote" data-cls="ok">Incluído no pacote</span><h3>Xangai → Suzhou</h3></header>
+  <ol class="tr-seg"><li><span class="tm">~08:45</span><span class="md">Carro</span><div><b>O motorista busca vocês no hotel e leva à estação</b><span>Check-out do Kingtown antes de sair</span></div></li><li><span class="tm">09:43</span><span class="md">Trem</span><div><b>Trem-bala de Xangai a Suzhou, 2ª classe</b><span>Chega 10:06 · “ou horário similar”, segundo a agência</span></div></li><li><span class="tm">10:06</span><span class="md">Guia</span><div><b>O guia de Suzhou espera na estação</b><span>Daí segue o passeio: Jardim Lingering e Shantang</span></div></li><li><span class="tm">14:00</span><span class="md">Hotel</span><div><b>Check-in no Scholars Boutique Pingjiangfu</b><span>A partir das 14:00</span></div></li></ol>
+  <dl class="tr-meta"><div><dt>Bilhetes</dt><dd>Comprados pela agência. Na China o bilhete de trem é ligado ao passaporte: levar o passaporte original, que é passado na catraca</dd></div><div><dt>Malas</dt><dd>Vão com vocês no carro e no trem. Há espaço sobre os assentos e no fim do vagão</dd></div></dl>
+  <p class="tr-tip">Chegar à estação com 30–40 min de antecedência: há inspeção de bagagem na entrada, como em aeroporto, e o embarque fecha alguns minutos antes da partida.</p>
+  <button type="button" class="btn ghost tr-day" data-day="4">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-6">
+  <header class="tr-top"><span class="mono">30/12 · qua · Trem-bala</span><span class="tr-st ok" data-orig="Incluído no pacote" data-cls="ok">Incluído no pacote</span><h3>Suzhou → Xangai</h3></header>
+  <ol class="tr-seg"><li><span class="tm">12:00</span><span class="md">Hotel</span><div><b>Check-out do Scholars; malas na recepção</b><span>Dia livre até o fim da tarde</span></div></li><li><span class="tm">~16:30</span><span class="md">Carro</span><div><b>O motorista busca vocês no hotel e leva à estação</b></div></li><li><span class="tm">17:23</span><span class="md">Trem</span><div><b>Trem-bala de Suzhou a Xangai, 2ª classe</b><span>Chega 17:53 · “ou horário similar”</span></div></li><li><span class="tm">17:53</span><span class="md">Carro</span><div><b>O motorista leva direto ao Kingtown Hotel Plaza</b></div></li></ol>
+  <dl class="tr-meta"><div><dt>Bilhetes</dt><dd>Comprados pela agência, ligados ao passaporte</dd></div></dl>
+  <p class="tr-tip">É fim de tarde da véspera do Ano-Novo: as estações ficam cheias. Manter o passaporte à mão.</p>
+  <button type="button" class="btn ghost tr-day" data-day="6">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg" id="tr-7">
+  <header class="tr-top"><span class="mono">31/12 · qui · Avião</span><span class="tr-st mid" data-orig="Voo por conta de vocês" data-cls="mid">Voo por conta de vocês</span><h3>Xangai → casa</h3></header>
+  <ol class="tr-seg"><li><span class="tm">12:00</span><span class="md">Hotel</span><div><b>Check-out do Kingtown</b><span>Manhã livre</span></div></li><li><span class="tm"></span><span class="md">Carro</span><div><b>O motorista leva ao aeroporto</b><span>Incluído no pacote</span></div></li><li><span class="tm"></span><span class="md">Voo</span><div><b>Voo de volta, com conexão no Canadá</b><span>Horário no bilhete</span><button type="button" class="buy" data-k="c7-2" data-def="0" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="bl">Não comprado</span></button></div></li></ol>
+  <dl class="tr-meta"><div><dt>Canadá</dt><dd>Conexão com eTA (feito)</dd></div><div><dt>Aeroporto</dt><dd>Chegar 3 horas antes nos voos internacionais</dd></div></dl>
+  <p class="tr-tip">Confirmar com a agência o horário do motorista, que depende do voo.</p>
+  <button type="button" class="btn ghost tr-day" data-day="7">Ver o dia na aba Hoje</button>
+</article>
+<article class="panel tr-leg"><header class="tr-top"><span class="mono">24 a 31/12 · Metrô, táxi e carro</span><span class="tr-st ok">Pagar na hora</span><h3>Dentro das cidades</h3></header>
+  <dl class="tr-meta"><div><dt>Passeios</dt><dd>Carro particular com guia nos dias de roteiro (25, 26, 28 e 29/12)</dd></div><div><dt>Dias livres</dt><dd>Metrô com o QR de transporte do Alipay; táxi ou DiDi, chamados pelo próprio Alipay. Corridas curtas custam pouco</dd></div><div><dt>Metrô de Xangai</dt><dd>O maior do mundo em extensão. O hotel fica a 300 m da estação Xinzha Road, da linha 1, e a uma estação da Praça do Povo</dd></div></dl><p class="tr-tip">Na China, baixar o Amap para mapas e direções: o Google Maps funciona mal lá.</p></article>
+  </div>
+  <p class="tr-foot">Os horários dos trens são os informados pela agência, que avisa que podem mudar para um “horário similar”.</p>
+</section>
+<section class="wrap trans ing" id="v-ing" role="tabpanel" aria-labelledby="tab-ing" hidden>
+  <div class="tr-head">
+    <span class="mono">Atrações, o que está incluído e o que vale a pena</span>
+    <h2>Ingressos</h2>
+    <p class="hj-sub">As entradas dos passeios com guia estão no pacote. Nos dias livres, use o botão para marcar o que já comprou. <b id="ig-count"></b></p>
+    <div class="tr-legend"><span class="tr-st ig-inc">Incluído</span><span class="tr-st ig-mid">Reservar online</span><span class="tr-st ig-here">Na hora</span><span class="tr-st ig-free">Grátis</span></div>
+    <nav class="ig-nav" aria-label="Cidades"><a href="#ig-xangai" class="ig-jump">Xangai</a><a href="#ig-suzhou" class="ig-jump">Suzhou</a></nav>
+  </div>
+<section class="panel ig-city" id="ig-xangai">
+  <header><span class="mono">24 a 27 e 30 a 31/12</span><h3>Xangai</h3></header>
+  <div class="ig-grid"><div><h4>Passes e escolhas</h4><ul class="vd"><li class="vd-sim"><span class="vd-k">Vale</span><div><b>Alipay com cartão estrangeiro</b><span>Paga quase tudo, inclusive metrô (QR de transporte), táxi e DiDi. Configurar ainda no Brasil e testar com uma compra pequena.</span></div></li><li class="vd-sim"><span class="vd-k">Vale</span><div><b>Dia livre no West Bund</b><span>Para quem gosta de áreas industriais transformadas: cais de carvão, tanques de combustível e uma usina que viraram museus, num calçadão plano à beira do rio.</span></div></li><li class="vd-sim"><span class="vd-k">Vale</span><div><b>Shanghai Tower em vez da Oriental Pearl</b><span>É bem mais alta, tem menos fila e a vista inclui a própria Oriental Pearl. Ir no fim da tarde, com tempo limpo.</span></div></li><li class="vd-talvez"><span class="vd-k">Depende</span><div><b>Cruzeiro noturno no Huangpu</b><span>Mostra o Bund e Pudong iluminados do rio. Preço varia com o barco; vale se sobrar uma noite.</span></div></li><li class="vd-nao"><span class="vd-k">Não vale</span><div><b>Trem Maglev do aeroporto</b><span>É famoso, mas vocês já têm traslado de carro incluído na chegada e na saída.</span></div></li></ul></div>
+  <div><h4>Ingressos</h4><ul class="ig-list"><li class="ig-it" data-buy-item><span class="ig-d">25/12</span><div class="ig-n"><b>Museu de Xangai Leste, com audioguia</b><span class="ig-o">Fecha às terças. Passaporte na entrada.</span></div><span class="ig-p">incluído</span><span class="tr-st ig-inc ig-st">Incluído</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">25/12</span><div class="ig-n"><b>Jardim Yu</b><span class="ig-o">O bazar em volta é livre.</span></div><span class="ig-p">incluído</span><span class="tr-st ig-inc ig-st">Incluído</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">25/12</span><div class="ig-n"><b>Tianzifang</b><span class="ig-o">Bairro aberto, com lojas e cafés.</span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">26/12</span><div class="ig-n"><b>M50</b><span class="ig-o">Algumas galerias fecham às segundas; dia 26 é sábado.</span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">26/12</span><div class="ig-n"><b>Armazém Sihang (memorial)</b><span class="ig-o">O roteiro passa pela margem. Perguntar ao guia se dá para entrar no memorial, com passaporte.</span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">26/12</span><div class="ig-n"><b>Ponte Waibaidu e o Bund</b><span class="ig-o"></span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">27/12</span><div class="ig-n"><b>Shanghai Tower, mirante do 118º andar</b><span class="ig-o">Online na véspera sai ~10% mais barato (Klook ou Trip.com).</span></div><span class="ig-p">¥180</span><span class="tr-st ig-mid ig-st">Reservar online</span><span class="ig-l"><a href="https://www.trip.com/things-to-do/" target="_blank" rel="noopener">Trip.com</a></span><button type="button" class="buy" data-k="ci6" data-def="0" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="bl">Não comprado</span></button></li><li class="ig-it" data-buy-item><span class="ig-d">27/12</span><div class="ig-n"><b>Museu Long West Bund</b><span class="ig-o">Preço varia com a exposição. Fecha às segundas.</span></div><span class="ig-p">¥100–200</span><span class="tr-st ig-here ig-st">Na hora</span><span class="ig-l"></span><button type="button" class="buy" data-k="ci7" data-def="0" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="bl">Não comprado</span></button></li><li class="ig-it" data-buy-item><span class="ig-d">27/12</span><div class="ig-n"><b>Tank Shanghai</b><span class="ig-o">Preço varia com a exposição. Fecha às segundas.</span></div><span class="ig-p">¥50–100</span><span class="tr-st ig-here ig-st">Na hora</span><span class="ig-l"></span><button type="button" class="buy" data-k="ci8" data-def="0" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="bl">Não comprado</span></button></li><li class="ig-it" data-buy-item><span class="ig-d">27/12</span><div class="ig-n"><b>Power Station of Art</b><span class="ig-o">Mostras especiais custam ~¥60. Fecha às segundas.</span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">31/12</span><div class="ig-n"><b>Museu de Xangai, Praça do Povo</b><span class="ig-o">Sem reserva desde 2025; só o passaporte. A 1,5 km do hotel.</span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li></ul></div></div>
+</section>
+<section class="panel ig-city" id="ig-suzhou">
+  <header><span class="mono">28 a 30/12</span><h3>Suzhou</h3></header>
+  <div class="ig-grid"><div><h4>Passes e escolhas</h4><ul class="vd"><li class="vd-sim"><span class="vd-k">Vale</span><div><b>Reservar o Administrador Humilde antes</b><span>É o jardim mais procurado da cidade e exige reserva com passaporte. A manhã do dia 30 está livre: é o momento.</span></div></li><li class="vd-talvez"><span class="vd-k">Depende</span><div><b>Barco pelo canal</b><span>Os barcos de remo da rua Pingjiang e de Shantang fazem passeios curtos. Bom para descansar as pernas.</span></div></li><li class="vd-sim"><span class="vd-k">Vale</span><div><b>Andar na rua Pingjiang cedo ou à noite</b><span>Fica na porta do hotel e é grátis. Fora do meio do dia, fica vazia e silenciosa.</span></div></li></ul></div>
+  <div><h4>Ingressos</h4><ul class="ig-list"><li class="ig-it" data-buy-item><span class="ig-d">28/12</span><div class="ig-n"><b>Jardim Lingering e 20 min de ópera</b><span class="ig-o"></span></div><span class="ig-p">incluído</span><span class="tr-st ig-inc ig-st">Incluído</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">28/12</span><div class="ig-n"><b>Rua Shantang</b><span class="ig-o"></span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">29/12</span><div class="ig-n"><b>Museu de Suzhou</b><span class="ig-o">Grátis, com reserva; a agência cuida dela.</span></div><span class="ig-p">incluído</span><span class="tr-st ig-inc ig-st">Incluído</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">29/12</span><div class="ig-n"><b>Suzhou Center, lago Jinji e Portão do Oriente</b><span class="ig-o"></span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li><li class="ig-it" data-buy-item><span class="ig-d">30/12</span><div class="ig-n"><b>Jardim do Administrador Humilde</b><span class="ig-o">Preço de baixa temporada. Reservar online com o passaporte antes de ir.</span></div><span class="ig-p">~¥70</span><span class="tr-st ig-mid ig-st">Reservar online</span><span class="ig-l"></span><button type="button" class="buy" data-k="ci15" data-def="0" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span class="bl">Não comprado</span></button></li><li class="ig-it" data-buy-item><span class="ig-d">30/12</span><div class="ig-n"><b>Rua Pingjiang</b><span class="ig-o">Na porta do hotel.</span></div><span class="ig-p">grátis</span><span class="tr-st ig-free ig-st">Grátis</span><span class="ig-l"></span></li></ul></div></div>
+</section>
+  <p class="tr-foot">Preços por pessoa, em yuan (¥, RMB), de referência para 2025–2026. Quase tudo aceita Alipay; museus e jardins pedem o passaporte na entrada.</p>
+</section>
+<div id="v-guia" role="tabpanel" aria-labelledby="tab-guia">
+<section class="wrap route" id="rota">
+  <div class="panel">
+    <div id="jp" class="lmap big"></div><p class="mapnote">Mapa interativo: use dois dedos no celular, ou Ctrl e a roda do mouse, para aproximar. As linhas ligam os pontos de cada trecho; o voo aparece como linha reta.</p>
+  </div>
+  <div class="panel legs">
+    <h2>Os quatro trechos</h2>
+    <span class="mono">Toque num trecho para vê-lo no mapa</span>
+    <ol id="legs"></ol>
+    <button class="btn" id="tour" type="button">Percorrer tudo</button>
+  </div>
+</section>
+
+<section class="wrap intro" id="eras">
+  <h2>Dois mil e quinhentos anos em oito dias</h2>
+  <div class="prose">
+    <p>As duas cidades do roteiro contam histórias opostas. Suzhou é uma das cidades mais antigas da China, fundada em 514 a.C. como capital do reino de Wu, e por quase dois milênios foi o lugar onde se concentravam a seda, o arroz, os letrados e o dinheiro do delta do Yangtzé. Xangai, a 100 km dali, era uma cidade murada de porte médio, conhecida pelo algodão, até que uma guerra perdida a transformou, em menos de um século, na maior metrópole da Ásia.</p>
+    <p>A primeira chave é o <b>Grande Canal</b>. Aberto em grande parte no início do século VII, sob a dinastia Sui, ele ligou o sul fértil ao norte político e passou por dentro de Suzhou. Os impostos em grão, a seda e os funcionários viajavam por ele. Quem fazia carreira no governo imperial, depois de passar nos exames, voltava para cá ao se aposentar e construía um jardim. É daí que vêm os jardins clássicos que vamos visitar, quase todos das dinastias Ming (1368–1644) e Qing (1644–1912).</p>
+    <p>A segunda chave é <b>1842</b>. Derrotada pela Grã-Bretanha na Primeira Guerra do Ópio, a China assinou o Tratado de Nanquim e abriu cinco portos ao comércio estrangeiro; Xangai era um deles. Britânicos, americanos e franceses ganharam áreas próprias, as concessões, com polícia, tribunais e leis próprias. O Bund, as casas <i>shikumen</i> de Tianzifang, as fábricas às margens do rio Suzhou e até a ponte Waibaidu nasceram desse arranjo, que os chineses lembram como o “século de humilhação”. A cidade cresceu com o dinheiro do comércio e com milhões de refugiados das guerras do interior.</p>
+    <p>A terceira chave é <b>1978</b>. Depois da revolução de 1949, as concessões acabaram, as empresas foram estatizadas e Xangai passou trinta anos como cidade industrial de economia planificada. Com as reformas de Deng Xiaoping, e sobretudo depois que Pudong virou zona especial em 1990, a cidade voltou a ser vitrine. Os arranha-céus do outro lado do rio têm menos de trinta anos. Suzhou seguiu o mesmo caminho: manteve o centro antigo, proibiu prédios altos dentro dos canais e construiu a cidade nova a leste, em torno do lago Jinji.</p>
+  </div>
+  <div class="gal"><figure class="ph" data-w="Grand Canal (China)"><a target="_blank" rel="noopener"><img alt="O Grande Canal, ainda em uso" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Grande Canal, ainda em uso</figcaption></figure><figure class="ph" data-w="Treaty of Nanking"><a target="_blank" rel="noopener"><img alt="1842: a assinatura do Tratado de Nanquim" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>1842: a assinatura do Tratado de Nanquim</figcaption></figure><figure class="ph" data-w="Shanghai International Settlement"><a target="_blank" rel="noopener"><img alt="O Bund nos tempos da concessão" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>O Bund nos tempos da concessão</figcaption></figure><figure class="ph" data-w="Pudong"><a target="_blank" rel="noopener"><img alt="Pudong, que era arrozal em 1990" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>Pudong, que era arrozal em 1990</figcaption></figure></div>
+<div class="prose">
+<p><b>Jardim chinês, jardim japonês.</b> Depois de três semanas no Japão, a comparação é inevitável. Os jardins japoneses que vimos descendem dos chineses, mas tomaram outro caminho: lá, a natureza é podada até parecer espontânea e o caminho conduz o olhar. Em Suzhou, o jardim é uma casa. Salões, pavilhões, corredores cobertos e muros brancos dividem o espaço em pátios pequenos, e cada janela recorta uma cena, como um quadro emoldurado. As pedras do lago Tai, cheias de furos, fazem o papel das montanhas. A ideia é caminhar por uma paisagem inteira sem sair do muro da cidade.</p>
+<p><b>A China de hoje.</b> A China tem cerca de 1,4 bilhão de habitantes e, desde 2022, a população diminui. Xangai, com quase 25 milhões, é a maior cidade do país e o seu centro financeiro. A rede de trens de alta velocidade, quase inexistente em 2008, hoje passa de 45 mil km, mais que o resto do mundo somado: é por ela que vamos a Suzhou em 23 minutos. No dia a dia, quase tudo se paga pelo celular, com Alipay ou WeChat, e o dinheiro vivo é cada vez mais raro.</p>
+</div>
+<aside class="facts"><h4>Curiosidades para a viagem inteira</h4><ul>
+<li>O Natal não é feriado na China: dia 25 é uma sexta-feira normal de trabalho, com lojas e museus abertos. O feriado é o Ano-Novo, em 1º de janeiro, e o grande feriado do ano é o Ano-Novo Lunar, que em 2027 cai em 6 de fevereiro.</li>
+<li>A China inteira usa um único fuso horário, o de Pequim, apesar de ter a largura de cinco. Xangai fica 1 hora atrás do Japão e 11 horas à frente do Rio.</li>
+<li>“Xangai” quer dizer, literalmente, “sobre o mar”. Suzhou é a “região de Su”, nome de uma erva aromática.</li>
+<li>Como no Japão, não se dá gorjeta. E água de torneira não se bebe: os hotéis deixam garrafas e há água quente em toda parte.</li>
+</ul></aside><div class="eras panel">
+    <table>
+      <thead><tr><th>Período</th><th>Anos</th><th>O que é dele no nosso roteiro</th></tr></thead>
+      <tbody>
+        <tr><td>Reino de Wu</td><td>514 a.C.</td><td>Fundação de Suzhou pelo rei He Lü; o traçado das muralhas e dos canais</td></tr>
+        <tr><td>Sui e Tang</td><td>581–907</td><td>O Grande Canal passa por Suzhou (séc. VII); o poeta Bai Juyi abre a rua Shantang (825)</td></tr>
+        <tr><td>Song</td><td>960–1279</td><td>Pingjiang, o nome de Suzhou na época; o mapa gravado em pedra de 1229 mostra os mesmos canais de hoje</td></tr>
+        <tr><td>Ming</td><td>1368–1644</td><td>Jardim do Administrador Humilde (1509), Jardim Yu em Xangai (1559), Jardim Lingering (1593), a ópera Kunqu</td></tr>
+        <tr><td>Qing</td><td>1644–1912</td><td>O Lingering ganha o nome atual; Xangai vira porto do tratado (1842) e surgem as concessões</td></tr>
+        <tr><td>República</td><td>1912–1949</td><td>O Bund de granito e art déco, os <i>shikumen</i> de Tianzifang, as fábricas do rio Suzhou (M50), o Armazém Sihang (1937)</td></tr>
+        <tr><td>República Popular</td><td>1949–hoje</td><td>Reformas de 1978, Pudong (1990), o Parque Industrial de Suzhou (1994), Museu de Suzhou (2006), Shanghai Tower (2015), Museu de Xangai Leste (2024)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= XANGAI ================= -->
+<section class="wrap chap" id="xangai">
+  <div class="chap-head">
+    <span class="kanji" aria-hidden="true">上海</span>
+    <span class="mono">24 a 28 e 30 a 31 de dezembro · Kingtown Hotel Plaza Shanghai</span>
+    <h2>Xangai</h2>
+    <p class="sub">Uma cidade murada de pescadores e tecelões de algodão que, aberta à força em 1842, virou em noventa anos a metrópole mais cosmopolita da Ásia, depois uma cidade operária, e desde 1990 a vitrine da China moderna.</p>
+  </div>
+  <div class="chap-grid">
+    <aside class="chap-map panel"><div class="mm" data-k="xangai"></div></aside>
+    <div class="chap-text">
+<article class="site">
+        <h3>O Bund e a vista de Pudong <small>外滩 · 陆家嘴</small></h3>
+        <span class="mono when">Dia 3 · sábado · fim de tarde, com o guia</span><div class="gal"><figure class="ph" data-w="The Bund"><a target="_blank" rel="noopener"><img alt="O Bund, à beira do rio Huangpu" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Bund, à beira do rio Huangpu</figcaption></figure><figure class="ph" data-w="HSBC Building (Shanghai)"><a target="_blank" rel="noopener"><img alt="O antigo prédio do HSBC, de 1923" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>O antigo prédio do HSBC, de 1923</figcaption></figure><figure class="ph" data-w="Lujiazui"><a target="_blank" rel="noopener"><img alt="Lujiazui, do outro lado do rio" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>Lujiazui, do outro lado do rio</figcaption></figure></div>
+        <p>O Bund é um cais de cerca de 1,5 km na margem oeste do rio Huangpu. A palavra vem do anglo-indiano e quer dizer aterro ou dique: era o caminho de sirga por onde se puxavam barcos, até que os britânicos, instalados aqui depois de 1842, o transformaram na fachada do seu comércio com a China. Em 1863 as áreas britânica e americana se fundiram na Concessão Internacional, governada por um conselho eleito de estrangeiros; ao sul ficava a Concessão Francesa, com administração própria. Os chineses viviam sob essas leis sem votar nelas.</p>
+        <p>Os prédios que se veem hoje são quase todos de 1900 a 1937, o auge da cidade. O antigo Hong Kong and Shanghai Bank, de 1923, foi descrito na época como o prédio mais bonito entre o canal de Suez e o estreito de Bering. Ao lado, a Alfândega de 1927 tem a torre do relógio que os moradores apelidaram de <i>Big Ching</i>. Mais adiante, a Sassoon House, de 1929, com o telhado verde em pirâmide, era o hotel Cathay, onde Noël Coward escreveu uma peça em quatro dias; hoje é o Fairmont Peace Hotel, que ficou famoso pela banda de jazz de músicos veteranos. Os bancos, os jornais e as companhias de navegação disputavam endereço aqui como quem disputa uma vitrine.</p>
+        <p>Depois de 1949, os bancos estrangeiros foram embora e os prédios viraram repartições do governo comunista. A virada veio nos anos 1990, quando muitos voltaram a ser bancos e hotéis de luxo. Do outro lado do rio está Lujiazui, o bairro financeiro de Pudong. Em 1990, quando o governo declarou Pudong zona econômica especial, aquilo era arrozal, galpões e casas baixas. A torre de TV Oriental Pearl, de 1994, foi o primeiro marco; vieram depois a Jin Mao (1999), o “abridor de garrafa” do World Financial Center (2008) e a Shanghai Tower (2015), com 632 metros, a segunda mais alta do mundo. É talvez a vista que melhor resume a China dos últimos trinta anos.</p>
+        <p class="look"><b>Para reparar</b>A diferença de escala entre as duas margens: de um lado, granito e cúpulas da época das concessões; do outro, vidro. Ao anoitecer, as luzes dos dois lados acendem juntas, e o calçadão enche de gente tirando foto.</p>
+      <aside class="facts"><h4>Curiosidades</h4><ul><li>O hotel Cathay foi construído por Victor Sassoon, de uma família de comerciantes judeus de Bagdá que fez fortuna em Bombaim e Xangai. Nos anos 1930 a cidade recebeu perto de 20 mil refugiados judeus da Europa, num dos poucos portos do mundo que não pedia visto.</li><li>Na véspera do Ano-Novo o Bund recebe multidões tão grandes que a polícia controla o acesso. Vocês voam no dia 31: é um motivo a mais para não deixar nada para a última noite.</li></ul></aside></article>
+<article class="site">
+        <h3>Ponte Waibaidu <small>外白渡桥</small></h3>
+        <span class="mono when">Dia 3 · sábado · a caminho do Bund</span><div class="gal"><figure class="ph" data-w="Waibaidu Bridge"><a target="_blank" rel="noopener"><img alt="A ponte Waibaidu, de 1907" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>A ponte Waibaidu, de 1907</figcaption></figure><figure class="ph" data-w="Suzhou Creek"><a target="_blank" rel="noopener"><img alt="O rio Suzhou chegando ao Huangpu" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O rio Suzhou chegando ao Huangpu</figcaption></figure></div>
+        <p>A ponte de aço que cruza a boca do rio Suzhou, onde ele deságua no Huangpu, é de 1907 e foi a primeira ponte inteiramente de aço da China. No lugar dela havia uma ponte de madeira construída em 1856 por um comerciante britânico, que cobrava pedágio. O nome popular, Waibaidu, quer dizer algo como “a travessia gratuita de fora”: os chineses a deram ao novo acesso quando o pedágio acabou.</p>
+        <p>Em agosto de 1937, a ponte foi a rota de fuga de milhares de pessoas que deixavam a zona de combate ao norte do rio para se abrigar na Concessão Internacional. Em 2008 ela foi desmontada, levada de barco para um estaleiro e restaurada; voltou ao lugar em 2009. É cenário de casamentos, de novelas e de quase todos os filmes que querem dizer “isto é Xangai”.</p>
+        <p class="look"><b>Para reparar</b>Ao norte da ponte, o Broadway Mansions, de 1934, prédio de tijolo em degraus que foi o mais alto da cidade e hospedou correspondentes estrangeiros durante a guerra.</p>
+</article>
+<article class="site">
+        <h3>Jardim Yu e a cidade velha <small>豫园</small></h3>
+        <span class="mono when">Dia 2 · sexta · com o guia</span><div class="gal"><figure class="ph" data-w="Yu Garden"><a target="_blank" rel="noopener"><img alt="O Jardim Yu" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Jardim Yu</figcaption></figure><figure class="ph" data-w="Huxinting Teahouse"><a target="_blank" rel="noopener"><img alt="A casa de chá do lago e a ponte em zigue-zague" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>A casa de chá do lago e a ponte em zigue-zague</figcaption></figure><figure class="ph" data-w="Old City of Shanghai"><a target="_blank" rel="noopener"><img alt="A cidade velha antes de 1912" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>A cidade velha antes de 1912</figcaption></figure></div>
+        <p>Antes das concessões, Xangai era isto: uma cidade de muralha redonda, à beira do rio, com templos, mercados e casas de mercadores. O Jardim Yu foi construído a partir de 1559 por Pan Yunduan, um funcionário da dinastia Ming, para o pai idoso; <i>yu</i> quer dizer tranquilidade, contentamento. A obra levou quase vinte anos e consumiu a fortuna da família, que perdeu o jardim pouco depois. Ele sobreviveu a séculos de mudança de dono, foi usado como quartel por tropas britânicas na Guerra do Ópio e serviu de quartel-general à Sociedade das Pequenas Espadas, que tomou a cidade velha em 1853. Foi restaurado nos anos 1950 e 1980.</p>
+        <p>São cerca de dois hectares de pavilhões, lagos com carpas, pedras do lago Tai e muros com dragões ondulados no alto. A peça mais famosa é a Pedra de Jade Requintada, uma rocha de mais de 3 metros cheia de furos: diz a tradição que, se se queimar incenso embaixo, a fumaça sai por todos eles. Fora do jardim fica o bazar, com o Templo do Deus da Cidade e a casa de chá Huxinting no meio do lago, ligada à margem pela ponte em nove dobras. As curvas, dizem, servem para despistar maus espíritos, que só andam em linha reta.</p>
+        <p>A muralha da cidade velha foi derrubada em 1912, logo depois da queda do império, e no lugar dela passa hoje uma avenida circular. O bazar é muito turístico, mas é ali que se come o <i>xiaolongbao</i> de Nanxiang, o pastelzinho cozido no vapor com caldo dentro, que nasceu num povoado vizinho de Xangai.</p>
+        <p class="look"><b>Para reparar</b>As janelas vazadas nos muros, cada uma com um desenho diferente, que emolduram o pátio seguinte. É a mesma ideia que veremos em Suzhou, em escala menor.</p>
+      <aside class="facts"><h4>Curiosidades</h4><ul><li>Para comer o xiaolongbao: morder um furinho, sugar o caldo e só depois comer o resto. O caldo sai muito quente.</li></ul></aside></article>
+<article class="site">
+        <h3>Museu de Xangai Leste <small>上海博物馆东馆</small></h3>
+        <span class="mono when">Dia 2 · sexta · manhã · audioguia incluído</span><div class="gal"><figure class="ph" data-w="Shanghai Museum"><a target="_blank" rel="noopener"><img alt="O Museu de Xangai" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Museu de Xangai</figcaption></figure><figure class="ph" data-w="Ding (vessel)"><a target="_blank" rel="noopener"><img alt="Um caldeirão <i>ding</i> de bronze" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>Um caldeirão <i>ding</i> de bronze</figcaption></figure></div>
+        <p>O Museu de Xangai foi fundado em 1952 e tem uma das melhores coleções de arte antiga da China: bronzes, cerâmicas, jades, pinturas e caligrafia, num arco que vai de mais de 5 mil anos atrás à dinastia Qing. A sede histórica fica na Praça do Povo, a 1,5 km do hotel, num prédio de 1996 de base quadrada e topo redondo, porque na cosmologia chinesa o céu é redondo e a terra é quadrada. Em 2024 abriu a sede Leste, em Pudong, bem maior, para onde foi grande parte das galerias.</p>
+        <p>São treze galerias permanentes. Vale começar pelos bronzes: caldeirões rituais das dinastias Shang e Zhou, de mais de 3 mil anos, usados para oferecer comida e vinho aos antepassados, com inscrições que estão entre os textos chineses mais antigos que existem. Depois, as cerâmicas, que contam a história do comércio da China com o mundo, das peças Tang levadas pela Rota da Seda à porcelana azul e branca que a Europa chamou simplesmente de <i>china</i>. A galeria Jiangnan, sobre a cultura da região do delta, prepara o terreno para Suzhou.</p>
+        <p class="look"><b>Para reparar</b>O formato dos caldeirões de três pés, o <i>ding</i>: o objeto virou símbolo de poder legítimo, e a palavra ainda aparece em expressões que querem dizer “sólido, estável”.</p>
+      <aside class="facts"><h4>Curiosidades</h4><ul><li>O museu fecha às terças. Dia 25 é sexta, então está aberto, e não precisa de reserva individual: só levar o passaporte.</li></ul></aside></article>
+<article class="site">
+        <h3>Tianzifang e os shikumen <small>田子坊</small></h3>
+        <span class="mono when">Dia 2 · sexta · tarde</span><div class="gal"><figure class="ph" data-w="Tianzifang"><a target="_blank" rel="noopener"><img alt="Os becos de Tianzifang" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>Os becos de Tianzifang</figcaption></figure><figure class="ph" data-w="Shikumen"><a target="_blank" rel="noopener"><img alt="Um portão de <i>shikumen</i>" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>Um portão de <i>shikumen</i></figcaption></figure></div>
+        <p>Os <i>shikumen</i>, “portões emoldurados em pedra”, são a casa típica da Xangai do início do século XX: sobrados geminados em fileiras, ao longo de becos chamados <i>lilong</i>, com um pátio na frente e um portão de madeira preta emoldurado em pedra. Misturavam a casa de pátio chinesa com a fileira de casas inglesa, e foram construídos aos milhares para a classe média que chegava à cidade. Com o tempo, cada casa passou a abrigar várias famílias, uma por cômodo, dividindo cozinha e banheiro.</p>
+        <p>Tianzifang, na rua Taikang, era um desses quarteirões, com algumas pequenas fábricas. No fim dos anos 1990, artistas alugaram os galpões como ateliês, e aos poucos as casas viraram lojas, cafés e galerias. O resultado salvou o bairro da demolição que levou boa parte dos <i>lilong</i> da cidade, e ainda há moradores antigos nos andares de cima, com roupa secando nas janelas por cima dos turistas.</p>
+        <p class="look"><b>Para reparar</b>Os relevos em cima dos portões, com datas e nomes de família, e os varais de bambu atravessando os becos.</p>
+</article>
+<article class="site">
+        <h3>M50 e o rio Suzhou <small>M50 创意园</small></h3>
+        <span class="mono when">Dia 3 · sábado · manhã</span><div class="gal"><figure class="ph" data-w="M50 Creative Park"><a target="_blank" rel="noopener"><img alt="O M50, na rua Moganshan" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O M50, na rua Moganshan</figcaption></figure><figure class="ph" data-w="Suzhou Creek"><a target="_blank" rel="noopener"><img alt="O rio Suzhou" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O rio Suzhou</figcaption></figure></div>
+        <p>O rio Suzhou, que liga Xangai a Suzhou pelo antigo sistema de canais, foi por um século a espinha industrial da cidade. As margens se encheram de fiações, moinhos, armazéns e depósitos, e a água ficou tão poluída que nos anos 1980 era chamada de rio negro. A limpeza, iniciada em 1998, levou duas décadas, e hoje um calçadão contínuo acompanha as margens.</p>
+        <p>O M50 ocupa o número 50 da rua Moganshan, um conjunto de prédios de uma fiação têxtil dos anos 1930. Quando a fábrica fechou, no fim dos anos 1990, artistas começaram a alugar os galpões, e em poucos anos o lugar virou o principal polo de arte contemporânea da cidade, com dezenas de galerias e ateliês. Os prédios de tijolo e concreto foram mantidos como estavam, com as janelas industriais e os grafites do muro da rua. A entrada e as galerias são grátis; algumas fecham às segundas.</p>
+        <p class="look"><b>Para reparar</b>O muro grafitado ao longo da rua Moganshan, que muda a cada poucos meses.</p>
+</article>
+<article class="site">
+        <h3>Armazém Sihang <small>四行仓库</small></h3>
+        <span class="mono when">Dia 3 · sábado · caminhada pela margem</span><div class="gal"><figure class="ph" data-w="Sihang Warehouse"><a target="_blank" rel="noopener"><img alt="O Armazém Sihang hoje" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Armazém Sihang hoje</figcaption></figure><figure class="ph" data-w="Defense of Sihang Warehouse"><a target="_blank" rel="noopener"><img alt="1937: a defesa do armazém" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>1937: a defesa do armazém</figcaption></figure></div>
+        <p>O armazém foi construído em 1931 por quatro bancos chineses, daí o nome Sihang, “quatro bancos”. Em 1937, o Japão invadiu a China e atacou Xangai. Depois de três meses de combate, o exército chinês recuou, e um batalhão de cerca de quatrocentos homens, sob o comando de Xie Jinyuan, ficou para trás para defender o armazém e cobrir a retirada.</p>
+        <p>Por quatro dias, de 26 de outubro a 1º de novembro, eles resistiram aos ataques japoneses. O armazém ficava exatamente na margem do rio Suzhou em frente à Concessão Internacional, neutra na guerra, e milhares de estrangeiros e chineses assistiram ao combate do outro lado da água, como num teatro. Uma escoteira de 22 anos, Yang Huimin, atravessou as linhas para levar aos soldados uma bandeira da China, que foi hasteada no telhado. Para enganar o inimigo, o batalhão dizia ter oitocentos homens, e a história ficou conhecida como a dos “Oitocentos Heróis”. Os sobreviventes acabaram internados na concessão pelos britânicos.</p>
+        <p>O prédio foi restaurado e virou memorial em 2015. A parede oeste foi mantida com as marcas de tiros e bombas, e é a imagem mais forte do lugar. Em 2020, o filme <i>Os Oitocentos</i>, sobre a batalha, foi uma das maiores bilheterias do mundo naquele ano.</p>
+        <p class="look"><b>Para reparar</b>Os buracos na fachada oeste, preservados de propósito, e a bandeira no alto do prédio.</p>
+</article>
+<article class="site">
+        <h3>Dia livre: o West Bund e a Shanghai Tower <small>西岸 · 上海中心</small></h3>
+        <span class="mono when">Dia 4 · domingo · sugestões para o dia livre</span><div class="gal"><figure class="ph" data-w="Long Museum"><a target="_blank" rel="noopener"><img alt="O Museu Long, no West Bund" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Museu Long, no West Bund</figcaption></figure><figure class="ph" data-w="Power Station of Art"><a target="_blank" rel="noopener"><img alt="A Power Station of Art, numa antiga usina" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>A Power Station of Art, numa antiga usina</figcaption></figure><figure class="ph" data-w="Shanghai Tower"><a target="_blank" rel="noopener"><img alt="A Shanghai Tower" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>A Shanghai Tower</figcaption></figure></div>
+        <p>Para quem gosta de áreas industriais transformadas, o dia livre tem um destino óbvio: o West Bund, a margem do Huangpu ao sul do centro, que até os anos 2000 era ocupada por um aeroporto, uma fábrica de cimento, um cais de carvão e depósitos de combustível. A cidade transformou a área num calçadão de quase 10 km à beira do rio, com museus instalados nas estruturas antigas.</p>
+        <p>O Museu Long West Bund, de 2014, foi construído em torno da ponte de descarga de um antigo cais de carvão, preservada no meio das abóbadas de concreto; é um museu particular de arte chinesa e contemporânea. O Tank Shanghai ocupa cinco tanques de combustível de aviação do antigo aeroporto de Longhua. Mais perto do centro, a Power Station of Art ocupa uma usina elétrica à beira do rio, reformada para a Expo de 2010 e aberta em 2012 como o primeiro museu estatal de arte contemporânea da China; a chaminé virou termômetro gigante. No domingo todos abrem (fecham às segundas).</p>
+        <p>Outra opção é subir à Shanghai Tower, em Pudong. O mirante do 118º andar fica a 546 metros, e os elevadores passam de 18 metros por segundo. Com tempo limpo, vale ir no fim da tarde e ver a cidade acender.</p>
+        <p class="look"><b>Para reparar</b>A ponte de carvão dentro do Museu Long, e a escala dos tanques do Tank Shanghai vistos do calçadão.</p>
+      <aside class="facts"><h4>Curiosidades</h4><ul><li>O calçadão do West Bund é plano e tem bancos, bom para a vovó. Táxi ou DiDi do hotel até lá custa pouco e leva uns 25 min.</li></ul></aside></article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUZHOU ================= -->
+<section class="wrap chap" id="suzhou">
+  <div class="chap-head">
+    <span class="kanji" aria-hidden="true">苏州</span>
+    <span class="mono">28 a 30 de dezembro · Scholars Boutique Suzhou Pingjiangfu</span>
+    <h2>Suzhou</h2>
+    <p class="sub">Capital de um reino há 2.500 anos, cidade da seda e dos letrados, com os canais desenhados no mesmo lugar há oito séculos. Os jardins clássicos são Patrimônio da Humanidade desde 1997.</p>
+  </div>
+  <div class="chap-grid">
+    <aside class="chap-map panel"><div class="mm" data-k="suzhou"></div></aside>
+    <div class="chap-text">
+<article class="site">
+        <h3>Uma cidade de canais <small>平江路</small></h3>
+        <span class="mono when">Dias 5 a 7 · o hotel fica na rua Pingjiang</span><div class="gal"><figure class="ph" data-w="Pingjiang Road"><a target="_blank" rel="noopener"><img alt="A rua Pingjiang e o canal" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>A rua Pingjiang e o canal</figcaption></figure><figure class="ph" data-w="Suzhou"><a target="_blank" rel="noopener"><img alt="Suzhou, no delta do Yangtzé" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>Suzhou, no delta do Yangtzé</figcaption></figure><figure class="ph" data-w="Pingjiang Map"><a target="_blank" rel="noopener"><img alt="O mapa de Pingjiang, gravado em 1229" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>O mapa de Pingjiang, gravado em 1229</figcaption></figure></div>
+        <p>Suzhou foi fundada em 514 a.C., quando o rei He Lü, de Wu, mandou o ministro Wu Zixu erguer uma capital murada no meio dos alagados do lago Tai. A cidade foi desenhada como um tabuleiro de água: canais paralelos às ruas, com casas que tinham porta para a rua e outra para o canal, por onde chegavam o arroz, a lenha e a seda. Por isso Suzhou é chamada de “Veneza do Oriente”, comparação atribuída a Marco Polo.</p>
+        <p>O nome Pingjiang é o da cidade sob a dinastia Song. Um mapa da cidade gravado em pedra em 1229, o <i>Pingjiang Tu</i>, mostra muralhas, canais e pontes que ainda coincidem em grande parte com os de hoje. A rua Pingjiang, onde fica o hotel, é o trecho mais bem conservado desse traçado: 1,6 km de rua de pedra ao longo do canal, com pontes em arco, casas brancas de telhado cinza, casas de chá e lojas. Logo cedo e à noite ela fica tranquila.</p>
+        <p>A riqueza de Suzhou veio da seda e do Grande Canal. Sob os Ming e os Qing, a região produzia uma parte enorme dos impostos do império e dos aprovados nos exames imperiais. Um ditado diz que “no céu há o paraíso; na terra, Suzhou e Hangzhou”.</p>
+        <p class="look"><b>Para reparar</b>Os barcos de madeira com remo único na popa, que ainda fazem passeios pelo canal, e as pontes altas o suficiente para eles passarem.</p>
+      <aside class="facts"><h4>Curiosidades</h4><ul><li>Suzhou é a cidade natal do arquiteto I. M. Pei, autor da pirâmide do Louvre. A família dele foi dona de um dos jardins clássicos da cidade, o Bosque do Leão.</li></ul></aside></article>
+<article class="site">
+        <h3>Jardim Lingering e a ópera Kunqu <small>留园 · 昆曲</small></h3>
+        <span class="mono when">Dia 5 · segunda · com o guia · inclui 20 min de ópera</span><div class="gal"><figure class="ph" data-w="Lingering Garden"><a target="_blank" rel="noopener"><img alt="O Jardim Lingering" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Jardim Lingering</figcaption></figure><figure class="ph" data-w="Kunqu"><a target="_blank" rel="noopener"><img alt="Uma cena de ópera Kunqu" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>Uma cena de ópera Kunqu</figcaption></figure></div>
+        <p>O Lingering, Liu Yuan em chinês, começou em 1593 como o Jardim do Leste de Xu Taishi, um funcionário Ming aposentado. Mudou de dono várias vezes e, no século XIX, foi comprado por Sheng Kang, que lhe deu o nome atual: <i>liu</i> quer dizer ficar, demorar-se, e soa parecido com o nome de um dono anterior. Com cerca de 2 hectares, é um dos quatro jardins mais famosos da China e talvez o que melhor mostra a arte de dividir o espaço.</p>
+        <p>A entrada é proposital: um corredor estreito e escuro, que dobra várias vezes, até se abrir de repente no lago. Mais adiante, um corredor coberto de 700 metros liga os pátios, com janelas vazadas em desenhos diferentes. A peça principal é o Pico Coroado de Nuvens, uma pedra do lago Tai de 6,5 metros, uma das maiores que existem; essas pedras eram tiradas do fundo do lago, às vezes depois de anos deixadas lá para a água cavar mais os furos.</p>
+        <p>No pavilhão de apresentações, vocês assistem a 20 minutos de ópera, provavelmente Kunqu. Nascida em Kunshan, entre Suzhou e Xangai, há cerca de 600 anos, a Kunqu é considerada a mãe das óperas chinesas e foi das primeiras artes declaradas Patrimônio Imaterial da Humanidade pela UNESCO, em 2001. É lenta, cantada com flauta, e cada gesto das mangas longas tem um significado.</p>
+        <p class="look"><b>Para reparar</b>Como a vista muda a cada poucos passos: o jardim foi feito para ser visto andando, e as janelas são molduras de quadros.</p>
+</article>
+<article class="site">
+        <h3>Rua Shantang <small>山塘街</small></h3>
+        <span class="mono when">Dia 5 · segunda · tarde</span><div class="gal"><figure class="ph" data-w="Shantang Street"><a target="_blank" rel="noopener"><img alt="A rua Shantang" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>A rua Shantang</figcaption></figure></div>
+        <p>Em 825, o poeta Bai Juyi, um dos mais lidos da dinastia Tang, foi nomeado governador de Suzhou. Uma das suas obras foi abrir um canal com uma rua ao lado, ligando o portão noroeste da cidade à Colina do Tigre, para facilitar o acesso e drenar os alagados. São os “sete li de Shantang”, cerca de 3,6 km.</p>
+        <p>Sob os Ming e os Qing, Shantang foi uma das ruas mais movimentadas da China, com guildas de mercadores de outras províncias, casas de chá, teatros e lojas. Um imperador Qing gostou tanto que mandou copiá-la nos jardins do Palácio de Verão, em Pequim. Hoje o trecho perto do portão Chang é restaurado e turístico, bom para provar petiscos locais. À noite as lanternas vermelhas acendem sobre o canal.</p>
+        <p class="look"><b>Para reparar</b>As lanternas e o perfil das pontes refletidos na água no fim da tarde.</p>
+</article>
+<article class="site">
+        <h3>Museu de Suzhou, de I. M. Pei <small>苏州博物馆</small></h3>
+        <span class="mono when">Dia 6 · terça · manhã · com o guia</span><div class="gal"><figure class="ph" data-w="Suzhou Museum"><a target="_blank" rel="noopener"><img alt="O Museu de Suzhou" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Museu de Suzhou</figcaption></figure><figure class="ph" data-w="I. M. Pei"><a target="_blank" rel="noopener"><img alt="I. M. Pei, o arquiteto" loading="lazy"></a><figcaption><span class="tag t-e">Época</span>I. M. Pei, o arquiteto</figcaption></figure></div>
+        <p>O museu, inaugurado em 2006, foi uma das últimas grandes obras de I. M. Pei, então com quase noventa anos. A família dele vinha de Suzhou, e ele passou verões da infância num dos jardins da cidade. O terreno é sensível: fica ao lado do Jardim do Administrador Humilde e do palácio de um príncipe da rebelião Taiping, dos anos 1860. Pei aceitou não fazer nada mais alto que as casas vizinhas.</p>
+        <p>A solução foi reinterpretar a casa tradicional de Suzhou: paredes brancas, telhados de pedra cinza em formas geométricas, claraboias que filtram a luz, e um jardim de pedra no centro, em que as rochas recortadas foram montadas como uma pintura de paisagem contra o muro branco. A coleção, de mais de 40 mil peças, inclui pinturas e caligrafias da escola de Suzhou, porcelanas, jades e objetos encontrados num pagode da cidade.</p>
+        <p class="look"><b>Para reparar</b>O jardim de pedras laminadas diante do muro branco, que Pei chamou de pintura tridimensional, e a luz nas claraboias.</p>
+</article>
+<article class="site">
+        <h3>Jardim do Administrador Humilde <small>拙政园</small></h3>
+        <span class="mono when">Dia 7 · quarta · manhã livre · opcional, reservar antes</span><div class="gal"><figure class="ph" data-w="Humble Administrator's Garden"><a target="_blank" rel="noopener"><img alt="O Jardim do Administrador Humilde" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Jardim do Administrador Humilde</figcaption></figure></div>
+        <p>É o maior e mais célebre jardim de Suzhou, com cerca de 5 hectares, e fica ao lado do museu e a uns 15 minutos a pé do hotel. Foi construído a partir de 1509 por Wang Xianchen, um censor imperial que se aposentou depois de cair em desgraça na corte. O nome vem de um poema antigo: cultivar o próprio jardim é a forma de governo do homem simples. Diz a lenda que o filho perdeu o jardim numa única noite de jogo.</p>
+        <p>Três quintos do jardim são água. Os pavilhões se distribuem em volta de lagos ligados por pontes em zigue-zague, e um deles foi posicionado para enquadrar, ao longe, o pagode do Templo do Norte, como se fosse parte do jardim: o empréstimo de paisagem, técnica central na arte chinesa de jardins. Na manhã do dia 30 vocês estão livres até o fim da tarde, então é o momento.</p>
+        <p class="look"><b>Para reparar</b>O pagode do Templo do Norte “emprestado” na paisagem, visto da margem oeste do lago central.</p>
+      <aside class="facts"><h4>Curiosidades</h4><ul><li>Reservar online com o passaporte antes de ir: na alta temporada esgota. Em dezembro é baixa temporada e mais barato.</li></ul></aside></article>
+<article class="site">
+        <h3>Suzhou moderna: lago Jinji e o Portão do Oriente <small>金鸡湖 · 东方之门</small></h3>
+        <span class="mono when">Dia 6 · terça · tarde</span><div class="gal"><figure class="ph" data-w="Gate to the East"><a target="_blank" rel="noopener"><img alt="O Portão do Oriente" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O Portão do Oriente</figcaption></figure><figure class="ph" data-w="Jinji Lake"><a target="_blank" rel="noopener"><img alt="O lago Jinji" loading="lazy"></a><figcaption><span class="tag t-h">Hoje</span>O lago Jinji</figcaption></figure></div>
+        <p>A leste da cidade antiga fica o Parque Industrial de Suzhou, criado em 1994 numa parceria entre a China e Singapura, que trouxe planejamento urbano e empresas estrangeiras para uma área de arrozais. Hoje é uma cidade inteira, com fábricas de alta tecnologia, universidades e torres ao redor do lago Jinji, e um dos motivos de Suzhou ter uma das maiores economias da China entre cidades que não são capital de província.</p>
+        <p>O Portão do Oriente, de 2015, são duas torres de 301 metros unidas no alto, formando um arco. A ideia era evocar um portão de cidade antiga; os moradores logo a apelidaram de “ceroula”. Ao lado, o Suzhou Center é um shopping com um enorme telhado ondulado. O passeio à beira do lago no fim do dia completa a comparação que o roteiro propõe: de manhã, a Suzhou dos jardins; à tarde, a Suzhou das torres.</p>
+        <p class="look"><b>Para reparar</b>O arco do Portão do Oriente refletido no lago, e a diferença de altura em relação à cidade velha, onde nada passa de três andares.</p>
+</article>
+
+    </div>
+  </div>
+</section>
+</div>
+<footer class="wrap foot">
+  <p><b>Sobre esta página.</b> O roteiro segue o programa enviado pela agência; horários marcados com “~” são estimativas. Datas históricas seguem as versões mais aceitas, e as lendas dos jardins estão indicadas como tal.</p>
+  <p><b>Mapas.</b> Mapas vetoriais do <a href="https://openfreemap.org/" target="_blank" rel="noopener">OpenFreeMap</a>, gratuitos e sem chave, com dados do © OpenStreetMap e da OpenMapTiles, exibidos com a biblioteca MapLibre. Os nomes aparecem em português ou inglês quando existem. As linhas ligam os pontos na ordem do roteiro e não seguem ruas nem trilhos.</p><p><b>Imagens.</b> Carregadas da Wikipédia e do Wikimedia Commons: cada foto é a imagem principal do verbete indicado na legenda, e um clique abre o verbete com autoria e licença.</p>
+</footer>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+(function(){
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var css=getComputedStyle(document.documentElement);
+var ACC=css.getPropertyValue('--accent').trim()||'#2B47B0',GOLD=css.getPropertyValue('--gold').trim()||'#8F6710',MUT=css.getPropertyValue('--muted').trim()||'#56607C';
+/* Mapa: OpenFreeMap (gratuito, sem chave). Para trocar de provedor, mude só esta linha. */
+var STYLE=window.__STYLE||'https://tiles.openfreemap.org/styles/liberty';
+
+/* ---------- imagens da Wikipédia ---------- */
+(function(){
+  var figs=[].slice.call(document.querySelectorAll('figure.ph')),seen={},titles=[];
+  figs.forEach(function(f){var t=f.getAttribute('data-w');if(!seen[t]){seen[t]=1;titles.push(t)}});
+  var res={};
+  function drop(f){var g=f.parentNode;if(!g)return;g.removeChild(f);if(!g.children.length&&g.parentNode)g.parentNode.removeChild(g)}
+  function apply(list){figs.forEach(function(f){var t=f.getAttribute('data-w');if(list.indexOf(t)<0)return;var r=res[t];
+    if(!r){drop(f);return}
+    var a=f.querySelector('a'),im=f.querySelector('img');a.href='https://en.wikipedia.org/wiki/'+encodeURIComponent(r.title.replace(/ /g,'_'));
+    im.onerror=function(){drop(f)};im.src=r.src})}
+  function batch(list){
+    var u='https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=640&pilimit=50&titles='+encodeURIComponent(list.join('|'));
+    return fetch(u).then(function(r){return r.json()}).then(function(j){
+      var q=j.query||{},norm={},red={},by={};
+      (q.normalized||[]).forEach(function(n){norm[n.from]=n.to});
+      (q.redirects||[]).forEach(function(n){red[n.from]=n.to});
+      Object.keys(q.pages||{}).forEach(function(k){var p=q.pages[k];by[p.title]=p});
+      list.forEach(function(t){var x=norm[t]||t;x=red[x]||x;var p=by[x];res[t]=p&&p.thumbnail?{src:p.thumbnail.source,title:x}:null});
+      apply(list)}).catch(function(){list.forEach(function(t){res[t]=null});apply(list)});
+  }
+  if(!window.fetch){figs.forEach(drop);return}
+  for(var i=0;i<titles.length;i+=40)batch(titles.slice(i,i+40));
+})();
+
+/* ---------- mapas ---------- */
+var OK=!!(window.maplibregl&&maplibregl.supported?maplibregl.supported():window.maplibregl);
+function fail(el,msg){el.innerHTML='';var p=document.createElement('p');p.className='msg';p.textContent=msg;el.appendChild(p)}
+if(!OK){[].forEach.call(document.querySelectorAll('.lmap'),function(e){fail(e,'O mapa precisa de internet e de um navegador com WebGL para carregar.')});window.__jp={ok:false};return}
+
+var LATIN=['coalesce',['get','name:pt'],['get','name_en'],['get','name:en'],['get','name:latin'],['get','name']];
+function relabel(map){
+  (map.getStyle().layers||[]).forEach(function(l){
+    if(l.type!=='symbol'||!l.layout||!l.layout['text-field'])return;
+    if(JSON.stringify(l.layout['text-field']).indexOf('name')<0)return;
+    var v=/^place/.test(l.id)?['format',LATIN,{},'\n',{},['coalesce',['get','name:nonlatin'],''],{'font-scale':.78}]:LATIN;
+    try{map.setLayoutProperty(l.id,'text-field',v)}catch(e){}
+  });
+}
+function hav(a,b){var R=6371e3,r=Math.PI/180,dl=(b[1]-a[1])*r,dn=(b[0]-a[0])*r,x=Math.sin(dl/2),y=Math.sin(dn/2);
+  var h=x*x+Math.cos(a[1]*r)*Math.cos(b[1]*r)*y*y;return 2*R*Math.asin(Math.sqrt(h))}
+function line(c){return {type:'Feature',properties:{},geometry:{type:'LineString',coordinates:c}}}
+function pt(c){return {type:'Feature',properties:{},geometry:{type:'Point',coordinates:c}}}
+function fc(a){return {type:'FeatureCollection',features:a}}
+var LIVE=[];
+
+function View(el,opt){
+  opt=opt||{};var self=this;this.el=el;this.q=[];this.ready=false;this.mk=[];this.raf=0;this.labels=!!opt.labels;
+  el.innerHTML='';
+  var m=this.map=new maplibregl.Map({container:el,style:STYLE,center:opt.center||[136.5,35.2],zoom:opt.zoom||5,
+    attributionControl:{compact:true},cooperativeGestures:true,dragRotate:false,pitchWithRotate:false,fadeDuration:0});
+  m.touchZoomRotate.disableRotation();
+  m.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+  m.addControl(new maplibregl.ScaleControl({unit:'metric',maxWidth:110}),'bottom-left');
+  var errShown=false;
+  m.on('error',function(e){if(self.ready||errShown)return;errShown=true;console.warn('mapa:',e&&e.error);});
+  m.on('load',function(){
+    relabel(m);
+    m.addSource('rt-bg',{type:'geojson',data:fc([])});
+    m.addSource('rt-act',{type:'geojson',data:fc([])});
+    m.addSource('rt-dot',{type:'geojson',data:fc([])});
+    m.addLayer({id:'rt-bg',type:'line',source:'rt-bg',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':MUT,'line-width':2.2,'line-opacity':.85,'line-dasharray':[1,2.4]}});
+    m.addLayer({id:'rt-act-case',type:'line',source:'rt-act',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#ffffff','line-width':8,'line-opacity':.9}});
+    m.addLayer({id:'rt-act',type:'line',source:'rt-act',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':ACC,'line-width':4.5}});
+    m.addLayer({id:'rt-dot',type:'circle',source:'rt-dot',paint:{'circle-radius':7,'circle-color':GOLD,'circle-stroke-color':'#ffffff','circle-stroke-width':2.5}});
+    self.ready=true;var q=self.q;self.q=[];q.forEach(function(f){f()});
+  });
+  LIVE.push(this);
+}
+View.prototype.when=function(f){if(this.ready)f();else this.q.push(f)};
+View.prototype.bg=function(lines){var s=this;this.when(function(){s.map.getSource('rt-bg').setData(fc(lines.map(line)))})};
+View.prototype.pins=function(list){var s=this;this.when(function(){
+  s.mk.forEach(function(k){k.remove()});s.mk=[];
+  list.forEach(function(p,i){
+    var w=document.createElement('div');w.className='pinwrap';
+    var c=document.createElement('div');c.className='pinicon';c.textContent=String(i+1);w.appendChild(c);
+    var mk;
+    if(s.labels){var t=document.createElement('span');t.className='pinlab';t.textContent=p[0];w.appendChild(t);
+      mk=new maplibregl.Marker({element:w,anchor:'left',offset:[-12,0]})}
+    else{w.title=p[0];w.setAttribute('role','img');w.setAttribute('aria-label',(i+1)+'. '+p[0]);
+      mk=new maplibregl.Marker({element:w,anchor:'center'}).setPopup(new maplibregl.Popup({offset:16,closeButton:false}).setText(p[0]))}
+    mk.setLngLat([p[1],p[2]]).addTo(s.map);s.mk.push(mk)})})};
+View.prototype.fit=function(c,o){var s=this;o=o||{};this.when(function(){
+  if(c.length===1){s.map.jumpTo({center:c[0],zoom:o.single||15});return}
+  var b=new maplibregl.LngLatBounds(c[0],c[0]);c.forEach(function(x){b.extend(x)});
+  s.map.fitBounds(b,{padding:o.padding||40,maxZoom:o.maxZoom||16,duration:o.animate&&!reduce?900:0})})};
+View.prototype.full=function(c){var s=this;this.when(function(){cancelAnimationFrame(s.raf);
+  s.map.getSource('rt-act').setData(fc(c.length>1?[line(c)]:[]));s.map.getSource('rt-dot').setData(fc([pt(c[c.length-1])]))})};
+View.prototype.run=function(c,ms,done){var s=this;this.when(function(){
+  cancelAnimationFrame(s.raf);
+  var d=[0],n=c.length,i;for(i=1;i<n;i++)d[i]=d[i-1]+hav(c[i-1],c[i]);var T=d[n-1];
+  var A=s.map.getSource('rt-act'),D=s.map.getSource('rt-dot');
+  function at(e){var t=T*e,k=1;while(k<n-1&&d[k]<t)k++;var g=d[k]-d[k-1],f=g?(t-d[k-1])/g:1;f=Math.max(0,Math.min(1,f));
+    var a=c[k-1],b=c[k],p=[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];
+    A.setData(fc([line(c.slice(0,k).concat([p]))]));D.setData(fc([pt(p)]))}
+  if(reduce||!T||n<2){s.full(c);if(done)done();return}
+  if(ms==null)ms=Math.max(1400,Math.min(4200,T/110));
+  var t0=null;
+  function step(t){if(t0===null)t0=t;var p=Math.min(1,(t-t0)/ms),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;at(e);
+    if(p<1)s.raf=requestAnimationFrame(step);else if(done)done()}
+  at(0);s.raf=requestAnimationFrame(step)})};
+View.prototype.resize=function(){if(this.map)this.map.resize()};
+View.prototype.destroy=function(){cancelAnimationFrame(this.raf);this.mk.forEach(function(k){k.remove()});
+  if(this.map){this.map.remove();this.map=null}var i=LIVE.indexOf(this);if(i>=0)LIVE.splice(i,1)};
+
+/* cria o mapa quando a seção aparece e o desfaz quando sai da tela, para não acumular mapas abertos */
+function lazy(el,enter,leave){
+  if(!('IntersectionObserver' in window)){enter();return}
+  var on=false;new IntersectionObserver(function(en){en.forEach(function(e){
+    if(e.isIntersecting&&!on){on=true;enter()}else if(!e.isIntersecting&&on){on=false;leave()}})},{rootMargin:'400px 0px'}).observe(el);
+}
+window.__jp={ok:true,View:View,lazy:lazy,live:LIVE};
+
+/* ---------- mapa da rota ---------- */
+var S={osaka:[34.702,135.496],kix:[34.434,135.244],sea1:[33.2,129.8],sea2:[31.9,125.0],pvg:[31.144,121.808],hot:[31.2383,121.4686],
+ shs:[31.2492,121.4558],kun:[31.3790,120.9540],szs:[31.3305,120.6081],szh:[31.3176,120.6303]};
+function P(){return [].map.call(arguments,function(k){return [S[k][1],S[k][0]]})}
+var CITIES=[['Osaka','osaka'],['Xangai','hot'],['Suzhou','szh']].map(function(c){return [c[0],S[c[1]][1],S[c[1]][0]]});
+var LEGS=[
+ {d:'24 dez',t:'Osaka → Xangai',m:'Voo de cerca de 2h15 sobre o mar da China Oriental; o guia espera no desembarque',p:P('osaka','kix','sea1','sea2','pvg','hot')},
+ {d:'28 dez',t:'Xangai → Suzhou',m:'Trem-bala 09:43–10:06 · 23 min',p:P('hot','shs','kun','szs','szh')},
+ {d:'30 dez',t:'Suzhou → Xangai',m:'Trem-bala 17:23–17:53 · 30 min',p:P('szh','szs','kun','shs','hot')},
+ {d:'31 dez',t:'Xangai → casa',m:'Carro até o aeroporto e voo de volta, com conexão no Canadá',p:P('hot','pvg')}
+];
+(function(){
+  var el=document.getElementById('jp'),ol=document.getElementById('legs'),tb=document.getElementById('tour');
+  var all=[];LEGS.forEach(function(l){all=all.concat(l.p)});
+  var v=null,cur=0,touring=false,btns=[];
+  function mark(i){btns.forEach(function(b,j){b.setAttribute('aria-current',j===i?'true':'false')})}
+  function go(i,anim,zoom,done){cur=i;mark(i);if(!v){if(done)done();return}var l=LEGS[i];
+    if(zoom)v.fit(l.p,{padding:{top:60,bottom:60,left:60,right:60},maxZoom:11,animate:true});
+    if(!anim){v.full(l.p);return}
+    v.full([l.p[0]]);
+    setTimeout(function(){v.run(l.p,null,done)},zoom&&!reduce?950:0)}
+  LEGS.forEach(function(l,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.className='leg-b';b.id='leg-'+i;
+    b.innerHTML='<span class="d"></span><span class="t"></span><span class="m"></span>';
+    b.children[0].textContent=l.d;b.children[1].textContent=l.t;b.children[2].textContent=l.m;
+    b.addEventListener('click',function(){stop();go(i,true,true)});li.appendChild(b);ol.appendChild(li);btns.push(b)});
+  function stop(){touring=false;tb.textContent='Percorrer tudo'}
+  tb.addEventListener('click',function(){
+    if(touring){stop();return}
+    touring=true;tb.textContent='Parar';if(v)v.fit(all,{padding:{top:40,bottom:40,left:40,right:60},animate:true});
+    (function next(i){if(!touring)return;if(i>=LEGS.length){stop();return}
+      go(i,true,false,function(){setTimeout(function(){next(i+1)},reduce?900:400)})})(0)});
+  mark(0);
+  lazy(el,function(){
+    v=new View(el,{labels:true});v.bg(LEGS.map(function(l){return l.p}));v.pins(CITIES);v.fit(all,{padding:{top:40,bottom:40,left:40,right:60}});v.full(LEGS[cur].p);
+  },function(){stop();if(v){v.destroy();v=null}});
+})();
+
+/* ---------- mapas das cidades ---------- */
+var MM={
+ xangai:{cap:'O hotel fica entre a Praça do Povo e o rio Suzhou. O dia 27 é livre: o mapa mostra uma sugestão.',days:[
+  {t:'Dia 1 · qui',p:[['Aeroporto de Pudong (conferir)',31.1443,121.8083],['Kingtown Hotel Plaza',31.2383,121.4686],['Rua Nanjing',31.2361,121.4757],['Praça do Povo',31.2304,121.4737]]},
+  {t:'Dia 2 · sex',p:[['Kingtown Hotel Plaza',31.2383,121.4686],['Museu de Xangai Leste',31.2196,121.5440],['Jardim Yu',31.2272,121.4921],['Tianzifang',31.2087,121.4687]]},
+  {t:'Dia 3 · sáb',p:[['Kingtown Hotel Plaza',31.2383,121.4686],['M50',31.2500,121.4472],['Armazém Sihang',31.2445,121.4694],['Ponte Waibaidu',31.2443,121.4906],['O Bund',31.2400,121.4900]]},
+  {t:'Dia 4 · dom',p:[['Kingtown Hotel Plaza',31.2383,121.4686],['Power Station of Art',31.2033,121.4948],['Museu Long West Bund',31.1715,121.4600],['Tank Shanghai',31.1640,121.4624],['Shanghai Tower',31.2335,121.5055]]},
+  {t:'Dia 8 · qui',p:[['Kingtown Hotel Plaza',31.2383,121.4686],['Museu de Xangai, Praça do Povo',31.2283,121.4755],['Aeroporto de Pudong (conferir)',31.1443,121.8083]]}]},
+ suzhou:{cap:'O hotel fica no começo da rua Pingjiang, dentro da cidade antiga.',days:[
+  {t:'Dia 5 · seg',p:[['Estação de Suzhou',31.3305,120.6081],['Jardim Lingering',31.3170,120.5885],['Rua Shantang',31.3207,120.6020],['Hotel Scholars',31.3176,120.6303]]},
+  {t:'Dia 6 · ter',p:[['Hotel Scholars',31.3176,120.6303],['Museu de Suzhou',31.3237,120.6283],['Suzhou Center',31.3175,120.6800],['Portão do Oriente',31.3242,120.6817]]},
+  {t:'Dia 7 · qua',p:[['Hotel Scholars',31.3176,120.6303],['Jardim do Administrador Humilde',31.3249,120.6295],['Rua Pingjiang',31.3150,120.6300],['Estação de Suzhou',31.3305,120.6081]]}]}
+};
+function build(box){
+  var cfg=MM[box.getAttribute('data-k')];if(!cfg)return;
+  var tabs=document.createElement('div');tabs.className='mm-tabs';
+  var md=document.createElement('div');md.className='lmap';
+  var ol=document.createElement('ol');
+  var row=document.createElement('div');row.className='row';
+  var cap=document.createElement('p');cap.className='cap';cap.style.margin='0';cap.textContent=cfg.cap;
+  var rep=document.createElement('button');rep.type='button';rep.className='btn ghost';rep.textContent='Repetir';
+  row.appendChild(cap);row.appendChild(rep);
+  box.appendChild(tabs);box.appendChild(md);box.appendChild(ol);box.appendChild(row);
+  var cur=0,bs=[],v=null,first=true;
+  function list(d){ol.innerHTML='';d.p.forEach(function(p){var li=document.createElement('li'),s=document.createElement('span');s.textContent=p[0];li.appendChild(s);ol.appendChild(li)})}
+  function draw(i,anim){
+    cur=i;var d=cfg.days[i];list(d);bs.forEach(function(x,j){x.setAttribute('aria-pressed',j===i?'true':'false')});
+    if(!v)return;
+    var c=d.p.map(function(p){return [p[2],p[1]]});
+    v.pins(d.p.map(function(p){return [p[0],p[2],p[1]]}));v.fit(c,{padding:44,maxZoom:15.5});
+    if(anim)v.run(c,2800);else v.full(c);
+  }
+  cfg.days.forEach(function(d,i){var x=document.createElement('button');x.type='button';x.textContent=d.t;x.addEventListener('click',function(){draw(i,true)});tabs.appendChild(x);bs.push(x)});
+  rep.addEventListener('click',function(){draw(cur,true)});
+  draw(0,false);
+  lazy(md,function(){v=new View(md);draw(cur,false)},function(){if(v){v.destroy();v=null}});
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){io.disconnect();setTimeout(function(){if(v)draw(cur,true)},300)}})},{threshold:.6});io.observe(md)}
+}
+[].forEach.call(document.querySelectorAll('.mm'),build);
+})();
+
+</script>
+<script>
+(function(){
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var HOT={"sh1": {"n": "Kingtown Hotel Plaza Shanghai", "a": "126 Xinzha Road, esquina com Changsha Road, Huangpu, Xangai · 上海广场嘉廷酒店", "c": "Check-in 24/12 a partir das 14:00 · Check-out 28/12 até 12:00 · café incluído"}, "sz": {"n": "Scholars Boutique Suzhou Pingjiangfu", "a": "60 Baita East Road, Gusu, Suzhou · 苏州书香府邸平江府", "c": "Check-in 28/12 a partir das 14:00 · Check-out 30/12 até 12:00 · café incluído"}, "sh2": {"n": "Kingtown Hotel Plaza Shanghai", "a": "126 Xinzha Road, esquina com Changsha Road, Huangpu, Xangai · 上海广场嘉廷酒店", "c": "Volta em 30/12, à noite · Check-out 31/12 até 12:00 · café incluído"}};
+var D=[{"d": "2026-12-24", "c": "Xangai", "ch": "xangai", "h": "sh1", "t": "Chegada a Xangai", "i": [["11:00", "Check-out em Osaka e trem ao aeroporto de Kansai"], ["", "Voo Osaka → Xangai, cerca de 2h15"], ["", "O guia espera no desembarque e leva ao hotel de carro"], ["14:00", "Check-in no Kingtown Hotel Plaza"], ["", "Resto do dia livre: rua Nanjing e Praça do Povo, a pé do hotel"]], "r": ["Isenção de visto: ter à mão a reserva do hotel e a passagem de volta.", "Ao pousar, ativar o eSIM: com ele Google e WhatsApp funcionam; no Wi-Fi do hotel, não.", "Pedir ao guia ajuda para configurar o Alipay e o QR de transporte, se ainda não estiver pronto."], "f": "A rua Nanjing, a dois quarteirões do hotel, foi a primeira rua comercial moderna da China, com as grandes lojas de departamento dos anos 1910 e 1920.", "p": [["Aeroporto de Pudong (conferir no voo)", 31.1443, 121.8083], ["Kingtown Hotel Plaza", 31.2383, 121.4686], ["Rua Nanjing (calçadão)", 31.2361, 121.4757], ["Praça do Povo", 31.2304, 121.4737]]}, {"d": "2026-12-25", "c": "Xangai", "ch": "xangai", "h": "sh1", "t": "Museu, Jardim Yu e Tianzifang", "i": [["", "Café da manhã no hotel"], ["", "Museu de Xangai Leste, em Pudong, com audioguia"], ["", "Jardim Yu e o bazar da cidade velha"], ["", "Almoço incluído"], ["", "Tianzifang: becos de shikumen, cafés e lojas"], ["", "Volta ao hotel"]], "r": ["Levar o passaporte: o museu pede documento na entrada.", "Natal não é feriado na China: a cidade funciona normalmente.", "No bazar, provar o xiaolongbao. Morder, sugar o caldo e depois comer."], "f": "A ponte da casa de chá do Jardim Yu dá nove voltas. Segundo a tradição, os maus espíritos só andam em linha reta.", "p": [["Kingtown Hotel Plaza", 31.2383, 121.4686], ["Museu de Xangai Leste", 31.2196, 121.544], ["Jardim Yu", 31.2272, 121.4921], ["Tianzifang", 31.2087, 121.4687]]}, {"d": "2026-12-26", "c": "Xangai", "ch": "xangai", "h": "sh1", "t": "M50, rio Suzhou e o Bund", "i": [["", "Café da manhã no hotel"], ["", "M50: galerias numa antiga fiação"], ["", "Caminhada pela margem do rio Suzhou"], ["", "Armazém Sihang, palco da batalha de 1937"], ["", "Almoço incluído"], ["", "Ponte Waibaidu"], ["", "O Bund no fim da tarde, com a vista de Pudong"], ["", "Jantar livre e volta ao hotel com o guia"]], "r": ["Agasalho: à beira do rio venta e, em dezembro, a sensação é de 3 a 8 °C.", "As luzes de Pudong acendem por volta das 17h30. Vale esperar."], "f": "A Alfândega do Bund tem um relógio que tocava a melodia do Big Ben. Os moradores o apelidaram de Big Ching.", "p": [["Kingtown Hotel Plaza", 31.2383, 121.4686], ["M50, rua Moganshan", 31.25, 121.4472], ["Armazém Sihang", 31.2445, 121.4694], ["Ponte Waibaidu", 31.2443, 121.4906], ["O Bund", 31.24, 121.49]]}, {"d": "2026-12-27", "c": "Xangai", "ch": "xangai", "h": "sh1", "t": "Dia livre", "i": [["", "Café da manhã no hotel"], ["", "Sugestão: West Bund, com o Museu Long e o Tank Shanghai"], ["", "Ou a Power Station of Art, numa antiga usina, grátis"], ["", "Fim de tarde: mirante da Shanghai Tower, a 546 m"], ["", "Jantar livre"]], "r": ["Domingo: os museus abrem; fecham às segundas.", "Táxi ou DiDi pelo Alipay até o West Bund: ~25 min.", "Comprar a Shanghai Tower online na véspera sai ~10% mais barato."], "f": "O Tank Shanghai funciona em cinco tanques de combustível do antigo aeroporto de Longhua, o primeiro aeroporto civil de Xangai.", "p": [["Kingtown Hotel Plaza", 31.2383, 121.4686], ["Power Station of Art", 31.2033, 121.4948], ["Museu Long West Bund", 31.1715, 121.46], ["Tank Shanghai", 31.164, 121.4624], ["Shanghai Tower", 31.2335, 121.5055]]}, {"d": "2026-12-28", "c": "Suzhou", "ch": "suzhou", "h": "sz", "t": "Ida a Suzhou", "i": [["~08:45", "Check-out; o motorista leva à estação"], ["09:43", "Trem-bala a Suzhou, chega 10:06"], ["", "O guia espera na estação"], ["", "Jardim Lingering e 20 min de ópera Kunqu"], ["", "Almoço incluído"], ["", "Rua Shantang, no fim da tarde"], ["", "Check-in no Scholars (a partir das 14:00)"]], "r": ["Passaporte à mão: é o bilhete do trem.", "Inspeção de bagagem na entrada da estação: chegar com folga.", "A rua Pingjiang, na porta do hotel, é mais bonita à noite e cedo de manhã."], "f": "O Pico Coroado de Nuvens, no Jardim Lingering, é uma pedra do lago Tai de 6,5 metros. Algumas dessas pedras ficavam anos no fundo do lago para a água cavar mais furos.", "p": [["Kingtown Hotel Plaza", 31.2383, 121.4686], ["Estação de Xangai", 31.2492, 121.4558], ["Estação de Suzhou", 31.3305, 120.6081], ["Jardim Lingering", 31.317, 120.5885], ["Rua Shantang", 31.3207, 120.602], ["Scholars Boutique Pingjiangfu", 31.3176, 120.6303]]}, {"d": "2026-12-29", "c": "Suzhou", "ch": "suzhou", "h": "sz", "t": "Museu de Suzhou e a cidade nova", "i": [["", "Café da manhã no hotel"], ["", "Museu de Suzhou, de I. M. Pei"], ["", "Almoço incluído"], ["", "Suzhou Center, à beira do lago Jinji"], ["", "Passeio pelo lago e o Portão do Oriente"]], "r": ["O museu fica a 1 km do hotel. Levar o passaporte.", "No lago, o fim de tarde é a melhor hora para o Portão do Oriente."], "f": "Os moradores de Suzhou apelidaram o Portão do Oriente, duas torres unidas no alto, de “ceroula”.", "p": [["Scholars Boutique Pingjiangfu", 31.3176, 120.6303], ["Museu de Suzhou", 31.3237, 120.6283], ["Suzhou Center", 31.3175, 120.68], ["Portão do Oriente", 31.3242, 120.6817]]}, {"d": "2026-12-30", "c": "Suzhou", "ch": "suzhou", "h": "sh2", "t": "Manhã livre e volta a Xangai", "i": [["", "Café da manhã no hotel"], ["", "Sugestão: Jardim do Administrador Humilde, reservado antes"], ["", "Passeio pela rua Pingjiang e almoço"], ["12:00", "Check-out; malas na recepção"], ["~16:30", "O motorista busca no hotel"], ["17:23", "Trem-bala a Xangai, chega 17:53"], ["", "Motorista até o Kingtown Hotel Plaza"]], "r": ["Reservar o Jardim do Administrador Humilde online, com o passaporte.", "Véspera de Ano-Novo: estações cheias. Passaporte à mão."], "f": "Três quintos do Jardim do Administrador Humilde são água, e um pagode de fora do muro foi “emprestado” para compor a paisagem.", "p": [["Scholars Boutique Pingjiangfu", 31.3176, 120.6303], ["Jardim do Administrador Humilde", 31.3249, 120.6295], ["Rua Pingjiang", 31.315, 120.63], ["Estação de Suzhou", 31.3305, 120.6081], ["Estação de Xangai", 31.2492, 121.4558], ["Kingtown Hotel Plaza", 31.2383, 121.4686]]}, {"d": "2026-12-31", "c": "Xangai", "ch": "xangai", "h": "sh2", "t": "Partida", "i": [["", "Café da manhã no hotel"], ["", "Manhã livre: Museu de Xangai, na Praça do Povo, grátis e sem reserva"], ["12:00", "Check-out"], ["", "O motorista leva ao aeroporto"], ["", "Voo de volta, com conexão no Canadá"]], "r": ["Guardar dinheiro chinês só para o aeroporto; o resto pode ser trocado lá.", "Chegar 3 horas antes do voo."], "f": "Na véspera do Ano-Novo, o Bund recebe tanta gente que a polícia controla os acessos. Vocês já estarão no ar.", "p": [["Kingtown Hotel Plaza", 31.2383, 121.4686], ["Museu de Xangai, Praça do Povo", 31.2283, 121.4755], ["Aeroporto de Pudong (conferir no voo)", 31.1443, 121.8083]]}];
+var WD=['domingo','segunda','terça','quarta','quinta','sexta','sábado'],WS=['dom','seg','ter','qua','qui','sex','sáb'];
+var MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+var ARR=Date.UTC(2026,11,24,4,0),END=Date.UTC(2026,11,31,8,0);
+function jst(){return new Date(Date.now()+8*3600e3)}
+function key(x){return x.toISOString().slice(0,10)}
+function parse(k){var p=k.split('-');return new Date(Date.UTC(+p[0],p[1]-1,+p[2]))}
+function nice(k){var x=parse(k);return WD[x.getUTCDay()]+', '+x.getUTCDate()+' de '+MES[x.getUTCMonth()]}
+function idxOf(k){for(var i=0;i<D.length;i++)if(D[i].d===k)return i;return -1}
+function $(id){return document.getElementById(id)}
+function txt(el,s){el.textContent=s;return el}
+function mk(tag,cls,s){var e=document.createElement(tag);if(cls)e.className=cls;if(s!=null)e.textContent=s;return e}
+
+/* contagem regressiva */
+var cd=$('cd');
+function pad(n){return (n<10?'0':'')+n}
+function tick(){
+  var now=Date.now(),j=jst(),off=-new Date().getTimezoneOffset()/60,dh=8-off;
+  txt($('cd-now'),'Na China agora: '+nice(key(j))+', '+pad(j.getUTCHours())+':'+pad(j.getUTCMinutes())+(dh?' · '+Math.abs(dh)+' horas '+(dh>0?'à frente':'atrás')+' daqui':''));
+  if(now<ARR){
+    var s=Math.floor((ARR-now)/1000);
+    txt($('cd-d'),s/86400|0);txt($('cd-h'),pad(s%86400/3600|0));txt($('cd-m'),pad(s%3600/60|0));txt($('cd-s'),pad(s%60));
+    cd.setAttribute('data-state','antes');
+  }else if(now<END){
+    var i=idxOf(key(j));cd.setAttribute('data-state','durante');
+    txt($('cd-live'),i>=0?'Dia '+(i+1)+' de '+D.length+' na China · '+D[i].c+' · '+D[i].t:'Estamos na China');
+  }else{cd.setAttribute('data-state','depois');}
+}
+tick();setInterval(tick,1000);
+
+/* aba Hoje */
+var cur=-1,map=null,grp=null,line=null,dot=null;
+var strip=$('hj-strip');
+D.forEach(function(x,i){var b=mk('button','chip');b.type='button';var p=parse(x.d);
+  b.appendChild(mk('span','w',WS[p.getUTCDay()]));b.appendChild(mk('span','n',String(p.getUTCDate())));
+  b.title=x.c+' · '+x.t;b.addEventListener('click',function(){render(i,true)});strip.appendChild(b)});
+$('hj-prev').addEventListener('click',function(){if(cur>0)render(cur-1,true)});
+$('hj-next').addEventListener('click',function(){if(cur<D.length-1)render(cur+1,true)});
+$('hj-today').addEventListener('click',function(){render(defaultIdx(),true)});
+function defaultIdx(){var k=key(jst());if(k<D[0].d)return 0;if(k>D[D.length-1].d)return D.length-1;var i=idxOf(k);return i<0?0:i}
+function ensureMap(){
+  if(map||!window.__jp||!window.__jp.ok)return;
+  map=new window.__jp.View($('hj-map'));
+}
+function render(i,anim){
+  cur=i;var x=D[i],today=key(jst()),isToday=x.d===today;
+  [].forEach.call(strip.children,function(b,j){b.setAttribute('aria-current',j===i?'true':'false');b.classList.toggle('today',D[j].d===today)});
+  var sel=strip.children[i];if(sel&&sel.scrollIntoView&&anim)sel.scrollIntoView({block:'nearest',inline:'center',behavior:reduce?'auto':'smooth'});
+  $('hj-prev').disabled=i===0;$('hj-next').disabled=i===D.length-1;
+  var lab;
+  if(isToday)lab='Hoje na China · '+nice(x.d);
+  else if(today<D[0].d)lab='Prévia · '+nice(x.d)+' · faltam '+Math.ceil((parse(x.d)-parse(today))/864e5)+' dias';
+  else if(today>D[D.length-1].d)lab='Lembrança · '+nice(x.d);
+  else lab=(x.d<today?'Já foi · ':'Daqui a '+Math.round((parse(x.d)-parse(today))/864e5)+' dia(s) · ')+nice(x.d);
+  txt($('hj-lab'),lab);txt($('hj-t'),x.t);txt($('hj-sub'),'Dia '+(i+1)+' de '+D.length+' · '+x.c);
+  $('hj-today').hidden=i===defaultIdx();
+  var ol=$('hj-tl');ol.innerHTML='';
+  var nowMin=jst().getUTCHours()*60+jst().getUTCMinutes(),nextSet=false,lastT=-1;
+  x.i.forEach(function(it){var li=mk('li');li.appendChild(mk('span','tm',it[0]||'·'));var s=mk('span','tx',it[1]);li.appendChild(s);
+    if(isToday&&it[0]){var m=it[0].match(/(\d\d):(\d\d)/);if(m){lastT=+m[1]*60+(+m[2]);
+      if(lastT<nowMin-30)li.classList.add('past');else if(!nextSet){nextSet=true;li.classList.add('next');s.appendChild(mk('b','nx','Próximo'))}}}
+    ol.appendChild(li)});
+  var rl=$('hj-r');rl.innerHTML='';x.r.forEach(function(s){rl.appendChild(mk('li',null,s))});
+  txt($('hj-f'),x.f);
+  var h=HOT[x.h];txt($('hj-hn'),h.n);txt($('hj-ha'),h.a);txt($('hj-hc'),h.c);
+  $('hj-read').setAttribute('href','#'+x.ch);txt($('hj-read'),'Ler a história de '+x.c);
+  ensureMap();
+  var ml=$('hj-ml');ml.innerHTML='';x.p.forEach(function(p){ml.appendChild(mk('li',null,p[0]))});
+  if(map){
+    map.resize();
+    var c=x.p.map(function(p){return [p[2],p[1]]});
+    map.pins(x.p.map(function(p){return [p[0],p[2],p[1]]}));map.fit(c,{padding:44,maxZoom:15.5,single:15});
+    if(c.length>1&&anim!==false)map.run(c,2600);else map.full(c);
+  }else if(!$('hj-map').querySelector('.msg')){$('hj-map').innerHTML='<p class="msg">O mapa precisa de conexão com a internet. O roteiro do dia funciona sem ela.</p>'}
+}
+
+/* troca de abas */
+var VIEWS={guia:['v-guia','tab-guia',''],hoje:['v-hoje','tab-hoje','hoje'],trans:['v-trans','tab-trans','transporte'],ing:['v-ing','tab-ing','ingressos']},shown=null;
+var tH=$('tab-hoje');
+function show(v){
+  if(shown===v)return;shown=v;
+  document.body.setAttribute('data-view',v);
+  Object.keys(VIEWS).forEach(function(k){$(VIEWS[k][0]).hidden=k!==v;$(VIEWS[k][1]).setAttribute('aria-selected',k===v)});
+  if(v==='hoje'){render(cur<0?defaultIdx():cur,true)}
+  else if(window.__jp&&window.__jp.live)window.__jp.live.forEach(function(x){x.resize()});
+  if(v==='hoje'&&map)setTimeout(function(){map.resize()},0);
+}
+function route(){
+  var h=location.hash.slice(1);
+  for(var k in VIEWS){if(VIEWS[k][2]&&h===VIEWS[k][2]){show(k);window.scrollTo(0,0);return}}
+  if(h.indexOf('ig-')===0){show('ing');var g=document.getElementById(h);if(g)setTimeout(function(){g.scrollIntoView()},0);return}
+  show('guia');
+  if(h){var el=document.getElementById(h);if(el)setTimeout(function(){el.scrollIntoView()},0)}
+}
+$('tab-guia').addEventListener('click',function(){if(location.hash)history.replaceState(null,'',location.pathname+location.search);show('guia');window.scrollTo(0,0)});
+['trans','ing'].forEach(function(k){$(VIEWS[k][1]).addEventListener('click',function(){if(location.hash!=='#'+VIEWS[k][2])location.hash=VIEWS[k][2];else show(k)})});
+Array.prototype.forEach.call(document.querySelectorAll('.tr-day'),function(b){b.addEventListener('click',function(){cur=+b.getAttribute('data-day');if(location.hash!=='#hoje')location.hash='hoje';else{shown=null;show('hoje')}})});
+tH.addEventListener('click',function(){if(location.hash!=='#hoje')location.hash='hoje';else show('hoje')});
+window.addEventListener('hashchange',route);
+var k0=key(jst()),during=k0>=D[0].d&&k0<=D[D.length-1].d;
+if(location.hash==='#hoje'||(!location.hash&&during)){show('hoje')}else route();
+$('cd-go').addEventListener('click',function(){location.hash='hoje'});
+})();
+
+</script>
+<script>
+(function(){
+var K='cn26-compras',st={};
+try{st=JSON.parse(localStorage.getItem(K)||'{}')||{}}catch(e){st={}}
+function save(){try{localStorage.setItem(K,JSON.stringify(st))}catch(e){}}
+function set(b,on){b.setAttribute('aria-pressed',on?'true':'false');b.querySelector('.bl').textContent=on?'Comprado':'Não comprado';var it=b.closest('[data-buy-item]');if(it)it.classList.toggle('is-bought',on)}
+function refresh(){
+  Array.prototype.forEach.call(document.querySelectorAll('.tr-leg'),function(a){
+    var bs=a.querySelectorAll('.buy'),c=a.querySelector('.tr-top .tr-st');if(!bs.length||!c)return;
+    var n=0;Array.prototype.forEach.call(bs,function(b){if(b.getAttribute('aria-pressed')==='true')n++});
+    c.className='tr-st '+(n===bs.length?'ok':c.getAttribute('data-cls'));
+    c.textContent=n===bs.length?'Tudo comprado':(n?n+' de '+bs.length+' comprados · ':'')+c.getAttribute('data-orig');
+  });
+  var ib=document.querySelectorAll('#v-ing .buy'),m=0;Array.prototype.forEach.call(ib,function(b){if(b.getAttribute('aria-pressed')==='true')m++});
+  var ct=document.getElementById('ig-count');if(ct)ct.textContent=m+' de '+ib.length+' ingressos pagos comprados.';
+}
+Array.prototype.forEach.call(document.querySelectorAll('.buy'),function(b){
+  var k=b.getAttribute('data-k');set(b,Object.prototype.hasOwnProperty.call(st,k)?!!st[k]:b.getAttribute('data-def')==='1');
+  b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')!=='true';st[k]=on;save();set(b,on);refresh()});
+});
+refresh();
+})();
+</script>
+</body>
+</html>
