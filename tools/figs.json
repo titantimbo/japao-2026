@@ -1,0 +1,896 @@
+[
+{
+"w": "Edo",
+"cap": "Edo, a cidade dos xoguns",
+"h3": "B.League",
+"f": "index.html"
+},
+{
+"w": "Meiji Restoration",
+"cap": "1868: o imperador a caminho de Tóquio",
+"h3": "B.League",
+"f": "index.html"
+},
+{
+"w": "1964 Summer Olympics",
+"cap": "Tóquio, 1964",
+"h3": "B.League",
+"f": "index.html"
+},
+{
+"w": "Sensō-ji",
+"cap": "O Sensō-ji, templo mais antigo de Tóquio",
+"h3": "Asakusa e o Sensō-ji",
+"f": "index.html"
+},
+{
+"w": "Kaminarimon",
+"cap": "O Kaminarimon e a lanterna",
+"h3": "Asakusa e o Sensō-ji",
+"f": "index.html"
+},
+{
+"w": "One Hundred Famous Views of Edo",
+"cap": "Edo nas gravuras de Hiroshige, década de 1850",
+"h3": "Asakusa e o Sensō-ji",
+"f": "index.html"
+},
+{
+"w": "Bombing of Tokyo (10 March 1945)",
+"cap": "Tóquio depois do bombardeio de 10 de março de 1945",
+"h3": "Asakusa e o Sensō-ji",
+"f": "index.html"
+},
+{
+"w": "Tokyo National Museum",
+"cap": "O Museu Nacional de Tóquio",
+"h3": "Parque Ueno e o Museu Nacional de Tóquio",
+"f": "index.html"
+},
+{
+"w": "Battle of Ueno",
+"cap": "A Batalha de Ueno, 1868",
+"h3": "Parque Ueno e o Museu Nacional de Tóquio",
+"f": "index.html"
+},
+{
+"w": "Ueno Park",
+"cap": "O Parque Ueno",
+"h3": "Parque Ueno e o Museu Nacional de Tóquio",
+"f": "index.html"
+},
+{
+"w": "Tokyo Imperial Palace",
+"cap": "O Palácio Imperial e seus fossos",
+"h3": "Palácio Imperial",
+"f": "index.html"
+},
+{
+"w": "Edo Castle",
+"cap": "O Castelo de Edo",
+"h3": "Palácio Imperial",
+"f": "index.html"
+},
+{
+"w": "Tokugawa Ieyasu",
+"cap": "Tokugawa Ieyasu, o primeiro xogum de Edo",
+"h3": "Palácio Imperial",
+"f": "index.html"
+},
+{
+"w": "Great Fire of Meireki",
+"cap": "O Grande Incêndio de Meireki, 1657",
+"h3": "Palácio Imperial",
+"f": "index.html"
+},
+{
+"w": "National Museum of Modern Art, Tokyo",
+"cap": "O MOMAT, no parque Kitanomaru",
+"h3": "Museu Nacional de Arte Moderna",
+"f": "index.html"
+},
+{
+"w": "Tsukiji fish market",
+"cap": "O mercado de Tsukiji",
+"h3": "Tsukiji",
+"f": "index.html"
+},
+{
+"w": "1923 Great Kantō earthquake",
+"cap": "O Grande Terremoto de Kantō, 1923",
+"h3": "Tsukiji",
+"f": "index.html"
+},
+{
+"w": "Hamarikyu Gardens",
+"cap": "Os Jardins Hamarikyū e as torres de Shiodome",
+"h3": "Jardins Hamarikyū",
+"f": "index.html"
+},
+{
+"w": "TeamLab",
+"cap": "Uma instalação do coletivo teamLab",
+"h3": "teamLab Planets",
+"f": "index.html"
+},
+{
+"w": "Ginza",
+"cap": "O cruzamento de Ginza 4-chōme",
+"h3": "Ginza",
+"f": "index.html"
+},
+{
+"w": "Wako (retailer)",
+"cap": "O prédio da Wako, de 1932",
+"h3": "Ginza",
+"f": "index.html"
+},
+{
+"w": "Tokyo Tower",
+"cap": "A Torre de Tóquio",
+"h3": "Torre de Tóquio",
+"f": "index.html"
+},
+{
+"w": "Meiji Shrine",
+"cap": "O Meiji Jingū",
+"h3": "Meiji Jingū e Harajuku",
+"f": "index.html"
+},
+{
+"w": "Meiji Restoration",
+"cap": "A Restauração Meiji, 1868",
+"h3": "Meiji Jingū e Harajuku",
+"f": "index.html"
+},
+{
+"w": "Takeshita Street",
+"cap": "A rua Takeshita, em Harajuku",
+"h3": "Meiji Jingū e Harajuku",
+"f": "index.html"
+},
+{
+"w": "Waseda University",
+"cap": "O auditório Ōkuma, símbolo da Universidade Waseda",
+"h3": "Waseda, a biblioteca de Murakami e Kagurazaka",
+"f": "index.html"
+},
+{
+"w": "Kagurazaka",
+"cap": "Uma ruela de Kagurazaka",
+"h3": "Waseda, a biblioteca de Murakami e Kagurazaka",
+"f": "index.html"
+},
+{
+"w": "Shinjuku Station",
+"cap": "A Estação de Shinjuku",
+"h3": "Shinjuku e Omoide Yokochō",
+"f": "index.html"
+},
+{
+"w": "Omoide Yokocho",
+"cap": "Omoide Yokochō",
+"h3": "Shinjuku e Omoide Yokochō",
+"f": "index.html"
+},
+{
+"w": "Shinjuku Golden Gai",
+"cap": "Golden Gai, outro pedaço do pós-guerra em Shinjuku",
+"h3": "Shinjuku e Omoide Yokochō",
+"f": "index.html"
+},
+{
+"w": "Mount Fuji",
+"cap": "O Monte Fuji",
+"h3": "O Monte Fuji",
+"f": "index.html"
+},
+{
+"w": "Thirty-six Views of Mount Fuji",
+"cap": "As Trinta e Seis Vistas do Monte Fuji, de Hokusai",
+"h3": "O Monte Fuji",
+"f": "index.html"
+},
+{
+"w": "Fine Wind, Clear Morning",
+"cap": "O “Fuji vermelho” de Hokusai, c. 1831",
+"h3": "O Monte Fuji",
+"f": "index.html"
+},
+{
+"w": "The Great Wave off Kanagawa",
+"cap": "A Grande Onda, com o Fuji ao fundo",
+"h3": "O Monte Fuji",
+"f": "index.html"
+},
+{
+"w": "Chureito Pagoda",
+"cap": "O pagode Chūreitō e o Fuji",
+"h3": "Pagode Chūreitō",
+"f": "index.html"
+},
+{
+"w": "Fujiyoshida",
+"cap": "Fujiyoshida, aos pés da montanha",
+"h3": "Pagode Chūreitō",
+"f": "index.html"
+},
+{
+"w": "Lake Kawaguchi",
+"cap": "O lago Kawaguchi",
+"h3": "O lago, o onsen e o hōtō",
+"f": "index.html"
+},
+{
+"w": "Hōtō",
+"cap": "Hōtō, o prato da região",
+"h3": "O lago, o onsen e o hōtō",
+"f": "index.html"
+},
+{
+"w": "Onsen",
+"cap": "Um banho termal ao ar livre",
+"h3": "O lago, o onsen e o hōtō",
+"f": "index.html"
+},
+{
+"w": "Maeda Toshiie",
+"cap": "Maeda Toshiie, fundador do domínio de Kaga",
+"h3": "Os Maeda e o “milhão de koku”",
+"f": "index.html"
+},
+{
+"w": "Sankin-kōtai",
+"cap": "Uma comitiva de daimiô a caminho de Edo",
+"h3": "Os Maeda e o “milhão de koku”",
+"f": "index.html"
+},
+{
+"w": "Kanazawa",
+"cap": "Kanazawa hoje",
+"h3": "Os Maeda e o “milhão de koku”",
+"f": "index.html"
+},
+{
+"w": "Kanazawa Castle",
+"cap": "O Castelo de Kanazawa",
+"h3": "Castelo de Kanazawa",
+"f": "index.html"
+},
+{
+"w": "Kenroku-en",
+"cap": "O Kenroku-en",
+"h3": "Kenroku-en",
+"f": "index.html"
+},
+{
+"w": "Yukitsuri",
+"cap": "Yukitsuri, as cordas que protegem os pinheiros da neve",
+"h3": "Kenroku-en",
+"f": "index.html"
+},
+{
+"w": "Higashi Chaya District",
+"cap": "A rua principal de Higashi Chaya",
+"h3": "Higashi Chaya",
+"f": "index.html"
+},
+{
+"w": "Geisha",
+"cap": "Gueixas no Japão antigo",
+"h3": "Higashi Chaya",
+"f": "index.html"
+},
+{
+"w": "Shirakawa-gō",
+"cap": "A vila de Ogimachi, em Shirakawa-gō",
+"h3": "Shirakawa-gō",
+"f": "index.html"
+},
+{
+"w": "Gasshō-zukuri",
+"cap": "Uma casa gasshō-zukuri",
+"h3": "Shirakawa-gō",
+"f": "index.html"
+},
+{
+"w": "Nagamachi, Kanazawa",
+"cap": "Os muros de barro de Nagamachi",
+"h3": "Nagamachi e os museus",
+"f": "index.html"
+},
+{
+"w": "21st Century Museum of Contemporary Art, Kanazawa",
+"cap": "O Museu do Século XXI",
+"h3": "Nagamachi e os museus",
+"f": "index.html"
+},
+{
+"w": "Seto Inland Sea",
+"cap": "O Mar Interior de Seto",
+"h3": "O Mar Interior de Seto",
+"f": "index.html"
+},
+{
+"w": "Great Seto Bridge",
+"cap": "A Grande Ponte de Seto",
+"h3": "O Mar Interior de Seto",
+"f": "index.html"
+},
+{
+"w": "Takamatsu Castle (Sanuki)",
+"cap": "O castelo de Takamatsu, com fosso de água do mar",
+"h3": "O Mar Interior de Seto",
+"f": "index.html"
+},
+{
+"w": "Sanuki udon",
+"cap": "Sanuki udon",
+"h3": "O Mar Interior de Seto",
+"f": "index.html"
+},
+{
+"w": "Teshima Art Museum",
+"cap": "O Museu de Arte de Teshima",
+"h3": "Teshima",
+"f": "index.html"
+},
+{
+"w": "Teshima, Kagawa",
+"cap": "A ilha de Teshima",
+"h3": "Teshima",
+"f": "index.html"
+},
+{
+"w": "Naoshima, Kagawa",
+"cap": "Naoshima",
+"h3": "Naoshima",
+"f": "index.html"
+},
+{
+"w": "Chichu Art Museum",
+"cap": "O Museu de Arte Chichū",
+"h3": "Naoshima",
+"f": "index.html"
+},
+{
+"w": "Benesse House",
+"cap": "A Benesse House, de Tadao Ando",
+"h3": "Naoshima",
+"f": "index.html"
+},
+{
+"w": "Water Lilies (Monet series)",
+"cap": "As Ninfeias de Monet",
+"h3": "Naoshima",
+"f": "index.html"
+},
+{
+"w": "Hiroshima Castle",
+"cap": "O Castelo de Hiroshima",
+"h3": "Antes da bomba",
+"f": "index.html"
+},
+{
+"w": "Hiroshima",
+"cap": "Hiroshima e os braços do rio Ōta",
+"h3": "Antes da bomba",
+"f": "index.html"
+},
+{
+"w": "Hiroshima Peace Memorial",
+"cap": "A Cúpula da Bomba Atômica",
+"h3": "Parque Memorial da Paz e Cúpula da Bomba",
+"f": "index.html"
+},
+{
+"w": "Atomic bombings of Hiroshima and Nagasaki",
+"cap": "6 de agosto de 1945",
+"h3": "Parque Memorial da Paz e Cúpula da Bomba",
+"f": "index.html"
+},
+{
+"w": "Hiroshima Peace Memorial Park",
+"cap": "O Parque Memorial da Paz",
+"h3": "Parque Memorial da Paz e Cúpula da Bomba",
+"f": "index.html"
+},
+{
+"w": "Children's Peace Monument",
+"cap": "O Monumento das Crianças",
+"h3": "Parque Memorial da Paz e Cúpula da Bomba",
+"f": "index.html"
+},
+{
+"w": "Hiroshima Peace Memorial Museum",
+"cap": "O Museu Memorial da Paz, de Tange Kenzō",
+"h3": "Parque Memorial da Paz e Cúpula da Bomba",
+"f": "index.html"
+},
+{
+"w": "Shukkei-en",
+"cap": "O jardim Shukkei-en",
+"h3": "A cidade refeita: castelo, Shukkei-en e okonomiyaki",
+"f": "index.html"
+},
+{
+"w": "Okonomiyaki",
+"cap": "Okonomiyaki",
+"h3": "A cidade refeita: castelo, Shukkei-en e okonomiyaki",
+"f": "index.html"
+},
+{
+"w": "Hiroshima Electric Railway",
+"cap": "Os bondes de Hiroshima",
+"h3": "A cidade refeita: castelo, Shukkei-en e okonomiyaki",
+"f": "index.html"
+},
+{
+"w": "Itsukushima Shrine",
+"cap": "O santuário de Itsukushima na maré cheia",
+"h3": "Miyajima e o santuário de Itsukushima",
+"f": "index.html"
+},
+{
+"w": "Taira no Kiyomori",
+"cap": "Taira no Kiyomori, que deu ao santuário a forma atual",
+"h3": "Miyajima e o santuário de Itsukushima",
+"f": "index.html"
+},
+{
+"w": "Itsukushima",
+"cap": "A ilha de Miyajima",
+"h3": "Miyajima e o santuário de Itsukushima",
+"f": "index.html"
+},
+{
+"w": "Heian-kyō",
+"cap": "Heian-kyō, a capital de 794",
+"h3": "A capital de mil anos",
+"f": "index.html"
+},
+{
+"w": "The Tale of Genji",
+"cap": "O Conto de Genji, século XI",
+"h3": "A capital de mil anos",
+"f": "index.html"
+},
+{
+"w": "Kyoto",
+"cap": "Kyoto",
+"h3": "A capital de mil anos",
+"f": "index.html"
+},
+{
+"w": "Kiyomizu-dera",
+"cap": "O Kiyomizu-dera e sua varanda",
+"h3": "Higashiyama: Yasaka, Kōdai-ji e Kiyomizu-dera",
+"f": "index.html"
+},
+{
+"w": "Yasaka Shrine",
+"cap": "O santuário Yasaka",
+"h3": "Higashiyama: Yasaka, Kōdai-ji e Kiyomizu-dera",
+"f": "index.html"
+},
+{
+"w": "Kōdai-ji",
+"cap": "O Kōdai-ji",
+"h3": "Higashiyama: Yasaka, Kōdai-ji e Kiyomizu-dera",
+"f": "index.html"
+},
+{
+"w": "Gion Matsuri",
+"cap": "O Gion Matsuri, realizado desde 869",
+"h3": "Higashiyama: Yasaka, Kōdai-ji e Kiyomizu-dera",
+"f": "index.html"
+},
+{
+"w": "Gion",
+"cap": "A rua Hanamikoji, em Gion",
+"h3": "Gion",
+"f": "index.html"
+},
+{
+"w": "Maiko",
+"cap": "Uma maiko, aprendiz de geiko",
+"h3": "Gion",
+"f": "index.html"
+},
+{
+"w": "Nijō Castle",
+"cap": "O Castelo de Nijō",
+"h3": "Castelo de Nijō",
+"f": "index.html"
+},
+{
+"w": "Taisei Hōkan",
+"cap": "A devolução do poder ao imperador, 1867",
+"h3": "Castelo de Nijō",
+"f": "index.html"
+},
+{
+"w": "Kanō school",
+"cap": "Pintura da escola Kanō",
+"h3": "Castelo de Nijō",
+"f": "index.html"
+},
+{
+"w": "Kinkaku-ji",
+"cap": "O Pavilhão Dourado",
+"h3": "Kinkaku-ji e Ryōan-ji",
+"f": "index.html"
+},
+{
+"w": "Ashikaga Yoshimitsu",
+"cap": "Ashikaga Yoshimitsu, que construiu o pavilhão",
+"h3": "Kinkaku-ji e Ryōan-ji",
+"f": "index.html"
+},
+{
+"w": "Ryōan-ji",
+"cap": "O jardim de pedras do Ryōan-ji",
+"h3": "Kinkaku-ji e Ryōan-ji",
+"f": "index.html"
+},
+{
+"w": "Nishiki Market",
+"cap": "O mercado Nishiki",
+"h3": "Mercado Nishiki",
+"f": "index.html"
+},
+{
+"w": "Tenryū-ji",
+"cap": "O jardim do Tenryū-ji",
+"h3": "Arashiyama e o Tenryū-ji",
+"f": "index.html"
+},
+{
+"w": "Bamboo Forest (Kyoto)",
+"cap": "O bosque de bambu de Arashiyama",
+"h3": "Arashiyama e o Tenryū-ji",
+"f": "index.html"
+},
+{
+"w": "Arashiyama",
+"cap": "A ponte Togetsukyō",
+"h3": "Arashiyama e o Tenryū-ji",
+"f": "index.html"
+},
+{
+"w": "Musō Soseki",
+"cap": "Musō Soseki, monge e paisagista do século XIV",
+"h3": "Arashiyama e o Tenryū-ji",
+"f": "index.html"
+},
+{
+"w": "Fushimi Inari-taisha",
+"cap": "Os portões de Fushimi Inari",
+"h3": "Fushimi Inari",
+"f": "index.html"
+},
+{
+"w": "Inari Ōkami",
+"cap": "Inari e suas raposas",
+"h3": "Fushimi Inari",
+"f": "index.html"
+},
+{
+"w": "Dōjima Rice Exchange",
+"cap": "A Bolsa de Arroz de Dōjima",
+"h3": "A cozinha do país",
+"f": "index.html"
+},
+{
+"w": "Osaka",
+"cap": "Osaka",
+"h3": "A cozinha do país",
+"f": "index.html"
+},
+{
+"w": "The Love Suicides at Sonezaki",
+"cap": "Os Amantes Suicidas de Sonezaki",
+"h3": "A cozinha do país",
+"f": "index.html"
+},
+{
+"w": "Bunraku",
+"cap": "Bunraku, o teatro de bonecos",
+"h3": "A cozinha do país",
+"f": "index.html"
+},
+{
+"w": "Osaka Castle",
+"cap": "O Castelo de Osaka",
+"h3": "Castelo de Osaka",
+"f": "index.html"
+},
+{
+"w": "Toyotomi Hideyoshi",
+"cap": "Toyotomi Hideyoshi",
+"h3": "Castelo de Osaka",
+"f": "index.html"
+},
+{
+"w": "Siege of Osaka",
+"cap": "O cerco de Osaka, 1615",
+"h3": "Castelo de Osaka",
+"f": "index.html"
+},
+{
+"w": "Dōtonbori",
+"cap": "Dōtonbori à noite",
+"h3": "Dōtonbori e Namba",
+"f": "index.html"
+},
+{
+"w": "Takoyaki",
+"cap": "Takoyaki",
+"h3": "Dōtonbori e Namba",
+"f": "index.html"
+},
+{
+"w": "Umeda Sky Building",
+"cap": "O Umeda Sky Building",
+"h3": "Umeda",
+"f": "index.html"
+},
+{
+"w": "Shinsekai",
+"cap": "Shinsekai e a torre Tsūtenkaku",
+"h3": "Kuromon, Shinsekai e Amerikamura",
+"f": "index.html"
+},
+{
+"w": "Tsūtenkaku",
+"cap": "A Tsūtenkaku",
+"h3": "Kuromon, Shinsekai e Amerikamura",
+"f": "index.html"
+},
+{
+"w": "Amerikamura",
+"cap": "Amerikamura",
+"h3": "Kuromon, Shinsekai e Amerikamura",
+"f": "index.html"
+},
+{
+"w": "Tōdai-ji",
+"cap": "O Tōdai-ji, em Nara",
+"h3": "Nara ou Kobe",
+"f": "index.html"
+},
+{
+"w": "Emperor Shōmu",
+"cap": "O imperador Shōmu, que mandou fundir o Grande Buda",
+"h3": "Nara ou Kobe",
+"f": "index.html"
+},
+{
+"w": "Kobe",
+"cap": "O porto de Kobe",
+"h3": "Nara ou Kobe",
+"f": "index.html"
+},
+{
+"w": "Great Hanshin earthquake",
+"cap": "O terremoto de Kobe, 1995",
+"h3": "Nara ou Kobe",
+"f": "index.html"
+},
+{
+"w": "0 Series Shinkansen",
+"cap": "O primeiro trem-bala, de 1964",
+"h3": "O fio que liga tudo",
+"f": "index.html"
+},
+{
+"w": "Tōkaidō Shinkansen",
+"cap": "O shinkansen hoje",
+"h3": "O fio que liga tudo",
+"f": "index.html"
+},
+{
+"w": "Grand Canal (China)",
+"cap": "O Grande Canal, ainda em uso",
+"h3": "Suzhou",
+"f": "china.html"
+},
+{
+"w": "Treaty of Nanking",
+"cap": "1842: a assinatura do Tratado de Nanquim",
+"h3": "Suzhou",
+"f": "china.html"
+},
+{
+"w": "Shanghai International Settlement",
+"cap": "O Bund nos tempos da concessão",
+"h3": "Suzhou",
+"f": "china.html"
+},
+{
+"w": "Pudong",
+"cap": "Pudong, que era arrozal em 1990",
+"h3": "Suzhou",
+"f": "china.html"
+},
+{
+"w": "The Bund",
+"cap": "O Bund, à beira do rio Huangpu",
+"h3": "O Bund e a vista de Pudong",
+"f": "china.html"
+},
+{
+"w": "HSBC Building (Shanghai)",
+"cap": "O antigo prédio do HSBC, de 1923",
+"h3": "O Bund e a vista de Pudong",
+"f": "china.html"
+},
+{
+"w": "Lujiazui",
+"cap": "Lujiazui, do outro lado do rio",
+"h3": "O Bund e a vista de Pudong",
+"f": "china.html"
+},
+{
+"w": "Waibaidu Bridge",
+"cap": "A ponte Waibaidu, de 1907",
+"h3": "Ponte Waibaidu",
+"f": "china.html"
+},
+{
+"w": "Suzhou Creek",
+"cap": "O rio Suzhou chegando ao Huangpu",
+"h3": "Ponte Waibaidu",
+"f": "china.html"
+},
+{
+"w": "Yu Garden",
+"cap": "O Jardim Yu",
+"h3": "Jardim Yu e a cidade velha",
+"f": "china.html"
+},
+{
+"w": "Huxinting Teahouse",
+"cap": "A casa de chá do lago e a ponte em zigue-zague",
+"h3": "Jardim Yu e a cidade velha",
+"f": "china.html"
+},
+{
+"w": "Old City of Shanghai",
+"cap": "A cidade velha antes de 1912",
+"h3": "Jardim Yu e a cidade velha",
+"f": "china.html"
+},
+{
+"w": "Shanghai Museum",
+"cap": "O Museu de Xangai",
+"h3": "Museu de Xangai Leste",
+"f": "china.html"
+},
+{
+"w": "Ding (vessel)",
+"cap": "Um caldeirão ding de bronze",
+"h3": "Museu de Xangai Leste",
+"f": "china.html"
+},
+{
+"w": "Tianzifang",
+"cap": "Os becos de Tianzifang",
+"h3": "Tianzifang e os shikumen",
+"f": "china.html"
+},
+{
+"w": "Shikumen",
+"cap": "Um portão de shikumen",
+"h3": "Tianzifang e os shikumen",
+"f": "china.html"
+},
+{
+"w": "M50 Creative Park",
+"cap": "O M50, na rua Moganshan",
+"h3": "M50 e o rio Suzhou",
+"f": "china.html"
+},
+{
+"w": "Suzhou Creek",
+"cap": "O rio Suzhou",
+"h3": "M50 e o rio Suzhou",
+"f": "china.html"
+},
+{
+"w": "Sihang Warehouse",
+"cap": "O Armazém Sihang hoje",
+"h3": "Armazém Sihang",
+"f": "china.html"
+},
+{
+"w": "Defense of Sihang Warehouse",
+"cap": "1937: a defesa do armazém",
+"h3": "Armazém Sihang",
+"f": "china.html"
+},
+{
+"w": "Long Museum",
+"cap": "O Museu Long, no West Bund",
+"h3": "Dia livre: o West Bund e a Shanghai Tower",
+"f": "china.html"
+},
+{
+"w": "Power Station of Art",
+"cap": "A Power Station of Art, numa antiga usina",
+"h3": "Dia livre: o West Bund e a Shanghai Tower",
+"f": "china.html"
+},
+{
+"w": "Shanghai Tower",
+"cap": "A Shanghai Tower",
+"h3": "Dia livre: o West Bund e a Shanghai Tower",
+"f": "china.html"
+},
+{
+"w": "Pingjiang Road",
+"cap": "A rua Pingjiang e o canal",
+"h3": "Uma cidade de canais",
+"f": "china.html"
+},
+{
+"w": "Suzhou",
+"cap": "Suzhou, no delta do Yangtzé",
+"h3": "Uma cidade de canais",
+"f": "china.html"
+},
+{
+"w": "Pingjiang Map",
+"cap": "O mapa de Pingjiang, gravado em 1229",
+"h3": "Uma cidade de canais",
+"f": "china.html"
+},
+{
+"w": "Lingering Garden",
+"cap": "O Jardim Lingering",
+"h3": "Jardim Lingering e a ópera Kunqu",
+"f": "china.html"
+},
+{
+"w": "Kunqu",
+"cap": "Uma cena de ópera Kunqu",
+"h3": "Jardim Lingering e a ópera Kunqu",
+"f": "china.html"
+},
+{
+"w": "Shantang Street",
+"cap": "A rua Shantang",
+"h3": "Rua Shantang",
+"f": "china.html"
+},
+{
+"w": "Suzhou Museum",
+"cap": "O Museu de Suzhou",
+"h3": "Museu de Suzhou, de I. M. Pei",
+"f": "china.html"
+},
+{
+"w": "I. M. Pei",
+"cap": "I. M. Pei, o arquiteto",
+"h3": "Museu de Suzhou, de I. M. Pei",
+"f": "china.html"
+},
+{
+"w": "Humble Administrator's Garden",
+"cap": "O Jardim do Administrador Humilde",
+"h3": "Jardim do Administrador Humilde",
+"f": "china.html"
+},
+{
+"w": "Gate to the East",
+"cap": "O Portão do Oriente",
+"h3": "Suzhou moderna: lago Jinji e o Portão do Oriente",
+"f": "china.html"
+},
+{
+"w": "Jinji Lake",
+"cap": "O lago Jinji",
+"h3": "Suzhou moderna: lago Jinji e o Portão do Oriente",
+"f": "china.html"
+}
+]
