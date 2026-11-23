@@ -1,0 +1,856 @@
+{
+ "1964 Summer Olympics": {
+  "file": "fotos/1964_Summer_Olympics.png",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/Tokyo_1964_Summer_Olympics_logo.svg/1280px-Tokyo_1964_Summer_Olympics_logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tokyo_1964_Summer_Olympics_logo.svg",
+  "w": 1000,
+  "h": 1832
+ },
+ "21st Century Museum of Contemporary Art, Kanazawa": {
+  "file": "fotos/21st_Century_Museum_of_Contemporary_Art_Kanazawa.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/21st_Century_Museum_of_Contemporary_Art%2C_Kanazawa011.jpg/1280px-21st_Century_Museum_of_Contemporary_Art%2C_Kanazawa011.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "21st_Century_Museum_of_Contemporary_Art,_Kanazawa011.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Amerikamura": {
+  "file": "fotos/Amerikamura.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Amerikamura.jpg/1280px-Amerikamura.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Amerikamura.jpg",
+  "w": 1000,
+  "h": 1153
+ },
+ "Arashiyama": {
+  "file": "fotos/Arashiyama.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Arashiyama%2C_Part_II_-_Arashiyama7534.jpg/1280px-Arashiyama%2C_Part_II_-_Arashiyama7534.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Arashiyama,_Part_II_-_Arashiyama7534.jpg",
+  "w": 1000,
+  "h": 607
+ },
+ "Ashikaga Yoshimitsu": {
+  "file": "fotos/Ashikaga_Yoshimitsu.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Yoshimitsu_Ashikaga_cropped.jpg/1280px-Yoshimitsu_Ashikaga_cropped.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Yoshimitsu_Ashikaga_cropped.jpg",
+  "w": 1000,
+  "h": 1145
+ },
+ "Atomic bombings of Hiroshima and Nagasaki": {
+  "file": "fotos/Atomic_bombings_of_Hiroshima_and_Nagasaki.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/54/Atomic_bombing_of_Japan.jpg/1280px-Atomic_bombing_of_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Atomic_bombing_of_Japan.jpg",
+  "w": 1000,
+  "h": 593
+ },
+ "Bamboo Forest (Kyoto)": {
+  "file": "fotos/Bamboo_Forest_Kyoto.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Bamboo_Park%2C_Kyoto_Japan%3B_by_Don_Ramey_Logan.jpg/1280px-Bamboo_Park%2C_Kyoto_Japan%3B_by_Don_Ramey_Logan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Bamboo_Park,_Kyoto_Japan;_by_Don_Ramey_Logan.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Battle of Ueno": {
+  "file": "fotos/Battle_of_Ueno.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/UenoSenso.jpg/1280px-UenoSenso.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "UenoSenso.jpg",
+  "w": 1000,
+  "h": 492
+ },
+ "Benesse House": {
+  "file": "fotos/Benesse_House.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Part_of_the_Benesse_House.jpg/1280px-Part_of_the_Benesse_House.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Part_of_the_Benesse_House.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Chichu Art Museum": {
+  "file": "fotos/Chichu_Art_Museum.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/150505_Chichu_Art_Museum_Naoshima_Island_Kagawa_pref_Japan01s3.jpg/1280px-150505_Chichu_Art_Museum_Naoshima_Island_Kagawa_pref_Japan01s3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "150505_Chichu_Art_Museum_Naoshima_Island_Kagawa_pref_Japan01s3.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Defense of Sihang Warehouse": {
+  "file": "fotos/Defense_of_Sihang_Warehouse.jpg",
+  "source": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Sihang_1937.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "name": "Sihang_1937.jpg",
+  "w": 420,
+  "h": 253
+ },
+ "Ding (vessel)": {
+  "file": "fotos/Ding_vessel.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Liu_Ding.jpg/1280px-Liu_Ding.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Liu_Ding.jpg",
+  "w": 1000,
+  "h": 1011
+ },
+ "Dōtonbori": {
+  "file": "fotos/D_tonbori.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Osaka_Dotonbori_Ebisu_Bridge.jpg/1280px-Osaka_Dotonbori_Ebisu_Bridge.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Osaka_Dotonbori_Ebisu_Bridge.jpg",
+  "w": 1000,
+  "h": 665
+ },
+ "Edo": {
+  "file": "fotos/Edo.jpg",
+  "source": "https://upload.wikimedia.org/wikipedia/commons/4/47/Location_TokyoJapan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "name": "Location_TokyoJapan.jpg",
+  "w": 647,
+  "h": 702
+ },
+ "Edo Castle": {
+  "file": "fotos/Edo_Castle.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Edo_P_detail.jpg/1280px-Edo_P_detail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Edo_P_detail.jpg",
+  "w": 1000,
+  "h": 678
+ },
+ "Emperor Shōmu": {
+  "file": "fotos/Emperor_Sh_mu.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Emperor_Shomu.jpg/1280px-Emperor_Shomu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Emperor_Shomu.jpg",
+  "w": 1000,
+  "h": 1670
+ },
+ "Fine Wind, Clear Morning": {
+  "file": "fotos/Fine_Wind_Clear_Morning.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/%E3%80%8C%E5%AF%8C%E5%B6%BD%E4%B8%89%E5%8D%81%E5%85%AD%E6%99%AF_%E5%87%B1%E9%A2%A8%E5%BF%AB%E6%99%B4%E3%80%8D-South_Wind%2C_Clear_Sky_%28Gaif%C5%AB_kaisei%29%2C_also_known_as_Red_Fuji%2C_from_the_series_Thirty-six_Views_of_Mount_Fuji_%28Fugaku_sanj%C5%ABrokkei%29_MET_DP141062.jpg/1280px-thumbnail.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "「富嶽三十六景_凱風快晴」-South_Wind,_Clear_Sky_(Gaifū_kaisei),_also_known_as_Red_Fuji,_from_the_series_Thirty-six_Views_of_Mount_Fuji_(Fugaku_sanjūrokkei)_MET_DP141062.jpg",
+  "w": 1000,
+  "h": 690
+ },
+ "Fujiyoshida": {
+  "file": "fotos/Fujiyoshida.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Fujiyoshida_montage.jpg/1280px-Fujiyoshida_montage.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Fujiyoshida_montage.jpg",
+  "w": 1000,
+  "h": 1104
+ },
+ "Fushimi Inari-taisha": {
+  "file": "fotos/Fushimi_Inari_taisha.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/1280px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Gate to the East": {
+  "file": "fotos/Gate_to_the_East.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Gate_of_the_Orient_%E4%B8%9C%E6%96%B9%E4%B9%8B%E9%97%A8_dong_fang_zhi_men_Suzhou_photo_Christian_G%C3%A4nshirt_2015.JPG/1280px-Gate_of_the_Orient_%E4%B8%9C%E6%96%B9%E4%B9%8B%E9%97%A8_dong_fang_zhi_men_Suzhou_photo_Christian_G%C3%A4nshirt_2015.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Gate_of_the_Orient_东方之门_dong_fang_zhi_men_Suzhou_photo_Christian_Gänshirt_2015.JPG",
+  "w": 1000,
+  "h": 759
+ },
+ "Geisha": {
+  "file": "fotos/Geisha.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Geiko_Kimiha.jpg/1280px-Geiko_Kimiha.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Geiko_Kimiha.jpg",
+  "w": 1000,
+  "h": 1500
+ },
+ "Ginza": {
+  "file": "fotos/Ginza.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Ginza-WAKO_at_night.jpg/1280px-Ginza-WAKO_at_night.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Ginza-WAKO_at_night.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Gion": {
+  "file": "fotos/Gion.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/150124_Gion_Kyoto_Japan01s3.jpg/1280px-150124_Gion_Kyoto_Japan01s3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "150124_Gion_Kyoto_Japan01s3.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Gion Matsuri": {
+  "file": "fotos/Gion_Matsuri.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/Yoiyama_-_The_Gion_Festival_-_July_14%2C_2008.jpg/1280px-Yoiyama_-_The_Gion_Festival_-_July_14%2C_2008.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Yoiyama_-_The_Gion_Festival_-_July_14,_2008.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Grand Canal (China)": {
+  "file": "fotos/Grand_Canal_China.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Wanning_Bridge_1.jpg/1280px-Wanning_Bridge_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Wanning_Bridge_1.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Great Fire of Meireki": {
+  "file": "fotos/Great_Fire_of_Meireki.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Meireki_fire.JPG/1280px-Meireki_fire.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Meireki_fire.JPG",
+  "w": 1000,
+  "h": 397
+ },
+ "Great Seto Bridge": {
+  "file": "fotos/Great_Seto_Bridge.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/Seto-Ohashi_Bridge.jpg/1280px-Seto-Ohashi_Bridge.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Seto-Ohashi_Bridge.jpg",
+  "w": 1000,
+  "h": 591
+ },
+ "Heian-kyō": {
+  "file": "fotos/Heian_ky.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Daidairi_of_Heiankyo.jpg/1280px-Daidairi_of_Heiankyo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Daidairi_of_Heiankyo.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "1923 Great Kantō earthquake": {
+  "file": "fotos/1923_Great_Kant_earthquake.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/The_Great_Kanto_Earthquake_%283767766524%29_%28cropped%29.jpg/1280px-The_Great_Kanto_Earthquake_%283767766524%29_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "The_Great_Kanto_Earthquake_(3767766524)_(cropped).jpg",
+  "w": 1000,
+  "h": 644
+ },
+ "Hamarikyu Gardens": {
+  "file": "fotos/Hamarikyu_Gardens.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Hamarikyu_Garden_as_seen_from_Shiodome.jpg/1280px-Hamarikyu_Garden_as_seen_from_Shiodome.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Hamarikyu_Garden_as_seen_from_Shiodome.jpg",
+  "w": 1000,
+  "h": 946
+ },
+ "Great Hanshin earthquake": {
+  "file": "fotos/Great_Hanshin_earthquake.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Hanshin-Awaji_earthquake_1995_337.jpg/1280px-Hanshin-Awaji_earthquake_1995_337.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Hanshin-Awaji_earthquake_1995_337.jpg",
+  "w": 1000,
+  "h": 707
+ },
+ "Hiroshima": {
+  "file": "fotos/Hiroshima.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Atomic_Bomb_Dome_and_Motoyaso_River%2C_Hiroshima%2C_Northwest_view_20190417_1.jpg/1280px-Atomic_Bomb_Dome_and_Motoyaso_River%2C_Hiroshima%2C_Northwest_view_20190417_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Atomic_Bomb_Dome_and_Motoyaso_River,_Hiroshima,_Northwest_view_20190417_1.jpg",
+  "w": 1000,
+  "h": 643
+ },
+ "Hiroshima Castle": {
+  "file": "fotos/Hiroshima_Castle.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Keep_tower%2C_Hiroshima_Castle%2C_Southwest_remote_view_20190417_1.jpg/1280px-Keep_tower%2C_Hiroshima_Castle%2C_Southwest_remote_view_20190417_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Keep_tower,_Hiroshima_Castle,_Southwest_remote_view_20190417_1.jpg",
+  "w": 1000,
+  "h": 1250
+ },
+ "Hiroshima Electric Railway": {
+  "file": "fotos/Hiroshima_Electric_Railway.png",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Hiroden_Logomark.svg/1280px-Hiroden_Logomark.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Hiroden_Logomark.svg",
+  "w": 1000,
+  "h": 1000
+ },
+ "Hiroshima Peace Memorial": {
+  "file": "fotos/Hiroshima_Peace_Memorial.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Genbaku_Dome04-r.JPG/1280px-Genbaku_Dome04-r.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Genbaku_Dome04-r.JPG",
+  "w": 1000,
+  "h": 667
+ },
+ "Hiroshima Peace Memorial Museum": {
+  "file": "fotos/Hiroshima_Peace_Memorial_Museum.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Hiroshima_Peace_Memorial_Museum_2009.jpg/1280px-Hiroshima_Peace_Memorial_Museum_2009.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Hiroshima_Peace_Memorial_Museum_2009.jpg",
+  "w": 1000,
+  "h": 455
+ },
+ "Hiroshima Peace Memorial Park": {
+  "file": "fotos/Hiroshima_Peace_Memorial_Park.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/20181111_Hiroshima_Memorial_Cenotaph-1.jpg/1280px-20181111_Hiroshima_Memorial_Cenotaph-1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "20181111_Hiroshima_Memorial_Cenotaph-1.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Humble Administrator's Garden": {
+  "file": "fotos/Humble_Administrator_s_Garden.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ad/%E6%8B%99%E6%94%BF%E5%9B%AD%E8%A7%81%E5%B1%B1%E6%A5%BC2024.11_%281%29.jpg/1280px-%E6%8B%99%E6%94%BF%E5%9B%AD%E8%A7%81%E5%B1%B1%E6%A5%BC2024.11_%281%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "拙政园见山楼2024.11_(1).jpg",
+  "w": 1000,
+  "h": 678
+ },
+ "Hōtō": {
+  "file": "fotos/H_t.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Houtou.jpg/1280px-Houtou.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Houtou.jpg",
+  "w": 1000,
+  "h": 793
+ },
+ "Inari Ōkami": {
+  "file": "fotos/Inari_kami.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/26/Blacksmith_Munechika%2C_helped_by_a_fox_spirit%2C_forging_the_blade_Ko-Gitsune_Maru%2C_by_Ogata_Gekk%C5%8D.jpg/1280px-Blacksmith_Munechika%2C_helped_by_a_fox_spirit%2C_forging_the_blade_Ko-Gitsune_Maru%2C_by_Ogata_Gekk%C5%8D.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Blacksmith_Munechika,_helped_by_a_fox_spirit,_forging_the_blade_Ko-Gitsune_Maru,_by_Ogata_Gekkō.jpg",
+  "w": 1000,
+  "h": 1416
+ },
+ "Itsukushima": {
+  "file": "fotos/Itsukushima.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/Miyajima_Island.jpg/1280px-Miyajima_Island.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Miyajima_Island.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Itsukushima Shrine": {
+  "file": "fotos/Itsukushima_Shrine.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ef/Itsukushima_Shrine_Torii_Gate_%2813890465459%29.jpg/1280px-Itsukushima_Shrine_Torii_Gate_%2813890465459%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Itsukushima_Shrine_Torii_Gate_(13890465459).jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Jinji Lake": {
+  "file": "fotos/Jinji_Lake.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Suzhou_Industrial_Park_%28SIP%29_-_West_Bank_of_Jin_Ji_Lake.jpg/1280px-Suzhou_Industrial_Park_%28SIP%29_-_West_Bank_of_Jin_Ji_Lake.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Suzhou_Industrial_Park_(SIP)_-_West_Bank_of_Jin_Ji_Lake.jpg",
+  "w": 1000,
+  "h": 607
+ },
+ "Kagurazaka": {
+  "file": "fotos/Kagurazaka.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d9/KagurazakaStreet.JPG/1280px-KagurazakaStreet.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "KagurazakaStreet.JPG",
+  "w": 1000,
+  "h": 750
+ },
+ "Kaminarimon": {
+  "file": "fotos/Kaminarimon.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Day2-2_%2840909714314%29.jpg/1280px-Day2-2_%2840909714314%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Day2-2_(40909714314).jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Kanazawa": {
+  "file": "fotos/Kanazawa.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/%E6%9C%9B%E6%B9%96%E5%8F%B0%EF%BC%92.jpg/1280px-%E6%9C%9B%E6%B9%96%E5%8F%B0%EF%BC%92.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "望湖台２.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Kanazawa Castle": {
+  "file": "fotos/Kanazawa_Castle.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cb/131109_Kanazawa_Castle_Kanazawa_Ishikawa_pref_Japan01s5p.jpg/1280px-131109_Kanazawa_Castle_Kanazawa_Ishikawa_pref_Japan01s5p.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "131109_Kanazawa_Castle_Kanazawa_Ishikawa_pref_Japan01s5p.jpg",
+  "w": 1000,
+  "h": 563
+ },
+ "Kanō school": {
+  "file": "fotos/Kan_school.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kano_Eino_-_Birds_and_Flowers_of_Spring_and_Summer_-_Google_Art_Project.jpg/1280px-Kano_Eino_-_Birds_and_Flowers_of_Spring_and_Summer_-_Google_Art_Project.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kano_Eino_-_Birds_and_Flowers_of_Spring_and_Summer_-_Google_Art_Project.jpg",
+  "w": 1000,
+  "h": 445
+ },
+ "Kenroku-en": {
+  "file": "fotos/Kenroku_en.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Stone_lantern_Kenrokuen.jpg/1280px-Stone_lantern_Kenrokuen.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Stone_lantern_Kenrokuen.jpg",
+  "w": 1000,
+  "h": 654
+ },
+ "Kinkaku-ji": {
+  "file": "fotos/Kinkaku_ji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg/1280px-Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Golden_Pavilion_Kinkaku-ji_water_mirror_2024.jpg",
+  "w": 1000,
+  "h": 1500
+ },
+ "Kiyomizu-dera": {
+  "file": "fotos/Kiyomizu_dera.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Kiyomizu.jpg/1280px-Kiyomizu.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kiyomizu.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Kobe": {
+  "file": "fotos/Kobe.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/20190901_Kobe_harbor-1.jpg/1280px-20190901_Kobe_harbor-1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "20190901_Kobe_harbor-1.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Kunqu": {
+  "file": "fotos/Kunqu.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Kunqu_Play_Taipei.JPG/1280px-Kunqu_Play_Taipei.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kunqu_Play_Taipei.JPG",
+  "w": 1000,
+  "h": 750
+ },
+ "Kyoto": {
+  "file": "fotos/Kyoto.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Kiyomizu-dera%2C_Kyoto%2C_November_2016_-02.jpg/1280px-Kiyomizu-dera%2C_Kyoto%2C_November_2016_-02.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg",
+  "w": 1000,
+  "h": 661
+ },
+ "Kōdai-ji": {
+  "file": "fotos/K_dai_ji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/170923_Kodaiji_Kyoto_Japan09n.jpg/1280px-170923_Kodaiji_Kyoto_Japan09n.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "170923_Kodaiji_Kyoto_Japan09n.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Lake Kawaguchi": {
+  "file": "fotos/Lake_Kawaguchi.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/KawaguchiKo.jpg/1280px-KawaguchiKo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "KawaguchiKo.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Lingering Garden": {
+  "file": "fotos/Lingering_Garden.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/02/Lingering_Garden.jpg/1280px-Lingering_Garden.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Lingering_Garden.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Lujiazui": {
+  "file": "fotos/Lujiazui.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg/1280px-Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Huangpu_Park_20124-Shanghai_(32208802494).jpg",
+  "w": 1000,
+  "h": 668
+ },
+ "Maiko": {
+  "file": "fotos/Maiko.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Fumino_misedashi_full_height.jpg/1280px-Fumino_misedashi_full_height.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Fumino_misedashi_full_height.jpg",
+  "w": 1000,
+  "h": 1500
+ },
+ "Meiji Restoration": {
+  "file": "fotos/Meiji_Restoration.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Emperor_Meiji_by_Takahashi_Yuichi.jpg/1280px-Emperor_Meiji_by_Takahashi_Yuichi.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Emperor_Meiji_by_Takahashi_Yuichi.jpg",
+  "w": 1000,
+  "h": 1265
+ },
+ "Meiji Shrine": {
+  "file": "fotos/Meiji_Shrine.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Meiji_Jingu_2023-3.jpg/1280px-Meiji_Jingu_2023-3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Meiji_Jingu_2023-3.jpg",
+  "w": 1000,
+  "h": 563
+ },
+ "Mount Fuji": {
+  "file": "fotos/Mount_Fuji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg/1280px-View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "View_of_Mount_Fuji_from_Ōwakudani_20211202.jpg",
+  "w": 1000,
+  "h": 489
+ },
+ "Musō Soseki": {
+  "file": "fotos/Mus_Soseki.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ee/Muso_Soseki.jpg/1280px-Muso_Soseki.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Muso_Soseki.jpg",
+  "w": 1000,
+  "h": 1221
+ },
+ "National Museum of Modern Art, Tokyo": {
+  "file": "fotos/National_Museum_of_Modern_Art_Tokyo.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/National_Museum_of_Modern_Art_Tokyo.jpg/1280px-National_Museum_of_Modern_Art_Tokyo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "National_Museum_of_Modern_Art_Tokyo.jpg",
+  "w": 1000,
+  "h": 581
+ },
+ "Naoshima, Kagawa": {
+  "file": "fotos/Naoshima_Kagawa.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Beachside_Torii%2C_Naoshima.jpg/1280px-Beachside_Torii%2C_Naoshima.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Beachside_Torii,_Naoshima.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Huxinting Teahouse": {
+  "file": "fotos/Huxinting_Teahouse.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Shanghai_-_Yu_Garden_-_0035.jpg/1280px-Shanghai_-_Yu_Garden_-_0035.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Shanghai_-_Yu_Garden_-_0035.jpg",
+  "w": 1000,
+  "h": 587
+ },
+ "Nijō Castle": {
+  "file": "fotos/Nij_Castle.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dd/NinomaruPalace.jpg/1280px-NinomaruPalace.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "NinomaruPalace.jpg",
+  "w": 1000,
+  "h": 753
+ },
+ "Nishiki Market": {
+  "file": "fotos/Nishiki_Market.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Nishiki_Ichiba_by_matsuyuki.jpg/1280px-Nishiki_Ichiba_by_matsuyuki.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Nishiki_Ichiba_by_matsuyuki.jpg",
+  "w": 1000,
+  "h": 1333
+ },
+ "Okonomiyaki": {
+  "file": "fotos/Okonomiyaki.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Okonomiyaki_001.jpg/1280px-Okonomiyaki_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Okonomiyaki_001.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "One Hundred Famous Views of Edo": {
+  "file": "fotos/One_Hundred_Famous_Views_of_Edo.jpeg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/De_pruimenboomgaard_te_Kameido-Rijksmuseum_RP-P-1956-743.jpeg/1280px-De_pruimenboomgaard_te_Kameido-Rijksmuseum_RP-P-1956-743.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "De_pruimenboomgaard_te_Kameido-Rijksmuseum_RP-P-1956-743.jpeg",
+  "w": 1000,
+  "h": 1470
+ },
+ "Onsen": {
+  "file": "fotos/Onsen.jpg",
+  "source": "https://upload.wikimedia.org/wikipedia/commons/4/41/Onsen_in_Nachikatsuura%2C_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "name": "Onsen_in_Nachikatsuura,_Japan.jpg",
+  "w": 1234,
+  "h": 878
+ },
+ "Osaka": {
+  "file": "fotos/Osaka.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Osaka_Castle_03bs3200.jpg/1280px-Osaka_Castle_03bs3200.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Osaka_Castle_03bs3200.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Osaka Castle": {
+  "file": "fotos/Osaka_Castle.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Osaka_Castle_03bs3200.jpg/1280px-Osaka_Castle_03bs3200.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Osaka_Castle_03bs3200.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Pingjiang Road": {
+  "file": "fotos/Pingjiang_Road.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Suzhou_Pingjiang_Road.jpg/1280px-Suzhou_Pingjiang_Road.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Suzhou_Pingjiang_Road.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Power Station of Art": {
+  "file": "fotos/Power_Station_of_Art.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Pavilion_of_the_Future.jpg/1280px-Pavilion_of_the_Future.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Pavilion_of_the_Future.jpg",
+  "w": 1000,
+  "h": 699
+ },
+ "Pudong": {
+  "file": "fotos/Pudong.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Shanghai_skyline_from_the_bund.jpg/1280px-Shanghai_skyline_from_the_bund.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Shanghai_skyline_from_the_bund.jpg",
+  "w": 1000,
+  "h": 563
+ },
+ "Ryōan-ji": {
+  "file": "fotos/Ry_an_ji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Kare-sansui_zen_garden%2C_Ry%C5%8Dan-ji%2C_Kyoto_20190416_1.jpg/1280px-Kare-sansui_zen_garden%2C_Ry%C5%8Dan-ji%2C_Kyoto_20190416_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kare-sansui_zen_garden,_Ryōan-ji,_Kyoto_20190416_1.jpg",
+  "w": 1000,
+  "h": 672
+ },
+ "Sankin-kōtai": {
+  "file": "fotos/Sankin_k_tai.jpg",
+  "source": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Tokugawa_Seiseiroku_001.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "name": "Tokugawa_Seiseiroku_001.jpg",
+  "w": 700,
+  "h": 345
+ },
+ "Sanuki udon": {
+  "file": "fotos/Sanuki_udon.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Kama-age_sanuki_udon_by_sekido_in_Takamatsu%2C_Kagawa.jpg/1280px-Kama-age_sanuki_udon_by_sekido_in_Takamatsu%2C_Kagawa.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kama-age_sanuki_udon_by_sekido_in_Takamatsu,_Kagawa.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Sensō-ji": {
+  "file": "fotos/Sens_ji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Sensoji_2023.jpg/1280px-Sensoji_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Sensoji_2023.jpg",
+  "w": 1000,
+  "h": 714
+ },
+ "Seto Inland Sea": {
+  "file": "fotos/Seto_Inland_Sea.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Seto_Inland_Sea.jpg/1280px-Seto_Inland_Sea.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Seto_Inland_Sea.jpg",
+  "w": 1000,
+  "h": 425
+ },
+ "Shanghai International Settlement": {
+  "file": "fotos/Shanghai_International_Settlement.png",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_the_Shanghai_International_Settlement_pre-WWI.svg/1280px-Flag_of_the_Shanghai_International_Settlement_pre-WWI.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Flag_of_the_Shanghai_International_Settlement_pre-WWI.svg",
+  "w": 1000,
+  "h": 500
+ },
+ "Shanghai Tower": {
+  "file": "fotos/Shanghai_Tower.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/20191114_Shanghai_Tower_%282%29.jpg/1280px-20191114_Shanghai_Tower_%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "20191114_Shanghai_Tower_(2).jpg",
+  "w": 1000,
+  "h": 2055
+ },
+ "Shantang Street": {
+  "file": "fotos/Shantang_Street.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/1_shantang_street_canal_2023.jpg/1280px-1_shantang_street_canal_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "1_shantang_street_canal_2023.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Shinjuku Golden Gai": {
+  "file": "fotos/Shinjuku_Golden_Gai.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8d/G2_Street_20090626_2.jpg/1280px-G2_Street_20090626_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "G2_Street_20090626_2.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Shinjuku Station": {
+  "file": "fotos/Shinjuku_Station.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/JRE_Shinjuku-STA_South.jpg/1280px-JRE_Shinjuku-STA_South.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "JRE_Shinjuku-STA_South.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Shinsekai": {
+  "file": "fotos/Shinsekai.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Shinsekai_and_Tsutenkaku_at_night_2019-04-12.jpg/1280px-Shinsekai_and_Tsutenkaku_at_night_2019-04-12.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Shinsekai_and_Tsutenkaku_at_night_2019-04-12.jpg",
+  "w": 1000,
+  "h": 1500
+ },
+ "Shukkei-en": {
+  "file": "fotos/Shukkei_en.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Rainbow_bridge_in_Shukkei-en_Hiroshima.jpg/1280px-Rainbow_bridge_in_Shukkei-en_Hiroshima.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Rainbow_bridge_in_Shukkei-en_Hiroshima.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Siege of Osaka": {
+  "file": "fotos/Siege_of_Osaka.jpg",
+  "source": "https://upload.wikimedia.org/wikipedia/commons/7/79/Osakarakuzyou_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "name": "Osakarakuzyou_(cropped).jpg",
+  "w": 933,
+  "h": 700
+ },
+ "Suzhou": {
+  "file": "fotos/Suzhou.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/%E4%B8%9C%E6%96%B9%E4%B9%8B%E9%97%A81.jpg/1280px-%E4%B8%9C%E6%96%B9%E4%B9%8B%E9%97%A81.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "东方之门1.jpg",
+  "w": 1000,
+  "h": 714
+ },
+ "Suzhou Creek": {
+  "file": "fotos/Suzhou_Creek.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Suzhou_Creek_from_Waibaidu_Bridge%2C_Shanghai.jpg/1280px-Suzhou_Creek_from_Waibaidu_Bridge%2C_Shanghai.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Suzhou_Creek_from_Waibaidu_Bridge,_Shanghai.jpg",
+  "w": 1000,
+  "h": 587
+ },
+ "Suzhou Museum": {
+  "file": "fotos/Suzhou_Museum.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/%E8%8B%8F%E5%B7%9E%E5%8D%9A%E7%89%A9%E9%A6%86%C2%B7%E8%8B%8F%E5%B7%9E%C2%B7%E8%A5%BF%E5%8D%97%E5%90%91%E4%B8%9C%E5%8C%97.jpg/1280px-%E8%8B%8F%E5%B7%9E%E5%8D%9A%E7%89%A9%E9%A6%86%C2%B7%E8%8B%8F%E5%B7%9E%C2%B7%E8%A5%BF%E5%8D%97%E5%90%91%E4%B8%9C%E5%8C%97.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "苏州博物馆·苏州·西南向东北.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Takamatsu Castle (Sanuki)": {
+  "file": "fotos/Takamatsu_Castle_Sanuki.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Takamatsu_castle09s3872.jpg/1280px-Takamatsu_castle09s3872.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Takamatsu_castle09s3872.jpg",
+  "w": 1000,
+  "h": 669
+ },
+ "Takoyaki": {
+  "file": "fotos/Takoyaki.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%A8%E3%83%9D%E3%83%B3%E9%85%A2%E3%81%AE%E3%81%9F%E3%81%93%E7%84%BC%E3%81%8D.jpg/1280px-%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%A8%E3%83%9D%E3%83%B3%E9%85%A2%E3%81%AE%E3%81%9F%E3%81%93%E7%84%BC%E3%81%8D.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "ソースとポン酢のたこ焼き.jpg",
+  "w": 1000,
+  "h": 1333
+ },
+ "Tenryū-ji": {
+  "file": "fotos/Tenry_ji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/42/Tenryuji_Kyoto.jpg/1280px-Tenryuji_Kyoto.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tenryuji_Kyoto.jpg",
+  "w": 1000,
+  "h": 564
+ },
+ "Sihang Warehouse": {
+  "file": "fotos/Sihang_Warehouse.jpg",
+  "source": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Sihang_1937.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+  "name": "Sihang_1937.jpg",
+  "w": 420,
+  "h": 253
+ },
+ "Takeshita Street": {
+  "file": "fotos/Takeshita_Street.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/JRE-Harajuku-Station-07.jpg/1280px-JRE-Harajuku-Station-07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "JRE-Harajuku-Station-07.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Old City of Shanghai": {
+  "file": "fotos/Old_City_of_Shanghai.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Old_City_of_Shanghai_will_walls_and_seafront.jpg/1280px-Old_City_of_Shanghai_will_walls_and_seafront.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Old_City_of_Shanghai_will_walls_and_seafront.jpg",
+  "w": 1000,
+  "h": 655
+ },
+ "Shirakawa-gō": {
+  "file": "fotos/Shirakawa_g.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Ogi_Shirakawa-g%C5%8D%2C_Gifu%2C_Japan.jpg/1280px-Ogi_Shirakawa-g%C5%8D%2C_Gifu%2C_Japan.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Ogi_Shirakawa-gō,_Gifu,_Japan.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Teshima Art Museum": {
+  "file": "fotos/Teshima_Art_Museum.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Teshima_Art_Museum_exterior_view_201310.jpg/1280px-Teshima_Art_Museum_exterior_view_201310.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Teshima_Art_Museum_exterior_view_201310.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "The Bund": {
+  "file": "fotos/The_Bund.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/The_Bund_2.jpg/1280px-The_Bund_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "The_Bund_2.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "The Great Wave off Kanagawa": {
+  "file": "fotos/The_Great_Wave_off_Kanagawa.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/1280px-Tsunami_by_hokusai_19th_century.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tsunami_by_hokusai_19th_century.jpg",
+  "w": 1000,
+  "h": 672
+ },
+ "Thirty-six Views of Mount Fuji": {
+  "file": "fotos/Thirty_six_Views_of_Mount_Fuji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0d/Great_Wave_off_Kanagawa2.jpg/1280px-Great_Wave_off_Kanagawa2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Great_Wave_off_Kanagawa2.jpg",
+  "w": 1000,
+  "h": 684
+ },
+ "Tianzifang": {
+  "file": "fotos/Tianzifang.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Shanghai_Tianzifang_%E4%B8%8A%E6%B5%B7%E7%94%B0%E5%AD%90%E5%9D%8A_-_panoramio.jpg/1280px-Shanghai_Tianzifang_%E4%B8%8A%E6%B5%B7%E7%94%B0%E5%AD%90%E5%9D%8A_-_panoramio.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Shanghai_Tianzifang_上海田子坊_-_panoramio.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Tokugawa Ieyasu": {
+  "file": "fotos/Tokugawa_Ieyasu.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Tokugawa_Ieyasu2.JPG/1280px-Tokugawa_Ieyasu2.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tokugawa_Ieyasu2.JPG",
+  "w": 1000,
+  "h": 1141
+ },
+ "Tokyo Imperial Palace": {
+  "file": "fotos/Tokyo_Imperial_Palace.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ac/Seimon_Ishibashi.JPG/1280px-Seimon_Ishibashi.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Seimon_Ishibashi.JPG",
+  "w": 1000,
+  "h": 667
+ },
+ "Tokyo National Museum": {
+  "file": "fotos/Tokyo_National_Museum.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Tokyo_National_Museum%2C_Honkan_2010.jpg/1280px-Tokyo_National_Museum%2C_Honkan_2010.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tokyo_National_Museum,_Honkan_2010.jpg",
+  "w": 1000,
+  "h": 664
+ },
+ "Tokyo Tower": {
+  "file": "fotos/Tokyo_Tower.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Tokyo_Tower_2023.jpg/1280px-Tokyo_Tower_2023.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tokyo_Tower_2023.jpg",
+  "w": 1000,
+  "h": 1333
+ },
+ "Toyotomi Hideyoshi": {
+  "file": "fotos/Toyotomi_Hideyoshi.png",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/09/Toyotomi_Hideyoshi_c1598_Kodai-ji_Temple.png/1280px-Toyotomi_Hideyoshi_c1598_Kodai-ji_Temple.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Toyotomi_Hideyoshi_c1598_Kodai-ji_Temple.png",
+  "w": 1000,
+  "h": 1000
+ },
+ "Treaty of Nanking": {
+  "file": "fotos/Treaty_of_Nanking.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/The_Signing_of_the_Treaty_of_Nanking.jpg/1280px-The_Signing_of_the_Treaty_of_Nanking.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "The_Signing_of_the_Treaty_of_Nanking.jpg",
+  "w": 1000,
+  "h": 375
+ },
+ "Tsukiji fish market": {
+  "file": "fotos/Tsukiji_fish_market.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/2018_Tsukiji_fish_market.jpg/1280px-2018_Tsukiji_fish_market.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "2018_Tsukiji_fish_market.jpg",
+  "w": 1000,
+  "h": 643
+ },
+ "Tsūtenkaku": {
+  "file": "fotos/Ts_tenkaku.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/New_Tsutenkaku%2C_Osaka.jpg/1280px-New_Tsutenkaku%2C_Osaka.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "New_Tsutenkaku,_Osaka.jpg",
+  "w": 1000,
+  "h": 1333
+ },
+ "Tōdai-ji": {
+  "file": "fotos/T_dai_ji.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/T%C5%8Ddai-ji_Kon-d%C5%8D.jpg/1280px-T%C5%8Ddai-ji_Kon-d%C5%8D.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Tōdai-ji_Kon-dō.jpg",
+  "w": 1000,
+  "h": 800
+ },
+ "Ueno Park": {
+  "file": "fotos/Ueno_Park.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Ueno_park.jpg/1280px-Ueno_park.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Ueno_park.jpg",
+  "w": 1000,
+  "h": 750
+ },
+ "Umeda Sky Building": {
+  "file": "fotos/Umeda_Sky_Building.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/2018_Umeda_Sky_Building.jpg/1280px-2018_Umeda_Sky_Building.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "2018_Umeda_Sky_Building.jpg",
+  "w": 1000,
+  "h": 1485
+ },
+ "Waibaidu Bridge": {
+  "file": "fotos/Waibaidu_Bridge.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Waibaidu_Bridge_Shanghai.jpg/1280px-Waibaidu_Bridge_Shanghai.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Waibaidu_Bridge_Shanghai.jpg",
+  "w": 1000,
+  "h": 563
+ },
+ "Wako (retailer)": {
+  "file": "fotos/Wako_retailer.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Ginza_Wako_20241021.jpg/1280px-Ginza_Wako_20241021.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Ginza_Wako_20241021.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Waseda University": {
+  "file": "fotos/Waseda_University.png",
+  "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/0/0d/Waseda_University_Logo.svg/1280px-Waseda_University_Logo.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Waseda_University_Logo.svg",
+  "w": 1000,
+  "h": 1000
+ },
+ "Water Lilies (Monet series)": {
+  "file": "fotos/Water_Lilies_Monet_series.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Reflections_of_Clouds_on_the_Water-Lily_Pond.jpg/1280px-Reflections_of_Clouds_on_the_Water-Lily_Pond.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Reflections_of_Clouds_on_the_Water-Lily_Pond.jpg",
+  "w": 1000,
+  "h": 571
+ },
+ "Yu Garden": {
+  "file": "fotos/Yu_Garden.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Shanghai_-_Yu_Garden_-_0035.jpg/1280px-Shanghai_-_Yu_Garden_-_0035.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Shanghai_-_Yu_Garden_-_0035.jpg",
+  "w": 1000,
+  "h": 587
+ },
+ "Yukitsuri": {
+  "file": "fotos/Yukitsuri.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c0/Kenrokuen04-r.jpg/1280px-Kenrokuen04-r.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Kenrokuen04-r.jpg",
+  "w": 1000,
+  "h": 667
+ },
+ "Tōkaidō Shinkansen": {
+  "file": "fotos/T_kaid_Shinkansen.jpg",
+  "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Series-N700S-J2.jpg/1280px-Series-N700S-J2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+  "name": "Series-N700S-J2.jpg",
+  "w": 1000,
+  "h": 667
+ }
+}
